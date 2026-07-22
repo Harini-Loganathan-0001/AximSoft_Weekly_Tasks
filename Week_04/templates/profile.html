@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <!-- Card with moonie dark background -->
+    <div class="card shadow-lg p-4 text-white" 
+         style="width: 650px; border-radius: 12px; background-color:#24175e;;">
+        <h2 class="text-center mb-4 fw-bold">Profile Details</h2>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              {% if message == "Please log in to access your profile." %}
+                <div class="alert alert-info mt-2 p-2 text-center" role="alert" style="line-height:1;">
+                  {{ message }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% if current_user.is_authenticated %}
+        <!-- Unified dark table -->
+        <table class="table table-bordered text-center align-middle shadow-sm mb-0"
+               style="border-radius: 10px; overflow: hidden; background-color:#16213e; color:#f1f1f1;">
+            <thead style="background-color:#0f3460; color:#ffffff;">
+                <tr>
+                    <th scope="col">Field</th>
+                    <th scope="col">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Name</th>
+                    <td>{{ current_user.name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>{{ current_user.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Total Enrollments</th>
+                    <td>{{ total_courses }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Completed Courses</th>
+                    <td>{{ completed_courses }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Progress Bar -->
+        <div class="mt-3">
+            <h6 class="fw-bold text-center">Learning Progress</h6>
+            <div class="progress" style="height: 25px; background-color:#97bdec;">
+                <div class="progress-bar bg-success fw-bold" role="progressbar"
+                     style="width: {{ (completed_courses / total_courses * 100) if total_courses > 0 else 0 }}%">
+                    {{ (completed_courses / total_courses * 100)|round(0) }}%
+                </div>
+            </div>
+        </div>
+
+        <!-- Motivational message -->
+        <div class="alert alert-success text-center fw-bold mt-3">
+            Keep learning, {{ current_user.name }}!
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

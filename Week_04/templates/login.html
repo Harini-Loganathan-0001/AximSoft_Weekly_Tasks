@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4" style="width: 350px;">
+        <h3 class="text-center mb-4 fw-bold">Login</h3>
+
+        <form method="POST" autocomplete="off">
+            <!-- Email -->
+            <div class="mb-3">
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="Email"
+                       value=""
+                       autocomplete="off"
+                       required>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="Password"
+                       value=""
+                       autocomplete="new-password"
+                       required>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-success">
+                    Login
+                </button>
+            </div>
+
+            <!-- Flash messages BELOW the button -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-2 p-2 text-center" role="alert" style="line-height:1;">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+        </form>
+    </div>
+</div>
+{% endblock %}

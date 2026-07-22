@@ -1,0 +1,74 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="mb-4 fw-bold text-center text-dark">Available Courses</h1>
+
+    <form method="GET" action="{{ url_for('courses') }}" class="d-flex justify-content-center">
+        <div class="d-flex mb-5" style="width:60%;">
+            <input
+                type="text"
+                name="search"
+                class="form-control text-light border-secondary me-2"
+                style="background-color:#06718fcf;"
+                placeholder="Search courses..."
+                value="{{ search }}"
+            >
+            <button class="btn btn-success">Search</button>
+        </div>
+    </form>
+
+
+    {% if courses %}
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <!-- Dark moonie card -->
+            <div class="card shadow-lg h-100 text-light" style="background-color:#24175e; border-radius:12px;">
+                <div class="card-body text-center">
+
+                    <!-- Title -->
+                    <h4 class="card-title fw-bold mb-3 text-info course-title">
+                        {{ course.course_name }}
+                    </h4>
+
+                    <!-- Course info -->
+                    <p>
+                        <strong>Category :</strong> {{ course.category }}
+                    </p>
+                    <p>
+                        <strong>Duration :</strong> {{ course.duration }}
+                    </p>
+
+                    <hr class="border-secondary">
+
+                    <!-- Description -->
+                    <p class="card-text">{{ course.description }}</p>
+
+                    <!-- Enroll button -->
+                    {% if course.id in enrolled_courses %}
+                        <button class="btn btn-secondary px-4 fw-bold" disabled>
+                            Enrolled
+                        </button>
+                    {% else %}
+                        <a href="{{ url_for('enroll', id=course.id) }}"
+                        class="btn btn-success px-4 fw-bold">
+                            Enroll
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center fw-bold">
+        Course not found. Try another course.
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4" style="width: 400px;">
+        <h3 class="text-center mb-4 fw-bold">Sign Up</h3>
+
+        <form method="POST" autocomplete="off">
+            <!-- Name -->
+            <div class="mb-3">
+                <input type="text"
+                       name="name"
+                       class="form-control"
+                       placeholder="Name"
+                       required>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="Email"
+                       autocomplete="off"
+                       required>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="Password"
+                       autocomplete="new-password"
+                       required>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-success">
+                    Register
+                </button>
+            </div>
+
+            <!-- Flash messages BELOW the button -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  {% if message in ["Registration Successful", "Email already exists"] %}
+                    <div class="alert alert-info mt-2 p-2 text-center" role="alert" style="line-height:1;">
+                      {{ message }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="fw-bold text-center text-dark">My Courses</h2><br>
+
+
+    <!-- Flash messages for my_courses page -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if message == "Please log in to view your enrolled courses." %}
+            <div class="alert alert-info mt-2 p-2 text-center" role="alert" style="line-height:1;">
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% if current_user.is_authenticated %}
+        {% if enrollments %}
+        <div class="row">
+            {% for enroll in enrollments %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <!-- Dark moonie card -->
+                <div class="card shadow-lg h-100 text-light" style="background-color:#24175e; border-radius:12px;">
+                    <div class="card-body text-center">
+
+                        <!-- Title -->
+                        <h4 class="card-title fw-bold mb-3 text-info">
+                            {{ enroll.course.course_name }}
+                        </h4>
+
+                        <!-- Progress info -->
+                        <p>
+                            🎯 <strong>Progress:</strong> {{ enroll.progress }}%
+                            {% if enroll.progress == 100 %}
+                            <span class="badge bg-success">Completed</span>
+                            {% endif %}
+                        </p>
+
+                        <!-- Progress bar -->
+                        <div class="progress mb-3" style="height: 20px; background-color:#0f3460;">
+                            <div class="progress-bar bg-success fw-bold"
+                                 role="progressbar"
+                                 style="width: {{ enroll.progress }}%;"
+                                 aria-valuenow="{{ enroll.progress }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                                {{ enroll.progress }}%
+                            </div>
+                        </div>
+
+                        <!-- Update Progress button -->
+                        {% if enroll.progress < 100 %}
+                        <a href="{{ url_for('update_progress', id=enroll.id) }}" 
+                           class="btn btn-sm btn-success fw-bold">
+                            Update Progress →
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning text-center fw-bold">
+            You haven’t enrolled in any courses yet.
+        </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}
