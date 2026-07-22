@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+<h2 class="mb-4">
+
+Payment Analytics
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<div class="card kpi-card customer-card">
+
+<div class="card-body">
+
+<h6>Total Transactions</h6>
+
+<h2>{{ "{:,}".format(total_transactions) }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<div class="card kpi-card revenue-card">
+
+<div class="card-body">
+
+<h6>Total Payment</h6>
+
+<h2>₹ {{ "{:,.2f}".format(total_payment) }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<div class="card kpi-card orders-card">
+
+<div class="card-body">
+
+<h6>Average Payment</h6>
+
+<h2>₹ {{ "{:.2f}".format(avg_payment) }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6 mb-4">
+
+<div class="card kpi-card seller-card">
+
+<div class="card-body">
+
+<h6>Average Review Score</h6>
+
+<h2>{{ "{:.2f}".format(avg_review) }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- payment behavier -->
+
+<div class="row">
+
+<div class="col-lg-12 mb-4">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+
+Payment Behavior
+
+</h4>
+
+<img src="{{ url_for('static', filename='images/payment/payment_behaviour(payment).png') }}" class="img-fluid rounded w-100">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Payment Value Distribution + Installment Usage -->
+
+
+<div class="row">
+
+<div class="col-lg-6 mb-4">
+
+<div class="card shadow-sm h-100">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+
+Payment Value Distribution
+
+</h4>
+
+<img src="{{ url_for('static', filename='images/payment/payment_value_distribution(payment).png') }}" class="img-fluid rounded w-100">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-6 mb-4">
+
+<div class="card shadow-sm h-100">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+
+Payment Installment Usage
+
+</h4>
+
+<img src="{{ url_for('static', filename='images/payment/payment_installment_usage(payment).png') }}" class="img-fluid rounded w-100">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Payment Methods + Review vs Purchase Value -->
+
+<div class="row">
+
+<div class="col-lg-6 mb-4">
+
+<div class="card shadow-sm h-100">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+
+Payment Methods
+
+</h4>
+
+<img src="{{ url_for('static', filename='images/payment/payment_methods(payment).png') }}" class="img-fluid rounded w-100">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-6 mb-4">
+
+<div class="card shadow-sm h-100">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+
+Positive vs Negative Review
+
+</h4>
+
+<img src="{{ url_for('static', filename='images/payment/positive_negative_review(review).png') }}" class="img-fluid rounded w-100">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- Review Trend + Positive/Negative Review -->
+
+
+<div class="row">
+
+<div class="col-lg-6 mb-4">
+
+<div class="card shadow-sm h-100">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+
+Review Trend Analysis
+
+</h4>
+
+<img src="{{ url_for('static', filename='images/payment/review_trend_analysis(review).png') }}" class="img-fluid rounded w-100">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-6 mb-4">
+
+<div class="card shadow-sm h-100">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+
+Review vs Purchase Value
+
+</h4>
+
+<img src="{{ url_for('static', filename='images/payment/review_vs_purchase_value(review).png') }}" class="img-fluid rounded w-100">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- Review Score Distribution -->
+
+<div class="row">
+
+<div class="col-lg-12 mb-4">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h4 class="mb-3">
+
+Review Score Distribution
+
+</h4>
+
+<img src="{{ url_for('static', filename='images/payment/review_score_distribution(review).png') }}" class="img-fluid rounded w-100">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Payment Summary Table -->
+
+<div class="row">
+
+<div class="col-lg-12 mb-4">
+
+<div class="card shadow-sm border-0">
+
+<div class="card-body">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<h4>
+
+<i class="bi bi-credit-card text-primary me-2"></i>
+
+Payment Summary
+
+</h4>
+
+<span class="badge bg-primary">
+
+Payment Types
+
+</span>
+
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover align-middle table-info">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Payment Type</th>
+
+<th>Transactions</th>
+
+<th>Total Payment</th>
+
+<th>Average Payment</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in payment_summary %}
+
+<tr>
+
+<td>{{ row.payment_type }}</td>
+
+<td>{{ "{:,}".format(row.Transactions) }}</td>
+
+<td>₹ {{ "{:,.2f}".format(row.Total_Payment) }}</td>
+
+<td>₹ {{ "{:.2f}".format(row.Average_Payment) }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

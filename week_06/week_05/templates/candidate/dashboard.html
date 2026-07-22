@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="fw-bold text-primary mb-3">
+        Candidate Dashboard
+    </h2>
+
+    <div class="row mb-4">
+
+    <!-- Jobs Applied -->
+    <div class="col-md-3">
+        <div class="card shadow text-center border-0">
+            <div class="card-body">
+                <i class="bi bi-briefcase-fill text-primary display-6"></i>
+                <h6 class="mt-2 text-muted">Jobs Applied</h6>
+                <h3 class="fw-bold text-primary">{{ total_applied }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Applications -->
+    <div class="col-md-3">
+        <div class="card shadow text-center border-0">
+            <div class="card-body">
+                <i class="bi bi-hourglass-split text-warning display-6"></i>
+                <h6 class="mt-2 text-muted">Pending</h6>
+                <h3 class="fw-bold text-warning">{{ total_pending }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interviews Scheduled -->
+    <div class="col-md-3">
+        <div class="card shadow text-center border-0">
+            <div class="card-body">
+                <i class="bi bi-calendar-check text-success display-6"></i>
+                <h6 class="mt-2 text-muted">Interviews</h6>
+                <h3 class="fw-bold text-success">{{ total_interviews }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jobs Saved -->
+    <div class="col-md-3">
+        <div class="card shadow text-center border-0">
+            <div class="card-body">
+                <i class="bi bi-bookmark-fill text-danger display-6"></i>
+                <h6 class="mt-2 text-muted">Jobs Saved</h6>
+                <h3 class="fw-bold text-danger">{{ total_saved }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+    <p class="text-white">
+        Track your job applications and status.
+    </p>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-dark text-center fw-bold text-white">
+            My Applications
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-primary">
+
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                        <th>Applied Date</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for app in applications %}
+
+                    <tr>
+
+                        <td>{{ app.job.job_title }}</td>
+
+                        <td>{{ app.job.employer.company_name }}</td>
+
+                        <td>
+
+                            <span class="badge bg-info">
+                                {{ app.status }}
+                            </span>
+
+                        </td>
+
+                        <td>
+                            {{ app.applied_date.strftime("%d-%m-%Y") }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center">
+
+                            No applications yet.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    
+    <!-- SAVED JOBS  -->
+
+    <div class="card shadow-sm mt-4";>
+
+        <div class="card-header btn-warning fw-semibold text-black ">
+            Saved Jobs
+        </div>
+
+        <div class="card-body" style="background-color: #297b91;">
+
+            {% if saved_jobs %}
+
+            <div class="row">
+
+                {% for save in saved_jobs %}
+
+                <div class="col-md-6 mb-3">
+
+                    <div class="card border">
+
+                        <div class="card-body">
+
+                            <h5 class="fw-bold">
+                                {{ save.job.job_title }}
+                            </h5>
+
+                            <p class="mb-1 fw-bold text-dark">
+                                <i class="bi bi-building"></i>
+                                {{ save.job.employer.company_name }}
+                            </p>
+
+                            <p class="mb-2 text-white">
+                                {{ save.job.location }}
+                            </p>
+
+                            <a href="{{ url_for('main.job_details', job_id=save.job.id) }}"
+                               class="btn btn-sm btn-primary">
+
+                                View Job
+
+                            </a>
+
+                            <form action="{{ url_for('main.unsave_job', job_id=save.job.id) }}"
+                                method="POST"
+                                class="d-inline">
+
+                                <button type="submit"
+                                        class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i> Unsave
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% else %}
+
+            <p class="text-muted">
+                No saved jobs yet.
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

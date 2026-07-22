@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<header class="hero"
+        style="background-image: url('{{ url_for('static', filename='images/hotel_bg.jpg') }}');">
+    <div class="hero-overlay"></div>
+
+    <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
+        <path d="M0,30 C220,75 420,5 700,25 C980,45 1160,10 1440,38 L1440,90 L0,90 Z"></path>
+    </svg>
+
+    <div class="container-fluid px-4">
+        <div class="row g-3 kpi-row justify-content-center">
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-bar-chart-line"></i> Normality Test</div>
+                    <div class="value">{{ kpis.normality_test }}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-diagram-3"></i> Correlation</div>
+                    <div class="value">{{ kpis.correlation }}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-clipboard-check"></i> Hypothesis Tests</div>
+                    <div class="value">{{ kpis.hypothesis_tests }}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-graph-up-arrow"></i> Confidence Interval</div>
+                    <div class="value">{{ kpis.confidence_interval }}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid px-4 mt-4">
+
+
+
+
+
+
+<div class="container-fluid mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h5>Distribution of Average Daily Rate (ADR)</h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div style="height:380px;">
+
+                <canvas id="distributionChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid mt-4">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow">
+
+                <div class="card-header">
+
+                    <h5>Hypothesis Test Statistics</h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height:350px;">
+
+                        <canvas id="hypothesisChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+                <div class="col-lg-6">
+
+            <div class="card shadow">
+
+                <div class="card-header">
+
+                    <h5>Correlation Analysis</h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height:350px;">
+
+                        <canvas id="correlationChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid mt-4">
+
+    <div class="row">
+
+        <!-- Confidence Interval -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow">
+
+                <div class="card-header">
+
+                    <h5>Confidence Interval</h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height:340px">
+
+                        <canvas id="confidenceChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Statistical Decision -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow">
+
+                <div class="card-header">
+
+                    <h5>Statistical Decision Summary</h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div style="height:340px">
+
+                        <canvas id="decisionChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="card shadow mt-4">
+
+    <div class="card-header">
+
+        <h5>Statistical Analysis Summary</h5>
+
+    </div>
+
+    <div class="card-body table-responsive">
+
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-dark">
+
+                <tr >
+
+                    <th >Test</th>
+
+                    <th>Statistic</th>
+
+                    <th>P-Value</th>
+
+                    <th>Result</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in statistical_summary %}
+
+                <tr class="table-primary">
+
+                    <td>{{ row.test }}</td>
+
+                    <td>{{ row.statistic }}</td>
+
+                    <td>{{ row.p_value }}</td>
+
+                    <td>{{ row.result }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</div>
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+const assumptionLabels = {{ assumption_labels | tojson }};
+const assumptionStatus = {{ assumption_status | tojson }};
+
+const distributionLabels = {{ distribution_labels|tojson }};
+const distributionCounts = {{ distribution_counts|tojson }};
+
+const hypothesisLabels={{hypothesis_labels|tojson}};
+
+const hypothesisValues={{hypothesis_values|tojson}};
+
+const correlationLabels=["Pearson","Spearman"];
+
+const correlationValues=[0.0383,0.1109];
+
+
+const confidenceLabels={{confidence_labels|tojson}};
+
+const confidenceValues={{confidence_values|tojson}};
+
+const decisionLabels={{decision_labels|tojson}};
+
+const decisionValues={{decision_values|tojson}};
+
+
+</script>
+
+<script src="{{ url_for('static', filename='js/statistical.js') }}"></script>
+
+{% endblock %}

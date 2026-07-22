@@ -1,0 +1,787 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<header class="hero"
+        style="background-image: url('{{ url_for('static', filename='images/hotel_bg.jpg') }}');">
+    <div class="hero-overlay"></div>
+
+    <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
+        <path d="M0,30 C220,75 420,5 700,25 C980,45 1160,10 1440,38 L1440,90 L0,90 Z"></path>
+    </svg>
+
+    <div class="container-fluid px-4">
+        <div class="row g-3 kpi-row justify-content-center">
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-graph-up-arrow"></i> Total Bookings</div>
+                    <div class="value">{{ kpis.total_bookings }}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-x-circle"></i> Cancellation Rate</div>
+                    <div class="value">{{ kpis.cancellation_rate }}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-currency-dollar"></i> Avg Daily Rate</div>
+                    <div class="value">{{ kpis.avg_daily_rate }}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-moon-stars"></i> Avg Stay Duration</div>
+                    <div class="value">{{ kpis.avg_stay_duration }}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+<div class="container-fluid mt-4">
+
+<div class="row g-4">
+
+    <!-- Monthly Booking -->
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm border-0 rounded-4 chart-card">
+
+            <div class="card-header bg-white border-0">
+
+                <h6 class="fw-bold mb-0">
+
+                    <i class="bi bi-calendar-event text-primary me-2"></i>
+
+                    Monthly Booking Trend
+
+                </h6>
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="bookingTrendChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Booking Season -->
+
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm border-0 rounded-4 chart-card">
+
+            <div class="card-header bg-white border-0">
+
+                <h6 class="fw-bold mb-0">
+
+                    <i class="bi bi-cloud-sun text-warning me-2"></i>
+
+                    Booking Season
+
+                </h6>
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="seasonChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid mt-4">
+
+    <div class="row g-4">
+
+        <!-- ================= LEFT SIDE ================= -->
+
+        <div class="col-lg-6 b-cards">
+
+            <div class="card  shadow-sm border-0 rounded-4 h-100">
+
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold">
+                        <i class="bi bi-stars text-warning"></i>
+                        Performance Highlights
+                    </h5>
+                </div>
+
+                <div class="card-body ">
+
+                    <div class="row g-3 ">
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-blue h-100">
+                                <h6>Highest Booking Month</h6>
+                                <h3>{{ highest_month }}</h3>
+                                <small>{{ highest_booking }} Bookings</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-green h-100">
+                                <h6>Highest Revenue</h6>
+                                <h3>{{ highest_revenue_month }}</h3>
+                                <small>${{ highest_revenue }}</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-orange h-100">
+                                <h6>Top Hotel</h6>
+                                <h3>{{ top_hotel }}</h3>
+                                <small>{{ top_hotel_percent }}%</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-cyan h-100">
+                                <h6>Top Country</h6>
+                                <h3>{{ top_country }}</h3>
+                                <small>{{ top_country_bookings }} Guests</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-purple h-100">
+                                <h6>Average Lead Time</h6>
+                                <h3>{{ avg_lead }} Days</h3>
+                                <small>Advance Booking</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-red h-100">
+                                <h6>Total Cancellations</h6>
+                                <h3>{{ total_cancelled }}</h3>
+                                <small>{{ kpis.cancellation_rate }} Cancellation Rate</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-pink h-100">
+                                <h6>Average Stay</h6>
+                                <h3>{{ avg_stay }} Nights</h3>
+                                <small>Weekend + Week Nights</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-dark h-100">
+                                <h6>Average Daily Rate</h6>
+                                <h3>${{ avg_adr }}</h3>
+                                <small>Average Revenue Per Night</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-teal h-100">
+                                <h6>Booking Success Rate</h6>
+                                <h3>{{ booking_success_rate }}%</h3>
+                                <small>Successfully Confirmed Bookings</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-yellow h-100">
+                                <h6>Avg Special Requests</h6>
+                                <h3>{{ avg_special_requests }}</h3>
+                                <small>Requests per Booking</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-brown h-100">
+                                <h6>Longest Lead Time</h6>
+                                <h3>{{ max_lead_time }} Days</h3>
+                                <small>Maximum Advance Booking</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="performance-card card-gold h-100">
+                                <h6>Repeat Guest Rate</h6>
+                                <h3>{{ repeat_guest_rate }}%</h3>
+                                <small>Returning Customer Ratio</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= RIGHT SIDE ================= -->
+
+        <div class="col-lg-6">
+
+            <!-- Booking Source -->
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card mb-4">
+
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold">
+                        <i class="bi bi-diagram-3 text-primary"></i>
+                        Booking Source Analysis
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <canvas id="sourceChart"></canvas>
+                </div>
+
+            </div>
+
+            <!-- Deposit Type -->
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card">
+
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold">
+                        <i class="bi bi-credit-card text-success"></i>
+                        Deposit Type Analysis
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <canvas id="depositChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="container-fluid mt-4">
+
+    <div class="row g-4">
+
+        <!-- LEFT SIDE -->
+        <div class="col-lg-6">
+
+            <!-- Top -->
+            <div class="card shadow-sm border-0 rounded-4 chart-card mb-4">
+
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold">
+                        <i class="bi bi-building"></i>
+                        Hotel Type Distribution
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <canvas id="hotelTypeChart"></canvas>
+                </div>
+
+            </div>
+
+            <!-- Bottom -->
+            <div class="card shadow-sm border-0 rounded-4 chart-card">
+
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold">
+                        <i class="bi bi-bar-chart-line"></i>
+                        Average ADR by Hotel
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <canvas id="adrHotelChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card h-100">
+
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold">
+                        <i class="bi bi-cash-stack"></i>
+                        Booking Value Segment
+                    </h5>
+                </div>
+
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <canvas id="bookingValueChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid mt-4">
+
+<div class="row">
+
+<div class="col-lg-12">
+
+<div class="card shadow-sm border-0 rounded-4 chart-card">
+
+<div class="card-header bg-white border-0">
+
+<h5 class="fw-bold">
+
+<i class="bi bi-graph-up-arrow text-primary me-2"></i>
+
+Lead Time vs Average Daily Rate
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<canvas id="scatterChart" height="110"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= FINAL ROW ================= -->
+
+<div class="container-fluid mt-4">
+
+    <div class="row g-4">
+
+        <!-- Booking Status -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card h-100">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-check2-square text-success me-2"></i>
+                        Booking Status Distribution
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="statusChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Monthly Cancellation Trend -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card h-100">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-x-circle-fill text-danger me-2"></i>
+                        Monthly Cancellation Trend
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="cancelChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Top Guest Countries -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card h-100">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="fw-bold mb-0">
+                        <i class="bi bi-globe-americas text-primary me-2"></i>
+                        Top Guest Countries
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="guestCountryChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid mt-4">
+
+    <div class="row g-4">
+
+        <!-- Chart 1 -->
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card">
+
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold">
+                        <i class="bi bi-arrow-repeat text-primary"></i>
+                        Booking Changes by Customer Type
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <canvas id="bookingChangeChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Chart 2 -->
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card">
+
+                <div class="card-header bg-white border-0">
+                    <h5 class="fw-bold">
+                        <i class="bi bi-clock-history text-primary"></i>
+                        Lead Time Category
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <canvas id="leadCategoryChart"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FINAL EXECUTIVE ROW ================= -->
+
+<div class="container-fluid mt-4">
+
+    <div class="row g-4">
+
+        <!-- Executive Summary -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h5 class="fw-bold mb-0">
+
+                        <i class="bi bi-clipboard-data-fill me-2"></i>
+
+                        Executive Summary
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between py-2 border-bottom text-dark">
+                        <span>Total Revenue</span>
+                        <strong>${{ total_revenue }}</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-2 border-bottom text-dark">
+                        <span>Peak Booking Month</span>
+                        <strong>{{ highest_month }}</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-2 border-bottom text-dark">
+                        <span>Average ADR</span>
+                        <strong>{{ kpis.avg_daily_rate }}</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-2 border-bottom text-dark">
+                        <span>Average Stay</span>
+                        <strong>{{ kpis.avg_stay_duration }}</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-2 border-bottom text-dark">
+                        <span>Cancellation Rate</span>
+                        <strong>{{ kpis.cancellation_rate }}</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-2 text-dark">
+                        <span>Top Country</span>
+                        <strong>{{ top_country }}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Business Health -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+
+                <div class="card-header bg-success text-white">
+
+                    <h5 class="fw-bold mb-0">
+
+                        <i class="bi bi-heart-pulse-fill me-2"></i>
+
+                        Business Health
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body text-dark">
+
+                    <h6>Booking Performance</h6>
+
+                    <div class="progress mb-3" style="height:10px;">
+                        <div class="progress-bar bg-primary" style="width:95%"></div>
+                    </div>
+
+                    <h6>Revenue Growth</h6>
+
+                    <div class="progress mb-3" style="height:10px;">
+                        <div class="progress-bar bg-success" style="width:90%"></div>
+                    </div>
+
+                    <h6>Customer Satisfaction</h6>
+
+                    <div class="progress mb-3" style="height:10px;">
+                        <div class="progress-bar bg-info" style="width:93%"></div>
+                    </div>
+
+                    <h6>Cancellation Control</h6>
+
+                    <div class="progress mb-3" style="height:10px;">
+                        <div class="progress-bar bg-warning" style="width:82%"></div>
+                    </div>
+
+                    <h6>Hotel Occupancy</h6>
+
+                    <div class="progress" style="height:10px;">
+                        <div class="progress-bar bg-danger" style="width:91%"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Key Findings -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+
+                <div class="card-header bg-warning">
+
+                    <h5 class="fw-bold mb-0">
+
+                        <i class="bi bi-lightbulb-fill me-2"></i>
+
+                        Key Findings
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-primary p-2 text-dark">
+                            🏨 {% if top_hotel == 0 %}
+                                City Hotel
+                            {% elif top_hotel == 1 %}
+                                Resort Hotel
+                            {% else %}
+                                Unknown Hotel
+                            {% endif %} is the most booked hotel.
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-success p-2 text-dark">
+                            🌍 {{ top_country }} contributes the highest bookings.
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-info p-2 text-dark">
+                            💳 No Deposit is the preferred booking type.
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-danger p-2 text-dark">
+                            📅 {{ highest_month }} is the busiest month.
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-secondary p-2 text-dark">
+                            ⭐ Resort Hotel has higher ADR.
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <span class="badge bg-warning p-2 text-dark">
+                            📈 Online TA generates maximum bookings.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+const monthly_labels={{monthly_labels|tojson}};
+const monthly_values={{monthly_values|tojson}};
+
+const revenue_labels={{revenue_labels|tojson}};
+const revenue_values={{revenue_values|tojson}};
+
+const season_labels={{season_labels|tojson}};
+const season_values={{season_values|tojson}};
+
+const source_labels={{source_labels|tojson}};
+const source_values={{source_values|tojson}};
+
+const deposit_labels={{deposit_labels|tojson}};
+const deposit_values={{deposit_values|tojson}};
+
+const hotel_type_labels={{hotel_type_labels|tojson}};
+const hotel_type_values={{hotel_type_values|tojson}};
+
+const booking_segment_labels={{booking_segment_labels|tojson}};
+const booking_segment_values={{booking_segment_values|tojson}};
+
+const adr_hotel_labels={{adr_hotel_labels|tojson}};
+const adr_hotel_values={{adr_hotel_values|tojson}};
+
+const scatter_data={{scatter_data|tojson}};
+
+const status_labels = {{ status_labels|tojson }};
+const status_values = {{ status_values|tojson }};
+
+const cancel_labels = {{ cancel_labels|tojson }};
+const cancel_values = {{ cancel_values|tojson }};
+
+const guest_country_labels = {{ guest_country_labels|tojson }};
+const guest_country_values = {{ guest_country_values|tojson }};
+
+const booking_change_labels={{booking_change_labels|tojson}};
+const booking_change_values={{booking_change_values|tojson}};
+
+const lead_category_labels={{lead_category_labels|tojson}};
+const lead_category_values={{lead_category_values|tojson}};
+
+
+</script>
+
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+
+{% endblock %}

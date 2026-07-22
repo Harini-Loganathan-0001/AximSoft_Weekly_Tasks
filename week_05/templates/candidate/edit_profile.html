@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+                <i class="bi bi-person-gear"></i>
+                Edit Profile
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {{ form.hidden_tag() }}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        {{ form.phone.label(class="form-label fw-bold") }}
+
+                        {{ form.phone(class="form-control",
+                        placeholder="Enter Phone Number") }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        {{ form.city.label(class="form-label fw-bold") }}
+
+                        {{ form.city(class="form-control",
+                        placeholder="Enter City") }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        {{ form.experience.label(class="form-label fw-bold") }}
+
+                        {{ form.experience(class="form-control",
+                        placeholder="Experience") }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        {{ form.education.label(class="form-label fw-bold") }}
+
+                        {{ form.education(class="form-control",
+                        placeholder="Education") }}
+
+                    </div>
+
+                    <div class="col-12 mb-3">
+
+                        {{ form.skills.label(class="form-label fw-bold") }}
+
+                        {{ form.skills(class="form-control",
+                        rows="3",
+                        placeholder="Python, Flask, SQL, HTML, CSS...") }}
+
+                    </div>
+
+                    <div class="col-12 mb-3">
+
+                        {{ form.about.label(class="form-label fw-bold") }}
+
+                        {{ form.about(class="form-control",
+                        rows="5",
+                        placeholder="Write about yourself...") }}
+
+                    </div>
+
+                    <!-- Profile Picture Upload -->
+                    <!-- Profile Picture Upload -->
+                    <div class="col-md-6 mb-3">
+                        {{ form.profile_pic.label(class="form-label fw-bold") }}
+                        {{ form.profile_pic(class="form-control", accept=".jpg,.jpeg,.png") }}
+                        <small class="text-muted">Upload JPG, JPEG or PNG image</small>
+
+                        {% if current_user.profile_pic %}
+                            <div class="mt-2">
+                                <img src="{{ url_for('static', filename='uploads/profiles/' ~ current_user.profile_pic) }}"
+                                    alt="Profile Picture"
+                                    class="img-thumbnail"
+                                    style="max-height: 120px;">
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Resume Upload -->
+                    <div class="col-md-6 mb-3">
+                        {{ form.resume.label(class="form-label fw-bold") }}
+                        {{ form.resume(class="form-control", accept=".pdf") }}
+                        <small class="text-muted">Upload Resume (PDF only)</small>
+
+                        {% if current_user.resume %}
+                            <div class="mt-2">
+                                <a href="{{ url_for('static', filename='uploads/resumes/' ~ current_user.resume) }}"
+                                target="_blank"
+                                class="btn btn-outline-primary btn-sm">
+                                    View Current Resume
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-end">
+
+                    <a href="{{ url_for('main.profile') }}"
+                       class="btn btn-secondary me-2">
+
+                        Cancel
+
+                    </a>
+
+                    {{ form.submit(class="btn btn-success btn-lg") }}
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

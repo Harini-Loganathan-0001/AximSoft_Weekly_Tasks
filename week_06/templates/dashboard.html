@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <h2 class="mb-4">Dashboard</h2>
+
+    <!-- ==========================
+         KPI Cards
+    =========================== -->
+
+    <div class="row">
+
+        <!-- Revenue -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card kpi-card revenue-card">
+                <div class="card-body">
+                    <h6>Total Revenue</h6>
+                    <h2>{{ revenue }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card kpi-card orders-card">
+                <div class="card-body">
+                    <h6>Total Orders</h6>
+                    <h2>{{ orders }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card kpi-card customer-card">
+                <div class="card-body">
+                    <h6>Total Customers</h6>
+                    <h2>{{ customers }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sellers -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card kpi-card seller-card">
+                <div class="card-body">
+                    <h6>Total Sellers</h6>
+                    <h2>{{ sellers }}</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==========================
+         Revenue Chart
+    =========================== -->
+
+    <div class="row">
+
+        <div class="col-lg-12">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="mb-4">Revenue Over Time</h4>
+
+                    <canvas id="revenueChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================
+        Donut Charts
+    ====================================== -->
+
+    <div class="row mt-4">
+
+        <!-- Payment Type -->
+
+        <div class="col-lg-5">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="text-center mb-4">
+                        Revenue by Payment Type
+                    </h4>
+
+                    <canvas id="paymentChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Top Categories -->
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="mb-4">
+                        Top 10 Product Categories
+                    </h4>
+
+                    <canvas id="categoryChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================
+            Revenue by State
+        ========================== -->
+
+        <div class="row mt-4">
+
+            <div class="col-lg-12">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h4 class="mb-4">
+                            Revenue by State
+                        </h4>
+
+                        <canvas id="stateTreemap"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================================
+            Top Sellers
+        =========================================== -->
+
+        <div class="row mt-4">
+
+            <div class="col-lg-12">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h4 class="mb-4">
+                            Top 10 Sellers by Revenue
+                        </h4>
+
+                        <canvas id="sellerChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================================
+            Top Sellers
+        =========================================== -->
+
+        <div class="row mt-4">
+
+            <div class="col-lg-12">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h4 class="mb-4">
+                            Monthly Orders Trend
+                        </h4>
+
+                        <canvas id="orderChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================================
+            order sttus distribution
+        =========================================== -->
+        
+        <div class="row mt-4">
+
+            <!-- Order Status -->
+            <div class="col-lg-6 col-md-6 d-flex">
+                <div class="card shadow-sm w-100 chart-card">
+                    <div class="card-body">
+                        <h4 class="mb-3">Order Status Distribution</h4>
+
+                        <div class="chart-container">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Score -->
+            <div class="col-lg-6 col-md-6 d-flex">
+                <div class="card shadow-sm w-100 chart-card">
+                    <div class="card-body">
+                        <h4 class="mb-3">Review Score Distribution</h4>
+
+                        <div class="chart-container">
+                            <canvas id="reviewChart"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-4">
+
+            <div class="col-lg-6 d-flex">
+
+                <div class="card shadow-sm w-100 chart-card">
+
+                    <div class="card-body">
+
+                        <h4 class="mb-4">
+                            Key Business Insights
+                        </h4>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <div class="insight-card blue">
+                                    
+                                    <h6>Top Revenue State</h6>
+                                    <h3>{{ top_state }}</h3>
+                                    <p>Highest contribution to overall revenue</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="insight-card green">
+                                    <h6>Preferred Payment</h6>
+                                    <h3>{{ top_payment }}</h3>
+                                    <p>Most used payment method</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="insight-card orange">
+                                    <h6>Best Category</h6>
+                                    <h3>{{ top_category }}</h3>
+                                    <p>Highest revenue category</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="insight-card purple">
+                                    <h6>Average Rating</h6>
+                                    <h3>{{ avg_review }}</h3>
+                                    <p>Customer satisfaction score</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================
+                Recent Transactions
+            ========================== -->
+
+            <div class="col-lg-6 d-flex">
+
+                <div class="card shadow-sm w-100">
+
+                    <div class="card-body">
+
+                        <h4 class="mb-3">📋 Recent Transactions</h4>
+
+                        <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-dark">
+
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>State</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for row in recent_orders %}
+
+                                <tr>
+
+                                    <td>{{ loop.index }}</td>
+
+                                    <td>{{ row.customer_state }}</td>
+
+                                    <td>{{ row.payment_type.replace("_", " ").title() }}</td>
+
+                                    <td>
+                                        <span class="badge bg-primary">
+                                            {{ row.order_status.title() }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        ₹ {{ "%.2f"|format(row.payment_value) }}
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ==========================
+           CUSTOMER SPENDING DISTRIBUTION SUMMARY
+        ========================== -->
+
+        <div class="row">
+
+            <div class="col-lg-12 mb-4">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <h4 class="mb-0">
+
+                                  Customer Spending Distribution Summary
+
+                            </h4>
+
+                            <span class="badge bg-primary">
+
+                                Distribution Analysis
+
+                            </span>
+
+                        </div>
+
+                        <img
+                            src="{{ url_for('static', filename='images/customers/distribution_summary(fea_plots).png') }}"
+                            class="img-fluid rounded w-100"
+                            alt="Customer Spending Distribution Summary"
+                        >
+
+                    
+
+                    </div>
+
+                </div>
+
+            </div>
+
+           
+        </div>
+
+
+    </div>
+
+</div>
+
+<!-- Pass Python data to JavaScript -->
+
+<script>
+
+const chartLabels = {{ labels | tojson }};
+const chartValues = {{ values | tojson }};
+
+const paymentLabels = {{ payment_labels | tojson }};
+const paymentValues = {{ payment_values | tojson }};
+
+const categoryLabels = {{ category_labels | tojson }};
+const categoryValues = {{ category_values | tojson }};
+
+const stateLabels = {{ state_labels | tojson }};
+const stateValues = {{ state_values | tojson }};
+
+const sellerLabels = {{ seller_labels | tojson }};
+const sellerValues = {{ seller_values | tojson }};
+
+const orderLabels = {{ order_labels | tojson }};
+const orderValues = {{ order_values | tojson }};
+
+const reviewLabels = {{ review_labels | tojson }};
+const reviewValues = {{ review_values | tojson }};
+
+const statusLabels = {{ status_labels | tojson }};
+const statusValues = {{ status_values | tojson }};
+
+</script>
+
+{% endblock %}

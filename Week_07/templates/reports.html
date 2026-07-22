@@ -1,0 +1,876 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<header class="hero"
+        style="background-image: url('{{ url_for('static', filename='images/hotel_bg.jpg') }}');">
+
+    <div class="hero-overlay"></div>
+
+    <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
+        <path d="M0,30 C220,75 420,5 700,25 C980,45 1160,10 1440,38 L1440,90 L0,90 Z"></path>
+    </svg>
+
+    <div class="container-fluid px-4">
+
+        <div class="row g-3 kpi-row justify-content-center">
+
+            <!-- Total Reports -->
+            <div class="col-6 col-sm-4 col-lg-2">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+
+                        Total Reports
+
+                    </div>
+
+                    <div class="value">
+
+                        {{ kpis.total_reports }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Dashboard Modules -->
+            <div class="col-6 col-sm-4 col-lg-2">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+
+                        <i class="bi bi-grid"></i>
+
+                        Dashboard Modules
+
+                    </div>
+
+                    <div class="value">
+
+                        {{ kpis.modules }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Download Formats -->
+            <div class="col-6 col-sm-4 col-lg-2">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+
+                        <i class="bi bi-download"></i>
+
+                        Export Formats
+
+                    </div>
+
+                    <div class="value">
+
+                        {{ kpis.formats }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Last Updated -->
+            <div class="col-6 col-sm-4 col-lg-2">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+
+                        <i class="bi bi-clock-history"></i>
+
+                        Last Updated
+
+                    </div>
+
+                    <div class="value">
+
+                        {{ kpis.updated }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<div class="container-fluid px-4 mt-4">
+
+
+<div class="container-fluid px-4 mt-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-dark text-white py-3">
+
+            <h4 class="mb-0">
+                <i class="bi bi-clipboard-data me-2"></i>
+                Executive Summary
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-lg-8">
+
+                    <h5 class="fw-bold mb-3 text-dark">
+                        Project Overview
+                    </h5>
+
+                    <p class="text-muted">
+
+                        The Hotel Booking Analytics Dashboard provides an integrated business
+                        intelligence solution for analyzing hotel booking demand, customer
+                        behavior, revenue performance, and statistical insights.
+
+                        The platform combines interactive visualizations, statistical analysis,
+                        and data exploration to support informed business decisions and improve
+                        operational efficiency.
+
+                    </p>
+
+                    <h5 class="fw-bold mt-4 mb-3 text-dark">
+
+                        Key Business Highlights
+
+                    </h5>
+
+                    <ul class="list-group list-group-flush">
+
+                        <li class="list-group-item">
+                            Comprehensive analysis of booking, customer and revenue performance.
+                        </li>
+
+                        <li class="list-group-item">
+                             Statistical validation using hypothesis testing, correlation and confidence intervals.
+                        </li>
+
+                        <li class="list-group-item">
+                             Interactive dashboard for business monitoring and reporting.
+                        </li>
+
+                        <li class="list-group-item">
+                             Advanced data exploration with search, filtering and export functionality.
+                        </li>
+
+                        <li class="list-group-item">
+                             Professional reporting platform for management decision support.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="card bg-light border-0 shadow-sm">
+
+                        <div class="card-body">
+
+                            <h5 class="fw-bold text-center mb-4 text-dark">
+
+                                Project Summary
+
+                            </h5>
+
+                            <table class="table table-bordered table-borderless">
+
+                                <tr>
+
+                                    <th>Dataset</th>
+
+                                    <td>Hotel Booking Demand</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>Records</th>
+
+                                    <td>{{ summary.total_records }}</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>Features</th>
+
+                                    <td>{{ summary.total_features }}</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>Missing Values</th>
+
+                                    <td>{{ summary.missing }}</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>Duplicates</th>
+
+                                    <td>{{ summary.duplicates }}</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th>Status</th>
+
+                                    <td>
+
+                                        <span class="badge bg-success">
+
+                                            Production Ready
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid px-4 mt-5">
+
+    <div class="row g-4">
+
+        <!-- Booking Report -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow border-0 rounded-4 report-card h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="report-icon bg-primary">
+
+                            <i class="bi bi-calendar-check"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="mb-1 text-dark">
+
+                                Booking Analytics Report
+
+                            </h4>
+
+                            <small class="text-muted">
+
+                                Booking trends, occupancy, cancellations and hotel performance.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+
+                        <a href="/booking-analytics"
+                           class="btn btn-primary">
+
+                            <i class="bi bi-eye"></i>
+
+                            View Dashboard
+
+                        <a href="/download-booking-report"
+   class="btn btn-outline-primary">
+    <i class="bi bi-download"></i>
+    PDF
+</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Customer Report -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow border-0 rounded-4 report-card h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="report-icon bg-success">
+
+                            <i class="bi bi-people-fill"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="mb-1 text-dark">
+
+                                Customer Analytics Report
+
+                            </h4>
+
+                            <small class="text-muted">
+
+                                Customer groups, repeat guests and demographics.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+
+                        <a href="/customer-analytics"
+                           class="btn btn-success">
+
+                            <i class="bi bi-eye"></i>
+
+                            View Dashboard
+
+                        </a>
+
+                        <a href="/download-customer-report"
+   class="btn btn-outline-success">
+    <i class="bi bi-download"></i>
+    PDF
+</a>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Revenue Report -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow border-0 rounded-4 report-card h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="report-icon bg-warning">
+
+                            <i class="bi bi-cash-stack"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="mb-1 text-dark">
+
+                                Revenue Analytics Report
+
+                            </h4>
+
+                            <small class="text-muted">
+
+                                ADR, seasonal revenue and business performance.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+
+                        <a href="/revenue-analytics"
+                           class="btn btn-warning">
+
+                            <i class="bi bi-eye"></i>
+
+                            View Dashboard
+
+                        </a>
+
+                        <a href="/download-revenue-report"
+   class="btn btn-outline-warning">
+    <i class="bi bi-download"></i>
+    PDF
+</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Statistical Report -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow border-0 rounded-4 report-card h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="report-icon bg-danger">
+
+                            <i class="bi bi-bar-chart-line-fill"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="mb-1 text-dark">
+
+                                Statistical Analysis Report
+
+                            </h4>
+
+                            <small class="text-muted">
+
+                                Hypothesis testing, correlation and confidence intervals.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+
+                        <a href="/statistical-analysis"
+                           class="btn btn-danger">
+
+                            <i class="bi bi-eye"></i>
+
+                            View Dashboard
+
+                        </a>
+
+                        <a href="/download-statistical-report"
+   class="btn btn-outline-danger">
+    <i class="bi bi-download"></i>
+    PDF
+</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- Analytics Resources -->
+<!-- ================================================= -->
+
+<div class="container-fluid px-4 mt-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-dark text-white py-3">
+
+            <h4 class="mb-0">
+
+                <i class="bi bi-folder2-open me-2"></i>
+
+                Analytics Resources
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <!-- Cleaned Dataset -->
+
+                <div class="col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100 rounded-4">
+
+                        <div class="card-body text-center">
+
+                            <div class="mb-3">
+
+                                <i class="bi bi-file-earmark-spreadsheet-fill text-success"
+                                   style="font-size:55px;"></i>
+
+                            </div>
+
+                            <h5 class="fw-bold text-dark">
+
+                                Cleaned Dataset
+
+                            </h5>
+
+                            <p class="text-muted">
+
+                                Download the processed dataset after
+                                data cleaning, preprocessing and
+                                feature engineering.
+
+                            </p>
+
+                            <a href="/download-cleaned-dataset"
+   class="btn btn-success">
+
+    <i class="bi bi-download me-2"></i>
+
+    Download CSV
+
+</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Statistical Report -->
+
+                <div class="col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100 rounded-4">
+
+                        <div class="card-body text-center">
+
+                            <div class="mb-3">
+
+                                <i class="bi bi-file-earmark-bar-graph-fill text-danger"
+                                   style="font-size:55px;"></i>
+
+                            </div>
+
+                            <h5 class="fw-bold text-dark">
+
+                                Statistical Report
+
+                            </h5>
+
+                            <p class="text-muted">
+
+                                Complete statistical analysis including
+                                hypothesis testing, correlation,
+                                confidence intervals and normality tests.
+
+                            </p>
+
+                            <a href="/download-statistical-reports"
+   class="btn btn-danger">
+
+    <i class="bi bi-download me-2"></i>
+
+    Download PDF
+
+</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- EDA Report -->
+
+                <div class="col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100 rounded-4">
+
+                        <div class="card-body text-center">
+
+                            <div class="mb-3">
+
+                                <i class="bi bi-file-earmark-richtext-fill text-primary"
+                                   style="font-size:55px;"></i>
+
+                            </div>
+
+                            <h5 class="fw-bold text-dark">
+
+                                EDA Summary
+
+                            </h5>
+
+                            <p class="text-muted">
+
+                                Exploratory Data Analysis report
+                                containing business insights,
+                                visualizations and summary statistics.
+
+                            </p>
+
+                            <a href="/download-eda-summary-report"
+                            class="btn btn-primary">
+
+                                <i class="bi bi-download me-2"></i>
+
+                                Download PDF
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-footer bg-light">
+
+            <small class="text-muted">
+
+                <i class="bi bi-info-circle me-1"></i>
+
+                All downloadable resources are generated from the processed Hotel Booking Demand dataset and summarize the analytical results presented throughout the dashboard.
+
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- Project Information -->
+<!-- ================================================= -->
+
+<div class="container-fluid px-4 mt-5 mb-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-dark text-white py-3">
+
+            <h4 class="mb-0">
+
+                <i class="bi bi-info-circle-fill me-2"></i>
+
+                Project Information
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Left Side -->
+
+                <div class="col-lg-6">
+
+                    <table class="table table-borderless align-middle">
+
+                        <tr>
+
+                            <th width="40%">Project Name</th>
+
+                            <td>Hotel Booking Analytics Dashboard</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Dataset</th>
+
+                            <td>Hotel Booking Demand Dataset</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Total Records</th>
+
+                            <td>{{ summary.total_records }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Total Features</th>
+
+                            <td>{{ summary.total_features }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Missing Values</th>
+
+                            <td>{{ summary.missing }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Duplicate Records</th>
+
+                            <td>{{ summary.duplicates }}</td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+                <!-- Right Side -->
+
+                <div class="col-lg-6">
+
+                    <table class="table table-borderless align-middle">
+
+                        <tr>
+
+                            <th width="40%">Framework</th>
+
+                            <td>Flask</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Frontend</th>
+
+                            <td>HTML5, CSS3, Bootstrap 5</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Backend</th>
+
+                            <td>Python</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Libraries</th>
+
+                            <td>Pandas, NumPy, Chart.js</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Dashboard Version</th>
+
+                            <td>Version 1.0</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Status</th>
+
+                            <td>
+
+                                <span class="badge bg-success fs-6">
+
+                                    Production Ready
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-footer text-center bg-light">
+
+            <small class="text-muted">
+
+                © 2026 Hotel Booking Analytics Dashboard |
+                Developed for Business Intelligence & Statistical Analysis
+
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+</div>
+
+
+{% endblock %}

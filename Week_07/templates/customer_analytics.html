@@ -1,0 +1,434 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<header class="hero"
+        style="background-image: url('{{ url_for('static', filename='images/hotel_bg.jpg') }}');">
+    <div class="hero-overlay"></div>
+
+    <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
+        <path d="M0,30 C220,75 420,5 700,25 C980,45 1160,10 1440,38 L1440,90 L0,90 Z"></path>
+    </svg>
+
+    <div class="container-fluid px-4">
+        <div class="row g-3 kpi-row justify-content-center">
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-people"></i> Total Customers</div>
+                    <div class="value">{{ kpis.total_customers }}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-globe"></i> Countries</div>
+                    <div class="value">{{ kpis.unique_countries }}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label"><i class="bi bi-person-check"></i> Repeat Guests</div>
+                    <div class="value">{{ kpis.repeat_guests }}%</div>
+                </div>
+            </div>
+
+            <!-- NEW CARD -->
+            <div class="col-6 col-sm-4 col-lg-2">
+                <div class="kpi-card">
+                    <div class="kpi-label">
+                        <i class="bi bi-list-check"></i> Special Requests
+                    </div>
+                    <div class="value">{{ kpis.total_requests }}</div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</header>
+
+<div class="container-fluid mt-4">
+
+    <!-- ================= Row 1 ================= -->
+
+<!-- ================= Row 1 ================= -->
+
+<div class="container-fluid mt-4">
+
+    <div class="row g-4">
+
+        <!-- Customer Type Distribution -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="fw-bold mb-0">
+
+                        <i class="bi bi-people-fill text-primary me-2"></i>
+
+                        Customer Type Distribution
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="customerTypeChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Customer Loyalty Status -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 rounded-4 chart-card">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="fw-bold mb-0">
+
+                        <i class="bi bi-person-check-fill text-success me-2"></i>
+
+                        Customer Loyalty Status
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="loyaltyChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= Row 2 ================= -->
+
+<div class="container-fluid mt-4">
+
+<div class="row g-4">
+
+<!-- Repeat Guest -->
+
+<div class="col-lg-4">
+
+<div class="card shadow-sm border-0 rounded-4 chart-card">
+
+<div class="card-header bg-white border-0">
+
+<h6 class="fw-bold mb-0">
+
+Repeat Guest Analysis
+
+</h6>
+
+</div>
+
+<div class="card-body">
+
+<canvas id="repeatGuestChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Guest Demographics -->
+
+<div class="col-lg-4">
+
+<div class="card shadow-sm border-0 rounded-4 chart-card">
+
+<div class="card-header bg-white border-0">
+
+<h6 class="fw-bold mb-0">
+
+Guest Demographics
+
+</h6>
+
+</div>
+
+<div class="card-body">
+
+<canvas id="guestChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Special Requests -->
+
+<div class="col-lg-4">
+
+<div class="card shadow-sm border-0 rounded-4 chart-card">
+
+<div class="card-header bg-white border-0">
+
+<h6 class="fw-bold mb-0">
+
+Special Requests
+
+</h6>
+
+</div>
+
+<div class="card-body">
+
+<canvas id="specialChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= Row 3 ================= -->
+
+<div class="container-fluid mt-4">
+
+<div class="row g-4">
+
+<div class="col-lg-6">
+
+<div class="card shadow-sm border-0 rounded-4 chart-card">
+
+<div class="card-header bg-white border-0">
+
+<h6 class="fw-bold mb-0">
+
+<i class="bi bi-globe2 me-2 text-primary"></i>
+
+Top Customer Countries
+
+</h6>
+
+</div>
+
+<div class="card-body">
+
+<canvas id="countryChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-lg-6">
+
+<div class="card shadow-sm border-0 rounded-4 chart-card">
+
+<div class="card-header bg-white border-0">
+
+<h6 class="fw-bold mb-0">
+
+<i class="bi bi-cash-stack me-2 text-success"></i>
+
+Booking Value Segment
+
+</h6>
+
+</div>
+
+<div class="card-body">
+
+<canvas id="bookingValueChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= Customer Analytics Summary ================= -->
+
+<div class="container-fluid mt-4 mb-5">
+
+    <div class="card shadow-sm border-0 rounded-4">
+
+        <div class="card-header bg-white border-0">
+
+            <h5 class="fw-bold mb-0">
+                <i class="bi bi-table me-2 text-primary"></i>
+                Customer Analytics Summary
+            </h5>
+
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Metric</th>
+
+                        <th>Result</th>
+
+                        <th>Business Insight</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="table-primary">
+
+                    <tr >
+
+                        <td>Total Customers</td>
+
+                        <td>{{ kpis.total_customers }}</td>
+
+                        <td>The dataset contains {{ kpis.total_customers }} unique customer records.</td>
+
+                    </tr>
+
+                    <tr>
+
+    <td>Repeat Guest Analysis</td>
+
+    <td>{{ repeat_guest_count }} </td>
+
+    <td>
+        {{ repeat_guest_rate }}% of hotel bookings were made by returning guests,
+        indicating the current level of customer loyalty.
+    </td>
+
+</tr>
+
+                    <tr>
+
+                        <td>Most Common Customer Type</td>
+
+                        <td>{{ top_customer_type }}</td>
+
+                        <td>{{ top_customer_type }} customers account for the highest share of bookings.</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Top Customer Country</td>
+
+                        <td>{{ top_country }}</td>
+
+                        <td>{{ top_country }} generated the highest number of hotel bookings.</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Average Special Requests</td>
+
+                        <td>{{ avg_special_requests }}</td>
+
+                        <td>Guests requested an average of {{ avg_special_requests }} special services per booking.</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Highest Booking Value Segment</td>
+
+                        <td>{{ top_booking_segment }}</td>
+
+                        <td>{{ top_booking_segment }} contributes the largest share of booking revenue.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    
+
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+const customer_type_labels={{customer_type_labels|tojson}};
+const customer_type_values={{customer_type_values|tojson}};
+
+
+const repeat_labels={{repeat_labels|tojson}};
+const repeat_values={{repeat_values|tojson}};
+
+const guest_labels={{guest_labels|tojson}};
+const guest_values={{guest_values|tojson}};
+
+const special_labels={{special_labels|tojson}};
+const special_values={{special_values|tojson}};
+
+
+const country_labels={{country_labels|tojson}};
+const country_values={{country_values|tojson}};
+
+const value_labels={{value_labels|tojson}};
+const value_values={{value_values|tojson}};
+
+const loyalty_labels={{loyalty_labels|tojson}};
+const new_guest_values={{new_guest_values|tojson}};
+const repeat_guest_values={{repeat_guest_values|tojson}};
+
+</script>
+
+<script src="{{url_for('static',filename='js/customer.js')}}"></script>
+
+
+
+
+{% endblock %}

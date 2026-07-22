@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+  <h2 class="mb-4 text-center dashboard-heading">📈 Analytics Dashboard</h2>
+
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs" id="analyticsTabs">
+    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#scatter">Feature Vs Target</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#distribution">Boxplot</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#outliers">Outliers</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#correlation">Correlation</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#grlivarea">GrLivArea vs SalePrice</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#missing">Heatmap</a></li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#selected">Selected Features</a></li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content mt-3">
+
+    <!-- Scatter -->
+    <div class="tab-pane fade show active" id="scatter">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">Scatter Plot</h6>
+          <img src="{{ url_for('static', filename='images/feature_vs_target(eda).png') }}" 
+              class="img-fluid rounded shadow" alt="Scatter Plot">
+        </div>
+      </div>
+    </div>
+
+    <!-- Distribution -->
+    <div class="tab-pane fade" id="distribution">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">SalePrice Boxplot</h6>
+          <img src="{{ url_for('static', filename='images/saleprice_boxplot.png') }}" 
+              class="img-fluid rounded shadow" alt="SalePrice Boxplot">
+        </div>
+      </div>
+    </div>
+
+    <!-- Outliers -->
+    <div class="tab-pane fade" id="outliers">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">Outlier Analysis</h6>
+          <img src="{{ url_for('static', filename='images/outlier(eda) copy.png') }}" 
+              class="img-fluid rounded shadow" alt="Outlier Analysis">
+        </div>
+      </div>
+    </div>
+
+    <!-- Correlation -->
+    <div class="tab-pane fade" id="correlation">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">Correlation</h6>
+          <img src="{{ url_for('static', filename='images/top_15_feature(eda).png') }}" 
+              class="img-fluid rounded shadow" alt="Correlation Heatmap">
+        </div>
+      </div>
+    </div>
+
+    <!-- GrLivArea vs SalePrice -->
+    <div class="tab-pane fade" id="grlivarea">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">GrLivArea vs SalePrice</h6>
+          <img src="{{ url_for('static', filename='images/another_chart.png') }}" 
+              class="img-fluid rounded shadow" alt="GrLivArea vs SalePrice">
+        </div>
+      </div>
+    </div>
+
+    <!-- Missing Value Heatmap -->
+    <div class="tab-pane fade" id="missing">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">Missing Value Heatmap</h6>
+          <img src="{{ url_for('static', filename='images/missing_value_heatmap.png') }}" 
+              class="img-fluid rounded shadow" alt="Missing Value Heatmap">
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected Features -->
+    <div class="tab-pane fade" id="selected">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">Selected Features</h6>
+          <img src="{{ url_for('static', filename='images/selected_features.png') }}" 
+              class="img-fluid rounded shadow" alt="Selected Features">
+        </div>
+      </div>
+    </div>
+
+  </div> 
+
+  <!-- First Row -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h6 class="card-title">Relationship</h6>
+          <img src="{{ url_for('static', filename='images/relationship(eda).png') }}" 
+               class="img-fluid rounded shadow full-image" alt="Relationship Pair Plot">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">Histogram</h6>
+          <img src="{{ url_for('static', filename='images/saleprice_histogram.png') }}" 
+               class="img-fluid rounded shadow" alt="SalePrice Histogram">
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">Model Comparison</h6>
+          <img src="{{ url_for('static', filename='images/model_comparison.png') }}" 
+               class="img-fluid rounded shadow" alt="Model Comparison">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Row -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h6 class="card-title">Skewness</h6>
+          <img src="{{ url_for('static', filename='images/skewness.png') }}" 
+               class="img-fluid rounded shadow full-image" alt="Skewness Plot">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Correlation Table -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h6 class="card-title fw-bold">Feature Correlation with SalePrice</h6>
+      <table class="table table-striped table-bordered">
+        <thead class="table-primary">
+          <tr>
+            <th>Rank</th>
+            <th>Feature</th>
+            <th>Correlation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in corr_table %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row.Feature }}</td>
+            <td>{{ "%.3f"|format(row.Correlation) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Skewness Table -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h6 class="card-title fw-bold">Feature Skewness</h6>
+      <table class="table table-striped table-bordered">
+        <thead class="table-primary">
+          <tr>
+            <th>Rank</th>
+            <th>Feature</th>
+            <th>Skewness</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in skew_table %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row.Feature }}</td>
+            <td>{{ "%.3f"|format(row.Skewness) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

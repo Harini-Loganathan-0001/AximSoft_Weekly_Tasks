@@ -1,0 +1,21 @@
+<div class="row g-3 kpi-row justify-content-center">
+    {% for card in kpi_cards %}
+    <div class="col-6 col-sm-4 col-lg-2">
+        <div class="kpi-card">
+            <div class="kpi-label">
+                <i class="bi {{ card.icon }}"></i>
+                {{ card.label }}
+            </div>
+
+            <div class="value">
+                {{ card.value }} {% if card.unit %}<span class="unit">{{ card.unit }}</span>{% endif %}
+            </div>
+
+            <div class="kpi-delta {{ card.delta_class }}">
+                <i class="bi {{ card.delta_icon }}"></i>
+                {{ card.delta_text }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

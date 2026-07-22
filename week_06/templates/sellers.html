@@ -1,0 +1,400 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+<h2 class="mb-4">
+
+Seller Analytics
+
+</h2>
+
+<!-- ==========================
+     KPI CARDS
+========================== -->
+
+<div class="row">
+
+    <!-- Total Sellers -->
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+        <div class="card kpi-card customer-card">
+
+            <div class="card-body">
+
+                <h6>
+
+                    Total Sellers
+
+                </h6>
+
+                <h2>
+
+                    {{ "{:,}".format(total_sellers) }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Seller States -->
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+        <div class="card kpi-card revenue-card">
+
+            <div class="card-body">
+
+                <h6>
+
+                    Seller States
+
+                </h6>
+
+                <h2>
+
+                    {{ seller_states }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Average Revenue -->
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+        <div class="card kpi-card orders-card">
+
+            <div class="card-body">
+
+                <h6>
+
+                    Average Seller Revenue
+
+                </h6>
+
+                <h2>
+
+                    ₹ {{ "{:,.2f}".format(avg_seller_revenue) }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Performance Score -->
+
+    <div class="col-lg-3 col-md-6 mb-4">
+
+        <div class="card kpi-card seller-card">
+
+            <div class="card-body">
+
+                <h6>
+
+                    Average Performance
+
+                </h6>
+
+                <h2>
+
+                    {{ "{:.2f}".format(avg_performance_score) }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================
+     SELLER PERFORMANCE OVERVIEW
+========================== -->
+
+<div class="row">
+
+    <div class="col-lg-12 mb-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <h4 class="mb-0">
+
+                        Seller Performance Overview
+
+                    </h4>
+
+                    <span class="badge bg-primary">
+
+                        Performance Dashboard
+
+                    </span>
+
+                </div>
+
+                <img
+                    src="{{ url_for('static', filename='images/seller/seller_performance_overview(seller).png') }}"
+                    class="img-fluid rounded w-100"
+                    alt="Seller Performance Overview"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================
+     SELLER STATE + REVENUE
+========================== -->
+
+<div class="row">
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h4 class="mb-3">
+
+                    Seller Distribution by States
+
+                </h4>
+
+                <img
+                    src="{{ url_for('static', filename='images/seller/distribution_by_states(seller).png') }}"
+                    class="img-fluid rounded w-100"
+                    alt="Seller Distribution"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h4 class="mb-3">
+
+                    Seller Revenue Performance
+
+                </h4>
+
+                <img
+                    src="{{ url_for('static', filename='images/seller/seller_revenue_performance(seller).png') }}"
+                    class="img-fluid rounded w-100"
+                    alt="Seller Revenue"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================
+     TOP SELLERS + PERFORMANCE SCORE
+========================== -->
+
+<div class="row">
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h4 class="mb-3">
+
+                    Top Sellers by Revenue
+
+                </h4>
+
+                <img
+                    src="{{ url_for('static', filename='images/seller/top_sellers_byrevenue(seller).png') }}"
+                    class="img-fluid rounded w-100"
+                    alt="Top Sellers"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h4 class="mb-3">
+
+                    Seller Performance Score
+
+                </h4>
+
+                <img
+                    src="{{ url_for('static', filename='images/seller/seller_performance_score(fea).png') }}"
+                    class="img-fluid rounded w-100"
+                    alt="Performance Score"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================
+     TOP SELLERS TABLE
+========================== -->
+
+<div class="row">
+
+    <div class="col-lg-12 mb-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+
+                        <h4 class="mb-1">
+
+                            <i class="bi bi-shop text-primary me-2"></i>
+
+                            Top Sellers by Revenue
+
+                        </h4>
+
+                        <small class="text-muted">
+
+                            Highest revenue generating sellers
+
+                        </small>
+
+                    </div>
+
+                    <span class="badge bg-success fs-6">
+
+                        Top 10
+
+                    </span>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle table-info">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th width="8%">Rank</th>
+
+                                <th>Seller ID</th>
+
+                                <th>Revenue</th>
+
+                                <th>Performance Score</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for row in seller_summary %}
+
+                            <tr>
+
+                                <td class="text-center">
+
+                                    <span >
+
+                                        {{ loop.index }}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <i class=" text-success me-2"></i>
+
+                                    {{ row.seller_id }}
+
+                                </td>
+
+                                <td class="fw-bold text-success">
+
+                                    ₹ {{ "{:,.2f}".format(row.Revenue) }}
+
+                                </td>
+
+                                <td>
+
+                                    <span class="badge bg-info">
+
+                                        {{ "{:.2f}".format(row.Performance) }}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

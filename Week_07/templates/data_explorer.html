@@ -1,0 +1,687 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<header class="hero"
+        style="background-image: url('{{ url_for('static', filename='images/hotel_bg.jpg') }}');">
+
+    <div class="hero-overlay"></div>
+
+    <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none">
+        <path d="M0,30 C220,75 420,5 700,25 C980,45 1160,10 1440,38 L1440,90 L0,90 Z"></path>
+    </svg>
+
+    <div class="container-fluid px-4">
+
+        <div class="row g-3 kpi-row justify-content-center">
+
+            <!-- Total Records -->
+            <div class="col-6 col-sm-4 col-lg-2">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+                        <i class="bi bi-database"></i>
+                        Total Records
+                    </div>
+
+                    <div class="value">
+                        {{ kpis.total_records }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Total Features -->
+            <div class="col-6 col-sm-4 col-lg-2">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+                        <i class="bi bi-columns-gap"></i>
+                        Total Features
+                    </div>
+
+                    <div class="value">
+                        {{ kpis.total_features }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Missing Values -->
+            <div class="col-6 col-sm-4 col-lg-2">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Missing Values
+                    </div>
+
+                    <div class="value">
+                        {{ kpis.missing_values }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Duplicate Records -->
+            <div class="col-6 col-sm-4 col-lg-2">
+
+                <div class="kpi-card">
+
+                    <div class="kpi-label">
+                        <i class="bi bi-files"></i>
+                        Duplicate Records
+                    </div>
+
+                    <div class="value">
+                        {{ kpis.duplicate_records }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="container-fluid mt-4">
+
+<div class="container-fluid px-4 mt-4">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-dark text-white py-3">
+
+            <h5 class="mb-0">
+                <i class="bi bi-funnel-fill me-2"></i>
+                Dataset Filters
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="GET" action="{{ url_for('data_explorer') }}">
+
+                <!-- Row 1 -->
+
+                <div class="row g-3">
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold text-dark">Search Dataset</label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+
+                                <i class="bi bi-search"></i>
+
+                            </span>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="search"
+                                placeholder="Search..."
+                                value="{{ request.args.get('search','') }}">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold text-dark">Country</label>
+
+                        <select class="form-select" name="country">
+
+                            <option value="">All Countries</option>
+
+                            {% for country in countries %}
+
+                            <option value="{{ country }}"
+                            {% if request.args.get('country')==country %}selected{% endif %}>
+
+                                {{ country }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold text-dark">Customer Group</label>
+
+                        <select class="form-select" name="customer_group">
+
+                            <option value="">All Groups</option>
+
+                            {% for item in customer_groups %}
+
+                            <option value="{{ item }}"
+                            {% if request.args.get('customer_group')==item %}selected{% endif %}>
+
+                                {{ item }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold text-dark">Booking Season</label>
+
+                        <select class="form-select" name="booking_season">
+
+                            <option value="">All Seasons</option>
+
+                            {% for item in booking_seasons %}
+
+                            <option value="{{ item }}"
+                            {% if request.args.get('booking_season')==item %}selected{% endif %}>
+
+                                {{ item }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- Row 2 -->
+
+                <div class="row g-3 mt-2">
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold text-dark">Booking Value</label>
+
+                        <select class="form-select" name="booking_value_segment">
+
+                            <option value="">All Values</option>
+
+                            {% for item in booking_values %}
+
+                            <option value="{{ item }}"
+                            {% if request.args.get('booking_value_segment')==item %}selected{% endif %}>
+
+                                {{ item }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold text-dark">Stay Type</label>
+
+                        <select class="form-select" name="stay_type">
+
+                            <option value="">All Types</option>
+
+                            {% for item in stay_types %}
+
+                            <option value="{{ item }}"
+                            {% if request.args.get('stay_type')==item %}selected{% endif %}>
+
+                                {{ item }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold text-dark">Lead Time</label>
+
+                        <select class="form-select" name="lead_time_category">
+
+                            <option value="">All</option>
+
+                            {% for item in lead_categories %}
+
+                            <option value="{{ item }}"
+                            {% if request.args.get('lead_time_category')==item %}selected{% endif %}>
+
+                                {{ item }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold text-dark">Reservation Status</label>
+
+                        <select class="form-select" name="reservation_status">
+
+                        <option value="">All</option>
+
+                        <option value="1"
+                        {% if request.args.get('reservation_status')=="1" %}selected{% endif %}>
+                            Check-Out
+                        </option>
+
+                        <option value="0"
+                        {% if request.args.get('reservation_status')=="0" %}selected{% endif %}>
+                            Canceled
+                        </option>
+
+                        <option value="2"
+                        {% if request.args.get('reservation_status')=="2" %}selected{% endif %}>
+                            No-Show
+                        </option>
+
+                    </select>
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+
+                <div class="row mt-4">
+
+                    <div class="col text-end">
+
+                        <button class="btn btn-primary px-4">
+
+                            <i class="bi bi-search me-1"></i>
+
+                            Search
+
+                        </button>
+
+                        <a href="{{ url_for('data_explorer') }}"
+                           class="btn btn-secondary px-4">
+
+                            <i class="bi bi-arrow-clockwise me-1"></i>
+
+                            Reset
+
+                        </a>
+
+                        <a href="{{ url_for(
+                            'export_csv',
+                            search=request.args.get('search'),
+                            country=request.args.get('country'),
+                            customer_group=request.args.get('customer_group'),
+                            booking_season=request.args.get('booking_season'),
+                            booking_value_segment=request.args.get('booking_value_segment'),
+                            stay_type=request.args.get('stay_type'),
+                            lead_time_category=request.args.get('lead_time_category'),
+                            reservation_status=request.args.get('reservation_status')
+                        ) }}"
+                        class="btn btn-success">
+
+                            <i class="bi bi-download"></i>
+                            Export CSV
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container-fluid px-4 mt-4">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h5 class="mb-1 text-dark">
+
+                    <i class="bi bi-table me-2 text-primary "></i>
+
+                    Hotel Booking Dataset
+
+                </h5>
+
+                <small class="text-muted">
+
+                    Showing
+
+                    <strong>{{ rows|length }}</strong>
+
+                    records out of
+
+                    <strong>{{ total_rows }}</strong>
+
+                </small>
+
+            </div>
+
+            <div>
+
+                <span class="badge bg-success fs-6">
+
+                    {{ columns|length }} Features
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="container-fluid px-4 mt-3">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div >
+
+<small class="text-muted">
+
+Showing
+
+<strong>{{ rows|length }}</strong>
+
+of
+
+<strong>{{ total_rows }}</strong>
+
+records
+
+</small>
+
+</div>
+
+<form method="GET">
+
+<input type="hidden" name="search" value="{{ request.args.get('search','') }}">
+
+<input type="hidden" name="country" value="{{ request.args.get('country','') }}">
+
+<input type="hidden" name="customer_group" value="{{ request.args.get('customer_group','') }}">
+
+<input type="hidden" name="booking_season" value="{{ request.args.get('booking_season','') }}">
+
+<input type="hidden" name="booking_value_segment" value="{{ request.args.get('booking_value_segment','') }}">
+
+<input type="hidden" name="stay_type" value="{{ request.args.get('stay_type','') }}">
+
+<input type="hidden" name="lead_time_category" value="{{ request.args.get('lead_time_category','') }}">
+
+<input type="hidden" name="reservation_status" value="{{ request.args.get('reservation_status','') }}">
+
+<label class="me-2 fw-semibold">
+
+Rows
+
+</label>
+
+<select
+
+class="form-select d-inline"
+
+style="width:120px"
+
+name="per_page"
+
+onchange="this.form.submit()">
+
+<option value="20" {% if per_page==20 %}selected{% endif %}>20</option>
+
+<option value="50" {% if per_page==50 %}selected{% endif %}>50</option>
+
+<option value="100" {% if per_page==100 %}selected{% endif %}>100</option>
+
+<option value="200" {% if per_page==200 %}selected{% endif %}>200</option>
+
+</select>
+
+</form>
+
+</div>
+
+
+</div>
+
+
+<div class="container-fluid px-4 mt-4">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+
+                <i class="bi bi-grid-3x3-gap-fill me-2"></i>
+
+                Feature Engineered Dataset
+
+            </h5>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive" style="max-height:650px; overflow:auto;">
+
+                <table class="table table-hover table-striped table-bordered align-middle mb-0">
+
+                    <thead class="table-dark sticky-top">
+
+                    <tr>
+
+                    {% for col in columns %}
+
+                    {% if loop.first %}
+
+                    <th class="sticky-col">
+
+                    {{ col }}
+
+                    </th>
+
+                    {% else %}
+
+                    <th>
+
+                    {{ col }}
+
+                    </th>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                    </tr>
+
+                    </thead>
+
+                        
+
+                    <tbody>
+
+{% for row in rows %}
+
+<tr>
+
+{% for col in columns %}
+
+{% if loop.first %}
+
+<td class="sticky-col">
+
+    {% if col=="reservation_status" %}
+
+        {% if row[col]==0 %}
+            <span class="badge bg-danger px-3 py-2">Canceled</span>
+
+        {% elif row[col]==1 %}
+            <span class="badge bg-success px-3 py-2">Check-Out</span>
+
+        {% elif row[col]==2 %}
+            <span class="badge bg-warning text-dark px-3 py-2">No-Show</span>
+
+        {% endif %}
+
+    {% else %}
+
+        {{ row[col] }}
+
+    {% endif %}
+
+</td>
+
+{% else %}
+
+<td>
+
+    {% if col=="reservation_status" %}
+
+        {% if row[col]==0 %}
+            <span class="badge bg-danger px-3 py-2">Canceled</span>
+
+        {% elif row[col]==1 %}
+            <span class="badge bg-success px-3 py-2">Check-Out</span>
+
+        {% elif row[col]==2 %}
+            <span class="badge bg-warning text-dark px-3 py-2">No-Show</span>
+
+        {% endif %}
+
+    {% else %}
+
+        {{ row[col] }}
+
+    {% endif %}
+
+</td>
+
+{% endif %}
+
+{% endfor %}
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container-fluid px-4 mt-4 mb-5">
+
+    <nav>
+
+        <ul class="pagination justify-content-center">
+
+            {% if page>1 %}
+
+            <li class="page-item">
+
+                <a class="page-link"
+                   href="?page={{ page-1 }}&per_page={{ per_page }}">
+
+                    <i class="bi bi-chevron-left"></i>
+
+                    Previous
+
+                </a>
+
+            </li>
+
+            {% endif %}
+
+            <li class="page-item active">
+
+                <span class="page-link">
+
+                    {{ page }}
+
+                </span>
+
+            </li>
+
+            {% if has_next %}
+
+            <li class="page-item">
+
+                <a class="page-link"
+                   href="?page={{ page+1 }}&per_page={{ per_page }}">
+                   
+
+                    Next
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </a>
+
+            </li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+</div>
+
+
+
+
+
+
+</div>
+
+{% endblock %}

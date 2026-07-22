@@ -1,0 +1,416 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <h2 class="mb-4">
+        Customer Analytics
+    </h2>
+
+
+    <!-- ==========================
+         KPI CARDS
+    ========================== -->
+
+    <div class="row">
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card kpi-card customer-card">
+
+                <div class="card-body">
+
+                    <h6>
+                        Total Customers
+                    </h6>
+
+                    <h2>
+                        {{ total_customers }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card kpi-card revenue-card">
+
+                <div class="card-body">
+
+                    <h6>
+                        Repeat Customers
+                    </h6>
+
+                    <h2>
+                        {{ repeat_customers }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card kpi-card orders-card">
+
+                <div class="card-body">
+
+                    <h6>
+                        Repeat Rate
+                    </h6>
+
+                    <h2>
+                        {{ repeat_rate }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card kpi-card seller-card">
+
+                <div class="card-body">
+
+                    <h6>
+                        Average Spending
+                    </h6>
+
+                    <h2>
+                        {{ avg_spending }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- ==========================
+     CUSTOMER SPENDING ANALYSIS
+    ========================== -->
+
+
+    <div class="row">
+
+        <div class="col-lg-12 mb-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        Customer Spending Analysis
+                    </h4>
+
+
+                    <img
+                        src="{{ url_for('static', filename='images/customers/cust_spending_ranking(customers).png') }}"
+                        class="img-fluid rounded w-100"
+                        alt="Customer Spending Analysis"
+                    >
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- ==========================
+        CUSTOMER STATE DISTRIBUTION + TOP CITIES
+    ========================== -->
+
+
+    <div class="row">
+
+
+        <!-- Customer Distribution Across States -->
+
+
+        <div class="col-lg-6 mb-4">
+
+
+            <div class="card shadow-sm h-100">
+
+
+                <div class="card-body">
+
+
+                    <h4 class="mb-3">
+                        Customer Distribution Across States
+                    </h4>
+
+
+
+                    <img
+                        src="{{ url_for('static', filename='images/customers/cust_distribution_states(customers).png') }}"
+                        class="img-fluid rounded w-100"
+                        alt="Customer State Distribution"
+                    >
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <!-- Top Purchasing Cities -->
+
+
+        <div class="col-lg-6 mb-4">
+
+
+            <div class="card shadow-sm h-100">
+
+
+                <div class="card-body">
+
+
+                    <h4 class="mb-3">
+                        Top Purchasing Cities
+                    </h4>
+
+
+
+                    <img
+                        src="{{ url_for('static', filename='images/customers/top_purchasing_cities(customers).png') }}"
+                        class="img-fluid rounded w-100"
+                        alt="Top Purchasing Cities"
+                    >
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!-- ==========================
+        REPEAT CUSTOMER ANALYSIS
+    ========================== -->
+
+
+    <div class="row">
+
+
+        <div class="col-lg-12 mb-4">
+
+
+            <div class="card shadow-sm">
+
+
+                <div class="card-body">
+
+
+                    <h4 class="mb-3">
+                        Repeat Customer Analysis
+                    </h4>
+
+
+
+                    <img
+                        src="{{ url_for('static', filename='images/customers/repeat_customer_analysis_dashboard.png') }}"
+                        class="img-fluid rounded w-100"
+                        alt="Repeat Customer Analysis"
+                    >
+
+
+
+                    <div class="mt-3 row text-center">
+
+
+                        <div class="col-md-4">
+
+                            <h6>
+                                Repeat Customers
+                            </h6>
+
+                            <h4>
+                                {{ repeat_customers }}
+                            </h4>
+
+                        </div>
+
+
+
+                        <div class="col-md-4">
+
+                            <h6>
+                                One-Time Customers
+                            </h6>
+
+                            <h4>
+                                {{ one_time_customers }}
+                            </h4>
+
+                        </div>
+
+
+
+                        <div class="col-md-4">
+
+                            <h6>
+                                Repeat Rate
+                            </h6>
+
+                            <h4>
+                                {{ repeat_rate }}
+                            </h4>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    
+
+    <!-- ==========================
+     TOP SPENDING CUSTOMERS TABLE
+    ========================== -->
+
+    <div class="row">
+
+        <div class="col-lg-12 mb-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+
+                    <h4 class="mb-3">
+                        Top Spending Customers
+                    </h4>
+
+
+
+                    <div class="table-responsive">
+
+
+                        <table class="table table-bordered table-hover align-middle table-info">
+
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th>
+                                        Customer ID
+                                    </th>
+
+                                    <th>
+                                        Total Spending
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+
+                            <tbody>
+
+
+                                {% for row in spending_summary %}
+
+
+                                <tr>
+
+                                    <td class="text-dark">
+                                        {{ row.Customer_ID }}
+                                    </td>
+
+
+                                    <td class="text-dark">
+                                        ₹ {{ "{:,.2f}".format(row.Total_Spending) }}
+                                    </td>
+
+
+                                </tr>
+
+
+                                {% endfor %}
+
+
+                            </tbody>
+
+
+                        </table>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

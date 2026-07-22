@@ -1,0 +1,412 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-primary text-white py-3">
+
+            <h2 class="mb-0">
+
+                
+
+                Regression Model Comparison Dashboard
+
+            </h2>
+
+        </div>
+
+        <div class="card-body">
+
+            <p class="text-muted fs-5">
+
+                Compare the performance of different machine learning regression models
+                trained for house price prediction. Evaluation is based on MAE, RMSE,
+                and R² Score.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Performance Summary -->
+
+<div class="container-fluid mt-4">
+
+    <div class="row">
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card shadow border-0 rounded-4 text-center">
+
+                <div class="card-body">
+
+                    <i class="fas fa-trophy fa-3x text-warning mb-3"></i>
+
+                    <h6 class="text-muted">Best Model</h6>
+
+                    <h3 class="fw-bold text-primary">
+                        {{ best_model["Model"] }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card shadow border-0 rounded-4 text-center">
+
+                <div class="card-body">
+
+                    <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+
+                    <h6 class="text-muted">Highest R² Score</h6>
+
+                    <h3 class="fw-bold text-success">
+                        {{ "%.4f"|format(best_model["R2 Score"]) }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card shadow border-0 rounded-4 text-center">
+
+                <div class="card-body">
+
+                    <i class="fas fa-database fa-3x text-info mb-3"></i>
+
+                    <h6 class="text-muted">Models Compared</h6>
+
+                    <h3 class="fw-bold text-info">
+                        {{ comparison|length }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card shadow border-0 rounded-4 text-center">
+
+                <div class="card-body">
+
+                    <i class="fas fa-bullseye fa-3x text-danger mb-3"></i>
+
+                    <h6 class="text-muted">Lowest RMSE</h6>
+
+                    <h3 class="fw-bold text-danger">
+                        {{ "{:,.0f}".format(best_model["RMSE"]) }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Model Comparison Table -->
+
+<div class="card shadow-lg border-0 rounded-4 mt-4">
+
+    <div class="card-header bg-dark text-white py-3">
+
+        <h4 class="mb-0">
+            Model Performance Comparison
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover table-bordered align-middle text-center">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>Rank</th>
+                        <th>Model</th>
+                        <th>MAE</th>
+                        <th>MSE</th>
+                        <th>RMSE</th>
+                        <th>R² Score</th>
+                        <th>Adjusted R²</th>
+                        <th>Cv Score</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                  {% for row in comparison %}
+
+                  <tr {% if row["Model"]==best_model["Model"] %}class="table-success fw-bold"{% endif %}>
+
+                  <td>{{ row["Rank"] }}</td>
+
+                  <td>{{ row["Model"] }}</td>
+
+                  <td>{{ "{:,.2f}".format(row["MAE"]) }}</td>
+
+                  <td>{{ "{:,.2E}".format(row["MSE"]) }}</td>
+
+                  <td>{{ "{:,.2f}".format(row["RMSE"]) }}</td>
+
+                  <td>{{ "%.4f"|format(row["R2 Score"]) }}</td>
+
+                  <td>{{ "%.4f"|format(row["Adjusted R2"]) }}</td>
+
+                  <td>{{ "%.4f"|format(row["CV Score"]) }}</td>
+
+                  <td>
+
+                  {% if row["Model"]==best_model["Model"] %}
+
+                  <span class="badge bg-success">Best</span>
+
+                  {% else %}
+
+                  <span class="badge bg-secondary">Compared</span>
+
+                  {% endif %}
+
+                  </td>
+
+                  </tr>
+
+                  {% endfor %}
+
+                  </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card shadow-lg border-0 rounded-4 mt-4">
+
+    <div class="card-header bg-success text-white py-3">
+
+        <h4 class="mb-0">
+
+            Model Performance Visualization
+        </h4>
+
+    </div>
+
+    <div class="card-body text-center">
+
+        <img
+            src="{{ url_for('static', filename='images/model_comparison.png') }}"
+            class="img-fluid rounded shadow"
+            style="max-height:600px;">
+
+    </div>
+
+</div>
+
+<div class="card shadow-lg border-0 rounded-4 mt-4">
+
+<div class="card-header bg-warning">
+
+<h4>Best Model Analysis</h4>
+
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-6">
+
+<table class="table table-bordered">
+
+<tr><th>Algorithm</th><td>{{ best_model["Model"] }}</td></tr>
+
+<tr><th>R² Score</th><td>{{ "%.4f"|format(best_model["R2 Score"]) }}</td></tr>
+
+<tr><th>Adjusted R²</th><td>{{ "%.4f"|format(best_model["Adjusted R2"]) }}</td></tr>
+
+<tr><th>MAE</th><td>{{ "{:,.2f}".format(best_model["MAE"]) }}</td></tr>
+
+<tr><th>RMSE</th><td>{{ "{:,.2f}".format(best_model["RMSE"]) }}</td></tr>
+
+<tr><th>CV Score</th><td>{{ "%.4f"|format(best_model["CV Score"]) }}</td></tr>
+
+</table>
+
+</div>
+
+<div class="col-md-6">
+
+<h5 class="text-success">Model Specify</h5>
+
+<ul class="list-group">
+
+<li class="list-group-item">Highest R² Score</li>
+
+<li class="list-group-item"> Lowest MAE</li>
+
+<li class="list-group-item"> Lowest RMSE</li>
+
+<li class="list-group-item"> Excellent Cross Validation Score</li>
+
+<li class="list-group-item"> Best Generalization Performance</li>
+
+<li class="list-group-item"> Selected for Final Deployment</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card shadow-lg border-0 rounded-4 mt-4">
+
+<div class="card-header bg-info text-white">
+
+<h4> Model Ranking</h4>
+
+</div>
+
+<div class="card-body">
+
+<table class="table table-hover text-center">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Rank</th>
+
+<th>Model</th>
+
+<th>R² Score</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in comparison %}
+
+<tr>
+
+<td>
+
+{% if loop.index==1 %}🥇
+
+{% elif loop.index==2 %}🥈
+
+{% elif loop.index==3 %}🥉
+
+{% else %}
+
+{{ loop.index }}
+
+{% endif %}
+
+</td>
+
+<td>{{ row["Model"] }}</td>
+
+<td>{{ "%.4f"|format(row["R2 Score"]) }}</td>
+
+<td>
+
+{% if loop.index==1 %}
+
+<span class="badge bg-success">Best</span>
+
+{% else %}
+
+<span class="badge bg-secondary">Compared</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="card shadow-lg border-0 rounded-4 mt-4 mb-5">
+
+<div class="card-header bg-success text-white">
+
+<h4>Final Conclusion</h4>
+
+</div>
+
+<div class="card-body">
+
+<p class="lead">
+
+After evaluating <strong>{{ comparison|length }}</strong> regression algorithms using
+<strong>MAE</strong>, <strong>RMSE</strong>, <strong>R² Score</strong>,
+<strong>Adjusted R²</strong>, and
+<strong>Cross Validation</strong>,
+the <strong>{{ best_model["Model"] }}</strong> achieved the best overall performance.
+
+</p>
+
+<p>
+
+It produced the <strong>highest prediction accuracy</strong>,
+<strong>lowest prediction error</strong>,
+and the <strong>best generalization capability</strong>.
+Therefore, it was selected as the final model for deployment in the House Price Prediction System.
+
+</p>
+
+</div>
+
+</div>
+
+
+{% endblock %}

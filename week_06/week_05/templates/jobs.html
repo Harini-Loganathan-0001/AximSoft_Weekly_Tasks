@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1  class="fw-bold text-white text-center mb-3">
+        Available Jobs
+    </h1>
+
+    <!-- Search & Filter Form -->
+    <form method="GET" action="{{ url_for('main.jobs') }}" class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <input type="text"
+                   name="search"
+                   class="form-control"
+                   placeholder="Search by title, company or location"
+                   value="{{ request.args.get('search','') }}">
+        </div>
+
+        <div class="col-md-3">
+            <select name="experience" class="form-select">
+                <option value="">Experience</option>
+                <option value="Fresher">Fresher</option>
+                <option value="1-2 Years">1-2 Years</option>
+                <option value="3-5 Years">3-5 Years</option>
+                <option value="5+ Years">5+ Years</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="job_type" class="form-select">
+                <option value="">Job Type</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+                <option value="Internship">Internship</option>
+                <option value="Remote">Remote</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100">
+                Search
+            </button>
+        </div>
+
+    </form>
+
+    <div class="row">
+
+        {% for job in jobs %}
+
+        <div class="col-md-6 col-lg-4 mb-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+                        {{ job.job_title }}
+                    </h4>
+
+                    <h5 class="fw-bold text-dark">
+                        {{ job.employer.company_name }}
+                    </h5>
+
+                    <p class="mb-1">Location : {{ job.location }}</p>
+
+                    <p class="mb-1">Salary : {{ job.salary }}</p>
+
+                    <p class="mb-1">Experience : {{ job.experience }}</p>
+
+                    <span class="badge bg-white">
+                        {{ job.job_type }}
+                    </span>
+
+                    <hr>
+
+                    
+
+                    <a href="{{ url_for('main.job_details', job_id=job.id) }}"
+                       class="btn btn-dark">
+                        View Details
+                    </a>
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="col-12">
+
+            <div class="alert alert-info">
+                No jobs available yet.
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

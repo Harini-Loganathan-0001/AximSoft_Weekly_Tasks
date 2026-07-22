@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-dark text-white text-center fw-bold py-3">
+            <h3 class="mb-0">Company Profile</h3>
+        </div>
+
+        <div class="card-body">
+
+            {% if request.args.get('edit') or not current_user.company_name %}
+                <!-- Edit Mode (Form) -->
+                <form method="POST" enctype="multipart/form-data">
+
+                    <!-- Company Logo Preview -->
+                    <div class="text-center mb-4">
+                        {% if current_user.company_logo %}
+                            <img src="{{ url_for('static', filename='uploads/' + current_user.company_logo) }}"
+                                 class="rounded-circle shadow" width="120" height="120">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='default-company.png') }}"
+                                 class="rounded-circle shadow" width="120" height="120">
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <!-- Company Logo Upload (only in edit mode) -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Company Logo</label>
+                            <input type="file" name="company_logo" class="form-control" >
+                        </div>
+
+                        <!-- Company Name -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" name="company_name" class="form-control"
+                                   value="{{ current_user.company_name or '' }}" required>
+                        </div>
+
+                        <!-- Website -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Website</label>
+                            <input type="text" name="company_website" class="form-control"
+                                   value="{{ current_user.company_website or '' }}" required>
+                        </div>
+
+                        <!-- Industry -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Industry</label>
+                            <input type="text" name="industry" class="form-control"
+                                   value="{{ current_user.industry or '' }}" required>
+                        </div>
+
+                        <!-- Company Size -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Company Size</label>
+                            <input type="text" name="company_size" class="form-control"
+                                   placeholder="e.g. 50-100 Employees"
+                                   value="{{ current_user.company_size or '' }}" required>
+                        </div>
+
+                        <!-- Founded Year -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Founded Year</label>
+                            <input type="text" name="founded" class="form-control"
+                                   value="{{ current_user.founded or '' }}" required>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Location</label>
+                            <input type="text" name="company_location" class="form-control"
+                                   value="{{ current_user.company_location or '' }}" required>
+                        </div>
+
+                        <!-- About -->
+                        <div class="col-12 mb-3">
+                            <label class="form-label">About Company</label>
+                            <textarea name="company_about" class="form-control" rows="5" required>
+                                {{ current_user.company_about or '' }}
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success btn-lg">Save Profile</button>
+                        <a href="{{ url_for('main.company_profile') }}" class="btn btn-secondary btn-lg">Cancel</a>
+                    </div>
+                </form>
+
+            {% else %}
+                <!-- Display Mode (no logo upload field) -->
+                <div class="text-center mb-4">
+                    {% if current_user.company_logo %}
+                        <img src="{{ url_for('static', filename='uploads/' + current_user.company_logo) }}"
+                             class="rounded-circle shadow" width="120" height="120">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='default-company.png') }}"
+                             class="rounded-circle shadow" width="120" height="120">
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3"><strong>Company Name:</strong> {{ current_user.company_name }}</div>
+                    <div class="col-md-6 mb-3"><strong>Website:</strong> {{ current_user.company_website }}</div>
+                    <div class="col-md-6 mb-3"><strong>Industry:</strong> {{ current_user.industry }}</div>
+                    <div class="col-md-6 mb-3"><strong>Company Size:</strong> {{ current_user.company_size }}</div>
+                    <div class="col-md-6 mb-3"><strong>Founded Year:</strong> {{ current_user.founded }}</div>
+                    <div class="col-md-6 mb-3"><strong>Location:</strong> {{ current_user.company_location }}</div>
+                    <div class="col-12 mb-3"><strong>About Company:</strong> {{ current_user.company_about }}</div>
+                </div>
+
+                <div class="text-end">
+                    <a href="{{ url_for('main.company_profile', edit='true') }}"
+                       class="btn btn-success btn-lg">Edit Company Profile</a>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

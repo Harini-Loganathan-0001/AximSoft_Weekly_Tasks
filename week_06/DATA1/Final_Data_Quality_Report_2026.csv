@@ -1,0 +1,53 @@
+Report,Metric,Value,Column,Missing Values,Missing Percentage,Feature,Outliers Detected,Percentage,Feature No,Created Feature,Business Purpose,Merged Tables,Status
+Summary,Total Records,118307.0,,,,,,,,,,,
+Summary,Total Features,67.0,,,,,,,,,,,
+Summary,Memory Usage (MB),149.67,,,,,,,,,,,
+Summary,Duplicate Rows,0.0,,,,,,,,,,,
+Summary,Missing Values,16899.0,,,,,,,,,,,
+Missing Values,,,shipping_duration,2589.0,2.19,,,,,,,,
+Missing Values,,,delivery_delay,2588.0,2.19,,,,,,,,
+Missing Values,,,order_delivered_customer_date,2588.0,2.19,,,,,,,,
+Missing Values,,,delivery_time,2588.0,2.19,,,,,,,,
+Missing Values,,,order_delivered_carrier_date,1254.0,1.06,,,,,,,,
+Missing Values,,,review_id,978.0,0.83,,,,,,,,
+Missing Values,,,review_creation_date,978.0,0.83,,,,,,,,
+Missing Values,,,review_answer_timestamp,978.0,0.83,,,,,,,,
+Missing Values,,,customer_geo_state,317.0,0.27,,,,,,,,
+Missing Values,,,customer_geo_city,317.0,0.27,,,,,,,,
+Missing Values,,,customer_lng,317.0,0.27,,,,,,,,
+Missing Values,,,customer_lat,317.0,0.27,,,,,,,,
+Missing Values,,,seller_lat,265.0,0.22,,,,,,,,
+Missing Values,,,seller_lng,265.0,0.22,,,,,,,,
+Missing Values,,,seller_geo_city,265.0,0.22,,,,,,,,
+Missing Values,,,seller_geo_state,265.0,0.22,,,,,,,,
+Missing Values,,,processing_time,15.0,0.01,,,,,,,,
+Missing Values,,,order_approved_at,15.0,0.01,,,,,,,,
+Outliers,,,,,,price,8867.0,7.49,,,,,
+Outliers,,,,,,total_order_value,8745.0,7.39,,,,,
+Outliers,,,,,,delivery_time,5811.0,4.91,,,,,
+Outliers,,,,,,shipping_duration,7140.0,6.04,,,,,
+Outliers,,,,,,customer_lifetime_value,11059.0,9.35,,,,,
+Features Created,,,,,,,,,1.0,delivery_time,Measures total time taken from purchase to delivery,,
+Features Created,,,,,,,,,2.0,shipping_duration,Measures shipping duration by logistics provider,,
+Features Created,,,,,,,,,3.0,processing_time,Measures order processing efficiency,,
+Features Created,,,,,,,,,4.0,delivery_delay,Identifies delayed deliveries,,
+Features Created,,,,,,,,,5.0,total_order_value,Calculates total customer order spending,,
+Features Created,,,,,,,,,6.0,average_product_price,Measures average price per product,,
+Features Created,,,,,,,,,7.0,customer_purchase_count,Identifies customer purchase frequency,,
+Features Created,,,,,,,,,8.0,repeat_customer,Classifies repeat and one-time customers,,
+Features Created,,,,,,,,,9.0,customer_lifetime_value,Measures long-term customer value,,
+Features Created,,,,,,,,,10.0,revenue_per_customer,Calculates revenue contribution per customer,,
+Features Created,,,,,,,,,11.0,average_review_score,Measures customer satisfaction level,,
+Features Created,,,,,,,,,12.0,seller_revenue,Calculates seller generated revenue,,
+Features Created,,,,,,,,,13.0,normalized_revenue,Standardizes seller revenue performance,,
+Features Created,,,,,,,,,14.0,seller_performance_score,Evaluates seller operational efficiency,,
+Features Created,,,,,,,,,15.0,purchase_year_month,Supports monthly trend analysis,,
+Merge Summary,,,,,,,,,,,,Orders + Customers,Completed
+Merge Summary,,,,,,,,,,,,Order Items,Completed
+Merge Summary,,,,,,,,,,,,Products,Completed
+Merge Summary,,,,,,,,,,,,Product Translation,Completed
+Merge Summary,,,,,,,,,,,,Sellers,Completed
+Merge Summary,,,,,,,,,,,,Payments,Completed
+Merge Summary,,,,,,,,,,,,Reviews,Completed
+Merge Summary,,,,,,,,,,,,Customer Geolocation,Completed
+Merge Summary,,,,,,,,,,,,Seller Geolocation,Completed

@@ -1,0 +1,741 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <!-- ==========================================
+         PAGE HEADER
+    ========================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Dataset Explorer
+            </h2>
+
+            <p class="text-muted mb-0">
+                Explore and analyze raw data from all Olist datasets
+            </p>
+
+        </div>
+
+        
+    </div>
+
+
+    <!-- ==========================================
+         KPI CARDS
+    ========================================== -->
+
+    <div class="dataset-cards mb-4">
+
+        <!-- Card 1 -->
+
+        <div class="dataset-card">
+
+            <div class="dataset-card-body">
+
+                <div class="dataset-icon bg-primary-subtle text-primary">
+
+                    <i class="bi bi-database fs-3"></i>
+
+                </div>
+
+                <div class="dataset-info">
+
+                    <h6>Total Datasets</h6>
+
+                    <h3>{{ total_tables }}</h3>
+
+                    <p>All Olist Tables</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Card 2 -->
+
+        <div class="dataset-card">
+
+            <div class="dataset-card-body">
+
+                <div class="dataset-icon bg-success-subtle text-success">
+
+                    <i class="bi bi-file-earmark-text fs-3"></i>
+
+                </div>
+
+                <div class="dataset-info">
+
+                    <h6>Total Records</h6>
+
+                    <h3>{{ "{:,}".format(total_records) }}</h3>
+
+                    <p>Across all datasets</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Card 3 -->
+
+        <div class="dataset-card">
+
+            <div class="dataset-card-body">
+
+                <div class="dataset-icon bg-warning-subtle text-warning">
+
+                    <i class="bi bi-table fs-3"></i>
+
+                </div>
+
+                <div class="dataset-info">
+
+                    <h6>Total Columns</h6>
+
+                    <h3>{{ total_columns }}</h3>
+
+                    <p>Across all datasets</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Card 4 -->
+
+        <div class="dataset-card">
+
+            <div class="dataset-card-body">
+
+                <div class="dataset-icon bg-danger-subtle text-danger">
+
+                    <i class="bi bi-clock-history fs-3"></i>
+
+                </div>
+
+                <div class="dataset-info">
+
+                    <h6>Last Updated</h6>
+
+                    <h3 style="font-size:24px;">
+                        {{ last_updated }}
+                    </h3>
+
+                    <p>Dataset Refresh</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Card 5 -->
+
+        <div class="dataset-card">
+
+            <div class="dataset-card-body">
+
+                <div class="dataset-icon bg-info-subtle text-info">
+
+                    <i class="bi bi-arrow-repeat fs-3"></i>
+
+                </div>
+
+                <div class="dataset-info">
+
+                    <h6>Refresh Rate</h6>
+
+                    <h3>Daily</h3>
+
+                    <p>Auto Updated</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+        FILTERS SECTION
+    ========================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+                <i class="bi bi-funnel-fill text-primary me-2"></i>
+                Dataset Filters
+            </h4>
+
+            <form method="GET" action="/dataset">
+
+                <!-- ==========================================
+                    FIRST ROW
+                ========================================== -->
+
+                <div class="row g-3">
+
+                    <!-- Dataset -->
+
+                    <div class="col-lg-3 col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Dataset
+                        </label>
+
+                        <select class="form-select" name="dataset">
+
+                            <option selected>
+                                Final Clean Dataset
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Search -->
+
+                    <div class="col-lg-3 col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Search
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="search"
+                            placeholder="Search anything..."
+                            value="{{ request.args.get('search','') }}"
+                        >
+
+                    </div>
+
+                    <!-- From Date -->
+
+                    <div class="col-lg-3 col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            From Date
+                        </label>
+
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="from_date"
+                            value="{{ request.args.get('from_date','') }}"
+                        >
+
+                    </div>
+
+                    <!-- To Date -->
+
+                    <div class="col-lg-3 col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            To Date
+                        </label>
+
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="to_date"
+                            value="{{ request.args.get('to_date','') }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==========================================
+                    SECOND ROW
+                ========================================== -->
+
+                <div class="row g-3 mt-2">
+
+                    <!-- Order Status -->
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Order Status
+                        </label>
+
+                        <select class="form-select" name="order_status">
+
+                            <option value="">All</option>
+
+                            {% for status in order_statuses %}
+
+                            <option value="{{ status }}"
+                            {% if request.args.get('order_status') == status %}selected{% endif %}>
+
+                                {{ status }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Payment Type -->
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Payment Type
+                        </label>
+
+                        <select class="form-select" name="payment_type">
+
+                            <option value="">All</option>
+
+                            {% for payment in payment_types %}
+
+                            <option value="{{ payment }}"
+                            {% if request.args.get('payment_type') == payment %}selected{% endif %}>
+
+                                {{ payment }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Customer State -->
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Customer State
+                        </label>
+
+                        <select class="form-select" name="customer_state">
+
+                            <option value="">All</option>
+
+                            {% for state in customer_states %}
+
+                            <option value="{{ state }}"
+                            {% if request.args.get('customer_state') == state %}selected{% endif %}>
+
+                                {{ state }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Seller State -->
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Seller State
+                        </label>
+
+                        <select class="form-select" name="seller_state">
+
+                            <option value="">All</option>
+
+                            {% for state in seller_states %}
+
+                            <option value="{{ state }}"
+                            {% if request.args.get('seller_state') == state %}selected{% endif %}>
+
+                                {{ state }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Shipping Days -->
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Shipping Days
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="shipping_days"
+                            placeholder="Days"
+                            value="{{ request.args.get('shipping_days','') }}"
+                        >
+
+                    </div>
+
+
+                    <!-- Buttons -->
+
+                    <div class="col-lg-2 d-flex align-items-end">
+
+                        <div class="d-grid gap-2 w-100">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary">
+
+                                <i class="bi bi-search me-1"></i>
+
+                                Apply
+
+                            </button>
+
+                            <a
+                                href="/dataset"
+                                class="btn btn-outline-secondary">
+
+                                <i class="bi bi-arrow-clockwise me-1"></i>
+
+                                Clear
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    
+
+    <!-- ==========================================
+        DATA PREVIEW HEADER
+    ========================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+                <!-- Left Side -->
+
+                <div>
+
+                    <h4 class="fw-bold mb-1">
+
+                        <i class="bi bi-table text-primary me-2"></i>
+
+                        Dataset Preview
+
+                    </h4>
+
+                    <p class="text-muted mb-0">
+
+                        Showing
+                        <strong>{{ table_data|length }}</strong>
+                        of
+                        <strong>{{ total_records }}</strong>
+                        records
+
+                    </p>
+
+                </div>
+
+                <!-- Right Side -->
+
+                <div class="d-flex gap-2 mt-3 mt-lg-0 ">
+
+                    
+                    <a
+                        href="/export?search={{ request.args.get('search','') }}&order_status={{ request.args.get('order_status','') }}&payment_type={{ request.args.get('payment_type','') }}&customer_state={{ request.args.get('customer_state','') }}&seller_state={{ request.args.get('seller_state','') }}&from_date={{ request.args.get('from_date','') }}
+&to_date={{ request.args.get('to_date','') }}"
+                        class="btn btn-success btn-sm ">
+
+                        <i class="bi bi-download"></i>
+
+                        Export CSV
+
+                    </a>
+                    <div class="d-flex align-items-center">
+
+                        <label class="me-2 fw-semibold">
+                            Rows
+                        </label>
+
+                        <select
+                            class="form-select form-select-sm"
+                            style="width:90px;"
+                            onchange="location=this.value">
+
+                            <option value="?per_page=10">10</option>
+
+                            <option value="?per_page=25" selected>25</option>
+
+                            <option value="?per_page=50">50</option>
+
+                            <option value="?per_page=100">100</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr class="my-4">
+
+            <!-- ==========================================
+                DATA TABLE
+            ========================================== -->
+
+            <div class="table-responsive rounded shadow-sm">
+
+                <table class="table table-hover table-striped table-bordered align-middle mb-0 ">
+
+                    <thead style="background:#0F172A;color:white;">
+
+                        <tr>
+
+                            {% for column in table_columns %}
+
+                            <th>
+
+                                {{ column.replace("_"," ").title() }}
+
+                            </th>
+
+                            {% endfor %}
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for row in table_data %}
+
+                        <tr>
+
+                            {% for value in row.values() %}
+
+                            <td>
+
+                            {% if loop.index0 == 2 %}
+
+                                {% if value=="delivered" %}
+
+                                    <span class="badge bg-success">
+
+                                        Delivered
+
+                                    </span>
+
+                                {% elif value=="shipped" %}
+
+                                    <span class="badge bg-primary">
+
+                                        Shipped
+
+                                    </span>
+
+                                {% elif value=="processing" %}
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Processing
+
+                                    </span>
+
+                                {% elif value=="canceled" %}
+
+                                    <span class="badge bg-danger">
+
+                                        Cancelled
+
+                                    </span>
+
+                                {% else %}
+
+                                    {{ value }}
+
+                                {% endif %}
+
+                            {% else %}
+
+                                {{ value }}
+
+                            {% endif %}
+
+                            </td>
+
+                            {% endfor %}
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+                <!-- ==========================================
+                    PAGINATION
+                ========================================== -->
+
+                <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap">
+
+                    <!-- Record Count -->
+
+                    <small class="text-muted">
+
+                        Showing
+
+                        <strong>{{ ((page-1)*per_page)+1 }}</strong>
+
+                        to
+
+                        <strong>{{ ((page-1)*per_page)+table_data|length }}</strong>
+
+                        of
+
+                        <strong>{{ total_records }}</strong>
+
+                        records
+
+                    </small>
+
+
+                    <!-- Pagination -->
+
+                    <nav>
+
+                        <ul class="pagination pagination-sm mb-0">
+
+                            <!-- Previous -->
+
+                            <li class="page-item {% if page == 1 %}disabled{% endif %}">
+
+                                <a class="page-link"
+                                href="?page={{ page-1 }}&search={{ request.args.get('search','') }}&order_status={{ request.args.get('order_status','') }}&payment_type={{ request.args.get('payment_type','') }}&customer_state={{ request.args.get('customer_state','') }}&seller_state={{ request.args.get('seller_state','') }}">
+
+                                    <i class="bi bi-chevron-left"></i>
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Page Numbers -->
+
+                            {% for p in range(1, total_pages+1) %}
+
+                                {% if p <= 5 %}
+
+                                <li class="page-item {% if p==page %}active{% endif %}">
+
+                                    <a class="page-link"
+
+                                    href="?page={{ p }}&search={{ request.args.get('search','') }}&order_status={{ request.args.get('order_status','') }}&payment_type={{ request.args.get('payment_type','') }}&customer_state={{ request.args.get('customer_state','') }}&seller_state={{ request.args.get('seller_state','') }}">
+
+                                        {{ p }}
+
+                                    </a>
+
+                                </li>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+
+                            {% if total_pages > 5 %}
+
+                            <li class="page-item disabled">
+
+                                <span class="page-link">
+
+                                    ...
+
+                                </span>
+
+                            </li>
+
+                            <li class="page-item">
+
+                                <a class="page-link"
+
+                                href="?page={{ total_pages }}">
+
+                                    {{ total_pages }}
+
+                                </a>
+
+                            </li>
+
+                            {% endif %}
+
+
+                            <!-- Next -->
+
+                            <li class="page-item {% if page==total_pages %}disabled{% endif %}">
+
+                                <a class="page-link"
+
+                                href="?page={{ page+1 }}&search={{ request.args.get('search','') }}&order_status={{ request.args.get('order_status','') }}&payment_type={{ request.args.get('payment_type','') }}&customer_state={{ request.args.get('customer_state','') }}&seller_state={{ request.args.get('seller_state','') }}">
+
+                                    <i class="bi bi-chevron-right"></i>
+
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </nav>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <h2 class="mb-4">
+
+        Delivery Analytics
+
+    </h2>
+
+    <!-- ==========================
+         KPI CARDS
+    ========================== -->
+
+    <div class="row">
+
+        <!-- Average Delivery Time -->
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card kpi-card customer-card">
+
+                <div class="card-body">
+
+                    <h6>
+
+                        Average Delivery Time
+
+                    </h6>
+
+                    <h2>
+
+                        {{ "{:.1f}".format(avg_delivery_time) }} Days
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Average Shipping Days -->
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card kpi-card revenue-card">
+
+                <div class="card-body">
+
+                    <h6>
+
+                        Average Shipping Days
+
+                    </h6>
+
+                    <h2>
+
+                        {{ "{:.1f}".format(avg_shipping_days) }} Days
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Average Processing Time -->
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card kpi-card orders-card">
+
+                <div class="card-body">
+
+                    <h6>
+
+                        Processing Time
+
+                    </h6>
+
+                    <h2>
+
+                        {{ "{:.1f}".format(avg_processing_time) }} Days
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- On-Time Delivery -->
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card kpi-card seller-card">
+
+                <div class="card-body">
+
+                    <h6>
+
+                        On-Time Delivery
+
+                    </h6>
+
+                    <h2>
+
+                        {{ "{:.1f}".format(on_time_rate) }}%
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================
+        MONTHLY DELIVERY TIME TREND ANALYSIS
+    ========================== -->
+
+    <div class="row">
+
+        <div class="col-lg-12 mb-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <h4 class="mb-0">
+
+                            Monthly Delivery Time Trend Analysis
+
+                        </h4>
+
+                        <span class="badge bg-primary">
+
+                            Monthly Trend
+
+                        </span>
+
+                    </div>
+
+                    <img
+                        src="{{ url_for('static', filename='images/delivery/monthly_delivery_time(delivery).png') }}"
+                        class="img-fluid rounded w-100"
+                        alt="Monthly Delivery Time Trend Analysis"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ==========================
+        DELIVERY PERFORMANCE
+    ========================== -->
+
+    <div class="row">
+
+        <!-- Delivery Performance -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+
+                        Delivery Performance
+
+                    </h4>
+
+                    <img
+                        src="{{ url_for('static', filename='images/delivery/delivery_performance(delivery).png') }}"
+                        class="img-fluid rounded w-100"
+                        alt="Delivery Performance"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Shipping Delivery Performance -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+
+                        Shipping Delivery Performance
+
+                    </h4>
+
+                    <img
+                        src="{{ url_for('static', filename='images/delivery/shipping_delivery_performance_compare(delivery).png') }}"
+                        class="img-fluid rounded w-100"
+                        alt="Shipping Delivery Performance"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ==========================
+     SHIPPING VS DELIVERY COMPARISON
+========================== -->
+
+<div class="row">
+
+    <div class="col-lg-12 mb-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <h4 class="mb-0">
+
+                        Shipping vs Delivery Comparison
+
+                    </h4>
+
+                    <span class="badge bg-success">
+
+                        Comparison
+
+                    </span>
+
+                </div>
+
+                <img
+                    src="{{ url_for('static', filename='images/delivery/shipping_vs_delivery_performance(delivery).png') }}"
+                    class="img-fluid rounded w-100"
+                    alt="Shipping vs Delivery Comparison"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ==========================
+     DELIVERY PERFORMANCE SUMMARY
+========================== -->
+
+<div class="row">
+
+    <div class="col-lg-12 mb-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+
+                        <h4 class="mb-1">
+
+                            <i class="bi bi-truck text-primary me-2"></i>
+
+                            Delivery Performance Summary
+
+                        </h4>
+
+                        <small class="text-muted">
+
+                            Top Seller States by Delivery Metrics
+
+                        </small>
+
+                    </div>
+
+                    <span class="badge bg-primary fs-6">
+
+                        Top 10
+
+                    </span>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle table-info">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th width="8%">Rank</th>
+
+                                <th>Seller State</th>
+
+                                <th>Avg Delivery Time</th>
+
+                                <th>Avg Shipping Days</th>
+
+                                <th>Total Orders</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for row in delivery_summary %}
+
+                            <tr>
+
+                                <td class="text-center">
+
+                                    <span >
+
+                                        {{ loop.index }}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    {{ row.seller_state }}
+
+                                </td>
+
+                                <td class="fw-bold text-success">
+
+                                    {{ "{:.1f}".format(row.Avg_Delivery) }} Days
+
+                                </td>
+
+                                <td>
+
+                                    {{ "{:.1f}".format(row.Avg_Shipping) }} Days
+
+                                </td>
+
+                                <td>
+
+                                    {{ "{:,}".format(row.Orders) }}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

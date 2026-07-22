@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <!-- Welcome Card -->
+    <div class="alert alert-light shadow-lg border-0 rounded-4 mb-4">
+
+        <div class="card-body">
+        
+
+            <div class="alert alert-primary shadow-lg border-0 rounded-4 text-center mb-0">
+
+                <h4 class="fw-bold mb-2">
+                    Welcome to the House Price Prediction Platform..!!
+                </h4>
+
+                <p class="mb-0 text-muted">
+                    Enter property details below to get instant price predictions powered by our best-performing
+                    <strong>CatBoost Regressor</strong>.
+                    Gain insights into the top features influencing your results and explore model performance analysis.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Prediction Form Card -->
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                House Price Prediction
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Overall Quality</label>
+                        <input type="number" name="OverallQual" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Living Area (sq.ft)</label>
+                        <input type="number" name="GrLivArea" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Total Square Feet</label>
+                        <input type="number" name="TotalSF" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Garage Cars</label>
+                        <input type="number" name="GarageCars" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Garage Year Built</label>
+                        <input type="number" name="GarageYrBlt" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Basement Finished Area (sq ft)</label>
+                        <input type="number" step="0.01" name="BsmtFinSF1" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-12 mb-4">
+                        <label class="form-label">Lot Area</label>
+                        <input type="number" name="LotArea" class="form-control" required>
+                    </div>
+
+
+                    <div class="text-center">
+
+                        <button class="btn btn-success btn-lg px-5">
+
+                        <i class="fas fa-calculator"></i>
+
+                        Predict Price
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+                    {% if prediction %}
+
+                    <hr>
+
+                    <div class="alert alert-success text-center">
+
+                    <h5>Predicted House Price</h5>
+
+                    <h2 class="fw-bold text-success">
+
+                    ₹ {{ "{:,.2f}".format(prediction) }}
+
+                    </h2>
+
+                    </div>
+
+                    {% endif %}
+
+                    </div>
+
+                    </div>
+
+
+{% if top_features %}
+
+<div class="card shadow mt-4 border-0 rounded-4">
+
+    <div class="card-header bg-dark text-white py-3">
+        <h4 class="mb-0">
+            <i class="fas fa-chart-line"></i>
+            Top Features Influencing Prediction
+        </h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            {% for item in top_features %}
+
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                    <div class="card-body text-center">
+
+                        <h5 class="fw-bold text-primary">
+
+                            <i class="fas fa-chart-bar"></i>
+
+                            {{ item.feature }}
+
+                        </h5>
+
+                        <hr>
+
+                        <h3 class="{% if item.value > 0 %}text-success{% else %}text-danger{% endif %}">
+
+                            {% if item.value > 0 %}
+                                ▲
+                            {% else %}
+                                ▼
+                            {% endif %}
+
+                            {{ item.value }}
+
+                        </h3>
+
+                        <small class="text-muted">
+
+                            SHAP Contribution
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- Prediction Summary -->
+
+{% if prediction %}
+
+<div class="card shadow-lg border-0 rounded-4 mt-4">
+
+    <div class="card-header bg-success text-white py-3">
+
+        <h4 class="mb-0">
+            <i class="fas fa-clipboard-check"></i>
+            Prediction Summary
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row text-center">
+
+            <div class="col-md-3 mb-3">
+
+                <div class="p-3 border rounded-4 shadow-sm">
+
+                    <h6 class="text-muted">Estimated Price</h6>
+
+                    <h4 class="text-success fw-bold">
+
+                        ₹ {{ "{:,.2f}".format(prediction) }}
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <div class="p-3 border rounded-4 shadow-sm">
+
+                    <h6 class="text-muted">Model Used</h6>
+
+                    <h4 class="text-primary fw-bold">
+
+                        CatBoost
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <div class="p-3 border rounded-4 shadow-sm">
+
+                    <h6 class="text-muted">Model Accuracy</h6>
+
+                    <h4 class="text-warning fw-bold">
+
+                        89.37%
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 mb-3">
+
+                <div class="p-3 border rounded-4 shadow-sm">
+
+                    <h6 class="text-muted">Features Used</h6>
+
+                    <h4 class="text-info fw-bold">
+
+                        7
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+
+<div class="card shadow-lg border-0 rounded-4 mt-4">
+
+    <div class="card-header bg-warning text-dark py-3">
+
+        <h4 class="mb-0">
+
+            Best Model Analysis
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-lg-6">
+
+                <table class="table table-bordered">
+
+                    <tr>
+
+                        <th width="45%">Algorithm</th>
+
+                        <td>CatBoost Regressor</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>R² Score</th>
+
+                        <td>0.9307</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>MAE</th>
+
+                        <td>14,033.41</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>RMSE</th>
+
+                        <td>19,560.91</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Cross Validation</th>
+
+                        <td>0.9280</td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <h5 class="text-success">
+
+
+                     CatBoost Specifies
+
+                </h5>
+
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item">
+                        Highest R² Score among all evaluated models.
+                    </li>
+
+                    <li class="list-group-item">
+                         Lowest RMSE indicating more accurate predictions.
+                    </li>
+
+                    <li class="list-group-item">
+                         Lowest MAE showing smaller prediction errors.
+                    </li>
+
+                    <li class="list-group-item">
+                         Stable performance during cross-validation.
+                    </li>
+
+                    <li class="list-group-item">
+                         Handles numerical and categorical features efficiently.
+                    </li>
+
+                    <li class="list-group-item">
+                         Selected as the final production model for deployment.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,221 @@
+
+html,
+body {
+  min-height: 100%;
+
+}
+
+#vanta-bg{
+     position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+}
+
+body {
+    background: transparent;
+    font-family:Poppins,sans-serif;
+}
+.hero{
+
+padding:70px 0;
+
+}
+
+.hero h1{
+
+color:#0A66C2;
+
+}
+
+.job-card{
+
+transition:.3s;
+
+border:none;
+
+}
+
+.job-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+}
+
+.navbar{
+
+padding:18px;
+
+}
+
+.btn-primary{
+
+background:#0A66C2;
+
+border:none;
+
+}
+
+.btn-primary:hover{
+
+background:#004182;
+
+}
+
+
+
+/* for fl0at css for employer dashboard cards*/
+
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+
+
+.company-logo {
+  height: 60px; /* slightly larger */
+  transition: transform 0.3s ease;
+}
+.company-card:hover .company-logo {
+  transform: scale(1.1); /* hover zoom effect */
+}
+.company-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.company-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
+.footer-section {
+  background: linear-gradient(135deg, #0D6EFD, #1E2A47); /* blue to dark navy */
+}
+.footer-section h5 {
+  letter-spacing: 1px;
+}
+.footer-section i {
+  color: #FFD43B; /* gold accent for icons */
+}
+.footer-section hr {
+  opacity: 0.3;
+}
+
+
+.hero-bg {
+  background: linear-gradient(135deg, #0D6EFD, #1E2A47); /* blue → dark navy */
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.hero-bg h1 {
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+}
+
+.hero-bg p {
+  opacity: 0.95;
+}
+
+.hero-img {
+  max-height: 400px;
+  transition: transform 0.3s ease;
+}
+
+.hero-img:hover {
+  transform: scale(1.05); /* subtle zoom on hover */
+}
+
+
+
+
+
+
+
+/* General card styling */
+.card {
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+}
+
+/* Unique gradient backgrounds for cards */
+.card:nth-of-type(1) {
+  background: linear-gradient(135deg, #1E3A8A, #3B82F6); /* deep blue */
+  color: #fff;
+}
+
+
+
+.card-jobs {
+  background: linear-gradient(135deg, #1E3A8A, #3B82F6); /* deep blue */
+}
+.card-applications {
+  background: linear-gradient(135deg, #047857, #10B981); /* green */
+}
+.card-interviews {
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4); /* teal/blue */
+}
+.card-hires {
+  background: linear-gradient(135deg, #f59e0b, #f97316); /* orange */
+}
+
+
+/* Badge styling */
+.card .badge {
+  background: rgba(255,255,255,0.85);
+  color: #111;
+  font-weight: 600;
+}
+
+/* Buttons inside cards */
+.card .btn {
+  border-radius: 8px;
+  font-weight: 600;
+}
+.card .btn-primary {
+  background: #fff;
+  color: #000;
+  border: none;
+}
+.card .btn-primary:hover {
+  background: #f0f0f0;
+}
+.card .btn-warning {
+  background: #FFD43B;
+  color: #000;
+  border: none;
+}
+
+
+
+
+.custom-bg {
+  background-color: #08313c; /* very light gray */
+}
+
+
+
+
+
+

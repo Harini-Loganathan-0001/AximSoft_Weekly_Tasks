@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid mt-4">
+  <h2 class="mb-4">Reports</h2>
+
+  <div class="row mt-4">
+    <!-- Preprocessing Report -->
+    <div class="col-md-4 mb-4">
+      <div class="card report-card shadow-sm h-100 border-primary">
+        <div class="card-body text-center">
+          <h5 class="card-title">Preprocessing</h5>
+          <p class="text-muted">Data cleaning & feature engineering report.</p>
+          <a href="{{ url_for('download_preprocessing_report') }}"
+              class="btn btn-success  shadow">
+                Download Preprocessing Pdf
+            </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDA Report -->
+    <div class="col-md-4 mb-4">
+      <div class="card report-card shadow-sm h-100 border-success">
+        <div class="card-body text-center">
+          <h5 class="card-title">EDA</h5>
+          <p class="text-muted">Exploratory Data Analysis insights.</p>
+          <a href="{{ url_for('download_eda_report') }}"
+            class="btn btn-primary shadow">
+              Download EDA Report
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <!-- Optimization Report -->
+    <div class="col-md-4 mb-4">
+      <div class="card report-card shadow-sm h-100 border-warning">
+        <div class="card-body text-center">
+          <h5 class="card-title">Optimization</h5>
+          <p class="text-muted">Hyperparameter tuning & final model.</p>
+          <a href="{{ url_for('download_optimization_report') }}"
+            class="btn btn-warning ">
+              Download Optimization Pdf
+
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row mt-4">
+    <!-- Prediction Report -->
+    <div class="col-md-6 mb-4">
+      <div class="card report-card shadow-sm h-100 border-secondary">
+        <div class="card-body text-center">
+          <h5 class="card-title">Prediction Report</h5>
+          <p class="text-muted">Predicted values vs actual outcomes.</p>
+
+            <div class="text-center mt-4">
+
+            <a href="/download_prediction_report"
+            class="btn btn-danger ">
+
+            Download Prediction Report
+
+            </a>
+
+            </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Report -->
+    <div class="col-md-6 mb-4">
+      <div class="card report-card shadow-sm h-100 border-dark">
+        <div class="card-body text-center">
+          <h5 class="card-title">Comparison Report</h5>
+          <p class="text-muted">Detailed comparison of models and metrics.</p>
+          <a href="/download_report" class="btn btn-primary">
+              Download Comparison Report (PDF)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Business Recommendations Section -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card shadow-lg border-info recommendation-card">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Business Recommendations</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">Insights and actionable strategies based on model outcomes.</p>
+          <div class="alert alert-light border-info" role="alert">
+            {{ recommendations }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  Data Quality Row -->
+  <div class="row mt-4">
+  
+    <div class="col-md-6 mb-4">
+      <div class="card border-success shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="card-title mb-0">Final Model Selection</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">Summary of the chosen model and justification for its selection.</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Best Model:</strong> <span class="badge bg-success">{{ best_model }}</span></li>
+            <li class="list-group-item"><strong>Performance Metrics:</strong> <span class="badge bg-info">{{ performance_metrics }}</span></li>
+            <li class="list-group-item"><strong>Advantages:</strong> {{ model_advantages }}</li>
+            <li class="list-group-item"><strong>Limitations:</strong> {{ model_limitations }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  <!-- Data Quality Summary -->
+  <div class="col-md-6 mb-4">
+    <div class="card border-primary shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <h5 class="card-title mb-0">Data Quality Summary</h5>
+      </div>
+      <div class="card-body">
+        <p class="text-muted">Overview of missing values, outliers handled, and feature engineering steps.</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Missing Values Handled:</strong> <span class="badge bg-danger text-white">{{ missing_values }}</span></li>
+          <li class="list-group-item"><strong>Outliers Removed:</strong> <span class="badge bg-danger">{{ outliers_removed }}</span></li>
+          <li class="list-group-item"><strong>Features Engineered:</strong> <span class="badge bg-danger">{{ features_engineered }}</span></li>
+          <li class="list-group-item"><strong>Duplicates Removed:</strong> <span class="badge bg-danger">{{ duplicates_removed }}</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Visualization Highlights</h5>
+        <p class="text-muted">Key charts generated during analysis.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <img src="{{ url_for('static', filename='images/correlation(eda).png') }}" class="img-thumbnail" style="width:250px;">
+          <img src="{{ url_for('static', filename='images/model_comparison.png') }}" class="img-thumbnail" style="width:200px;">
+          <img src="{{ url_for('static', filename='images/outlier(eda).png') }}" class="img-thumbnail" style="width:200px;">
+          <img src="{{ url_for('static', filename='images/another_chart.png') }}" 
+             class="img-fluid rounded shadow" alt="Relationships"  style="width:230px;">
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+ <div class="row mt-4">
+  <!-- Future Work -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm border-info">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Future Work</h5>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Deploy model with Flask + Bootstrap dashboard</li>
+          <li>Integrate real-time prediction API</li>
+          <li>Enhance feature engineering with domain-specific variables</li>
+          <li>Explore deep learning regression models</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Takeaways -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm border-warning">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Key Takeaways</h5>
+      </div>
+      <div class="card-body">
+        <p class="text-muted">Highlights from the project so far:</p>
+        <ul>
+          <li>Feature importance strongly influences SalePrice</li>
+          <li>Random Forest & XGBoost outperform baseline models</li>
+          <li>Outlier treatment improved prediction accuracy</li>
+          <li>Correlation analysis guided feature selection</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+  
+</div>
+
+
+
+  
+</div>
+{% endblock %}

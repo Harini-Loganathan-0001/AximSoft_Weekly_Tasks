@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="fw-bold text-primary mb-3">My Profile</h2>
+
+  <div class="row">
+    <div class="col-md-4 text-center">
+      {% if current_user.profile_pic %}
+        <img src="{{ url_for('static', filename='profile_pics/' ~ current_user.profile_pic) }}" class="img-thumbnail mb-3" width="200">
+      {% else %}
+        <img src="{{ url_for('static', filename='images/default.png') }}" class="img-thumbnail mb-3" width="200">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.name.label(class="form-label") }}
+          {{ form.name(class="form-control") }}
+        </div>
+        <div class="mb-3">
+          {{ form.skills.label(class="form-label") }}
+          {{ form.skills(class="form-control", rows=3) }}
+        </div>
+        <div class="mb-3">
+          {{ form.experience.label(class="form-label") }}
+          {{ form.experience(class="form-control", rows=3) }}
+        </div>
+        <div class="mb-3">
+          {{ form.resume.label(class="form-label") }}
+          {{ form.resume(class="form-control") }}
+        </div>
+        <div class="mb-3">
+          {{ form.profile_pic.label(class="form-label") }}
+          {{ form.profile_pic(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-success">Update Profile</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

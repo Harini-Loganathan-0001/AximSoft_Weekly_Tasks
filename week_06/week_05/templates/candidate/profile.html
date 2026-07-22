@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-success text-white p-3 text-center">
+
+            <h3 class="fw-bold text-uppercase">My Profile 👤</h3>
+            
+        </div>
+
+        <div class="card-body bg-success-subtle text-black border-25">
+
+            <div class="row">
+
+                <div class="col-md-3 text-center">
+
+                    {% if current_user.profile_pic %}
+
+                        <img src="{{ url_for('static', filename='uploads/profiles/' + current_user.profile_pic) }}"
+                             class="img-fluid rounded-circle border"
+                             width="180"
+                             height="180">
+
+                    {% else %}
+
+                        <img src="{{ url_for('static', filename='images/default_profile.png') }}"
+                             class="img-fluid rounded-circle border"
+                             width="180"
+                             height="180">
+
+                    {% endif %}
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <h3>{{ current_user.name }}</h3>
+
+                    <hr>
+
+                    <p><strong>Email:</strong> {{ current_user.email }}</p>
+
+                    <p><strong>Phone:</strong> {{ current_user.phone or "Not Added" }}</p>
+
+                    <p><strong>City:</strong> {{ current_user.city or "Not Added" }}</p>
+
+                    <p><strong>Skills:</strong> {{ current_user.skills or "Not Added" }}</p>
+
+                    <p><strong>Experience:</strong> {{ current_user.experience or "Not Added" }}</p>
+
+                    <p><strong>Education:</strong> {{ current_user.education or "Not Added" }}</p>
+
+                    <p><strong>About:</strong> {{ current_user.about or "Not Added" }}</p>
+
+                    <hr>
+
+                    <a href="{{ url_for('main.edit_profile') }}"
+                        class="btn btn-primary btn-lg">
+                        <i class="bi bi-pencil-square"></i>
+                        Edit Profile
+                    </a>
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

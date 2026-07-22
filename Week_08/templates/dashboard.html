@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+  <h2 class="mb-4">Dashboard Overview</h2>
+
+  <div class="row mt-4">
+  <div class="col-md-2">
+    <div class="card stat-card card-blue text-center mb-4">
+      <div class="card-body">
+        <h6 class="card-title">Total Records</h6>
+        <h4 class="fw-bold">{{ total_records }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card stat-card card-green text-center mb-4">
+      <div class="card-body">
+        <h6 class="card-title">Total Features</h6>
+        <h4 class="fw-bold">{{ total_features }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card stat-card card-orange text-center mb-4">
+      <div class="card-body">
+        <h6 class="card-title">Missing Values</h6>
+        <h4 class="fw-bold">{{ missing_values }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card stat-card card-red text-center mb-4">
+      <div class="card-body">
+        <h6 class="card-title">Duplicates</h6>
+        <h4 class="fw-bold">{{ duplicates }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card stat-card card-purple text-center mb-4">
+      <div class="card-body">
+        <h6 class="card-title">Target Mean (SalePrice)</h6>
+        <h4 class="fw-bold">{{ target_mean }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Charts Section -->
+<div class="row mt-4">
+  <!-- SalePrice Distribution -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">SalePrice Distribution</h6>
+        <img src="{{ url_for('static', filename='images/saleprice_histogram.png') }}" 
+             class="img-fluid rounded shadow" alt="SalePrice Histogram">
+      </div>
+    </div>
+  </div>
+
+  <!-- Another Chart (same size as SalePrice Distribution) -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Living Area vs SalePrice</h6>
+        <img src="{{ url_for('static', filename='images/another_chart.png') }}" 
+             class="img-fluid rounded shadow" alt="Another Chart">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Heatmap Row -->
+<div class="row mt-4">
+  <div class="col-md-12 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Correlation Heatmap</h6>
+        <img src="{{ url_for('static', filename='images/correlation_heatmap.png') }}" 
+             class="img-fluid rounded shadow" alt="Correlation Heatmap" style="width:100%; height:600px; object-fit:contain;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Missing Values + Box Plot Row -->
+<div class="row mt-4">
+  <!-- Missing Value Heatmap -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Missing Value Heatmap</h6>
+        <img src="{{ url_for('static', filename='images/missing_value_heatmap.png') }}" 
+             class="img-fluid rounded shadow" alt="Missing Value Heatmap">
+      </div>
+    </div>
+  </div>
+
+  <!-- SalePrice Box Plot -->
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">SalePrice Box Plot</h6>
+        <img src="{{ url_for('static', filename='images/saleprice_boxplot.png') }}" 
+             class="img-fluid rounded shadow" alt="SalePrice Box Plot">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Model Comparison Row -->
+<div class="row mt-4">
+  <div class="col-md-12 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title">Model Comparison (R² Scores)</h6>
+        <img src="{{ url_for('static', filename='images/model_comparison.png') }}" 
+             class="img-fluid rounded shadow" alt="Model Comparison"  style="width:100%; height:600px; object-fit:contain;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Metrics Table -->
+<div class="row mt-2">
+  <div class="col-md-12">
+    <table class="table table-striped table-bordered shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th>Model</th>
+          <th>MAE</th>
+          <th>MSE</th>
+          <th>RMSE</th>
+          <th>R² Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Linear Regression</td><td>22534.36</td><td>2.99e9</td><td>54670.14</td><td>0.459</td></tr>
+        <tr><td>Decision Tree</td><td>27232.28</td><td>1.53e9</td><td>39157.45</td><td>0.722</td></tr>
+        <tr><td>Random Forest</td><td>16740.27</td><td>6.23e8</td><td>24954.92</td><td>0.887</td></tr>
+        <tr><td>Gradient Boosting</td><td>15264.31</td><td>4.63e8</td><td>21507.64</td><td>0.916</td></tr>
+        <tr><td>XGBoost</td><td>17409.26</td><td>6.33e8</td><td>25158.61</td><td>0.885</td></tr>
+        <tr><td>LightGBM</td><td>16006.29</td><td>6.00e8</td><td>24496.99</td><td>0.891</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h3>Edit Job</h3>
+    </div>
+
+    <div class="card-body">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="row">
+
+          <!-- ❌ REMOVED company_name field -->
+
+          <div class="col-md-6 mb-3">
+            {{ form.job_title.label(class="form-label") }}
+            {{ form.job_title(class="form-control") }}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            {{ form.location.label(class="form-label") }}
+            {{ form.location(class="form-control") }}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            {{ form.experience.label(class="form-label") }}
+            {{ form.experience(class="form-select") }}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            {{ form.salary.label(class="form-label") }}
+            {{ form.salary(class="form-control") }}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            {{ form.job_type.label(class="form-label") }}
+            {{ form.job_type(class="form-select") }}
+          </div>
+
+          <div class="col-12 mb-3">
+            {{ form.skills.label(class="form-label") }}
+            {{ form.skills(class="form-control", rows="3") }}
+          </div>
+
+          <div class="col-12 mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control", rows="6") }}
+          </div>
+
+          <div class="text-end">
+            <button type="submit" class="btn btn-success btn-lg">
+              Update Job
+            </button>
+
+            <a href="{{ url_for('main.employer_dashboard') }}"
+               class="btn btn-secondary btn-lg">
+              Cancel
+            </a>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
