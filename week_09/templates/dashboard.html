@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="page-title">
+        <h2>Dashboard</h2>
+        <p>Skin Disease Classification Overview</p>
+    </div>
+
+    <!-- KPI Cards -->
+
+<!-- ================= KPI CARDS ================= -->
+
+<div class="row g-4">
+
+    <!-- Total Images -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+
+        <div class="kpi-card blue-card">
+
+            <i class="bi bi-images card-icon"></i>
+
+            <h5>Total Images</h5>
+
+            <h2>10,015</h2>
+
+        </div>
+
+    </div>
+
+    <!-- Disease Classes -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+
+        <div class="kpi-card green-card">
+
+            <i class="bi bi-virus card-icon"></i>
+
+            <h5>Disease Classes</h5>
+
+            <h2>7</h2>
+
+        </div>
+
+    </div>
+
+    <!-- Best Model -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+
+        <div class="kpi-card orange-card">
+
+            <i class="bi bi-cpu-fill card-icon"></i>
+
+            <h5>Best Model</h5>
+
+            <h3 class="model-name">
+
+                EfficientNetB0
+
+            </h3>
+
+        </div>
+
+    </div>
+
+    <!-- Accuracy -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+
+        <div class="kpi-card pink-card">
+
+            <i class="bi bi-graph-up-arrow card-icon"></i>
+
+            <h5>Accuracy</h5>
+
+            <h2>97.8%</h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- Charts -->
+
+    <div class="row mt-4">
+
+        <div class="col-lg-12">
+
+            <div class="chart-card">
+
+                <h4>Class Distribution</h4>
+
+                <canvas id="classChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-lg-6">
+
+            <div class="chart-card">
+
+                <h4>Model Comparison</h4>
+
+                <canvas id="modelChart"></canvas>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="chart-card">
+
+                <h4>Dataset Split</h4>
+
+                <canvas id="splitChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-lg-6">
+
+            <div class="chart-card">
+
+                <h4>Training Accuracy</h4>
+
+                <canvas id="accuracyChart"></canvas>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="chart-card">
+
+                <h4>Training Loss</h4>
+
+                <canvas id="lossChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+{% endblock %}
