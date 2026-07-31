@@ -1,0 +1,9 @@
+Model,Train Accuracy,Validation Accuracy,Test Accuracy,Train Loss,Validation Loss,Test Loss
+Batch normalization CNN,47.55,48.2,46.97,1.5012,1.4709,1.5244
+Batch CNN + Early Stopping,50.61,52.53,50.9,1.3241,1.2356,1.2584
+Batch CNN Learningrate,60.11,55.86,56.75,0.9803,1.1009,1.0691
+Batch CNN Optimization(SGD),52.94,53.53,52.53,1.1462,1.112,1.1724
+Batch CNN Optimization(RMSprop),43.54,44.21,42.45,1.4673,1.4319,1.4975
+batch CNN Batchsize(16)),61.68,61.72,61.68,0.9756,0.9756,1.0072
+batch CNN Batchsize(64)),41.57,45.67,43.98,1.618,1.4393,1.4686
+batch CNN HyperParameter,60.83,59.39,60.41,1.0164,1.0525,1.0408

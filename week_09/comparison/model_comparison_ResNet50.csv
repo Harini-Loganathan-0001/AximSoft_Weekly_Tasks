@@ -1,0 +1,8 @@
+Model,Train Accuracy,Validation Accuracy,Test Accuracy,Train Loss,Validation Loss,Test Loss
+ResNet50,59.43,59.25,57.55,1.0916,1.0551,1.1118
+ResNet50 ES_LR,68.64,66.84,65.0,0.8056,0.8235,0.8873
+ResNet50 SGD,71.2,68.24,67.8,0.732,0.7799,0.8336
+ResNet50 RMSprop,68.46,64.58,64.14,0.7974,0.8562,0.9173
+ResNet50 batchsize(16),66.95,66.98,66.93,1.2781,1.2762,1.2783
+ResNet50 HyperParameter,70.9,67.98,66.0,0.7208,0.813,0.8929
+ResNet50 tuning,65.25,63.38,62.34,0.9471,0.9267,0.9849
