@@ -1,9 +1,9 @@
 Model,Train Accuracy,Validation Accuracy,Test Accuracy,Train Loss,Validation Loss,Test Loss
 Basic CNN,49.93,52.46,49.3,1.3031,1.2501,1.2747
-Basic CNN + Early Stopping,59.61,62.12,61.68,1.0461,1.0298,1.0225
-Basic CNN + Learning Rate Scheduling,55.11,56.59,54.96,1.1284,1.1439,1.1293
-Basic CNN + Learning Rate Optimizer(SGD),41.44,43.14,42.2,1.4006,1.3664,1.3704
-Basic CNN + Learning Rate Optimizer(RMSprop),48.73,52.93,51.3,1.2636,1.2221,1.2234
-Basic CNN + Batchsize(16),52.31,54.93,54.3,1.217,1.2085,1.1937
-Basic CNN + Batchsize(64),47.68,49.07,48.3,1.3261,1.3037,1.3148
-Basic CNN + HyperParameter(optimization),50.47,52.46,50.5,1.2608,1.2323,1.2478
+Basic CNN Early Stopping,59.61,62.12,61.68,1.0461,1.0298,1.0225
+Basic CNN Learning Rate Scheduling,55.11,56.59,54.96,1.1284,1.1439,1.1293
+Basic CNN(SGD),41.44,43.14,42.2,1.4006,1.3664,1.3704
+Basic CNN(RMSprop),48.73,52.93,51.3,1.2636,1.2221,1.2234
+Basic CNN Batchsize(16),52.31,54.93,54.3,1.217,1.2085,1.1937
+Basic CNN Batchsize(64),47.68,49.07,48.3,1.3261,1.3037,1.3148
+Basic CNN HyperParameter(optimization),49.39,51.46,49.83,1.5458,1.5001,1.5295
