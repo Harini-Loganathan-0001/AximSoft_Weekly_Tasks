@@ -1,0 +1,9 @@
+Model,Best Optimization,Test Accuracy
+Basic CNN,Early Stopping,61.68
+Deep CNN,HyperParameter Optimization,67.53
+CNN + Batch Normalization,Batch Size(16),61.68
+CNN + Dropout,HyperParameter Optimization,67.13
+EfficientNetB0,HyperParameter Optimization,66.27
+ResNet50,SGD Optimizer,67.80
+DenseNet121,HyperParameter Optimization,65.00
+MobileNetV2,RmsProp Optimization,65.93
