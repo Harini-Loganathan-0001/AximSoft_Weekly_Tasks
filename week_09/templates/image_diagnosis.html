@@ -4,130 +4,219 @@
 
 <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <div class="page-title mb-4">
-        <h2>
-            <i class="bi bi-heart-pulse-fill text-danger"></i>
-            Image Diagnosis
-        </h2>
+    <!-- Page Title -->
+    <div class="p-3 rounded-4 shadow-sm bg-secondary border-start border-5 border-dark mb-4">
+
+    <h2 class="fw-bold text-dark">
+
+        Image Diagnosis
+
+    </h2>
+
+
+    <p class="mb-0 fs-5 text-muted">
+
+        <small class="text-dark">
+           Upload a skin image and get AI-powered insights with confidence-based prediction.
+        </small>
+
+    </p>
+
+</div>
+
+    <!-- ================= FIRST ROW ================= -->
+    <div class="row justify-content-center g-5">
+
+    <div class="col-lg-8">
+
+        <div class="diagnosis-card">
+
+            <h4 class="mb-4 fw-bold text-dark">
+
+
+                Upload Image
+
+            </h4>
+
+            <form method="POST" enctype="multipart/form-data">
+
+                <div class="upload-box"
+     style="height:420px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+
+    <img id="previewImage"
+         src=""
+         style="display:none; max-width:100%; max-height:300px; border-radius:10px;">
+
+    <div id="placeholder">
+
+        <i class="bi bi-image upload-icon"></i>
+
+        <h5>Select Skin Image</h5>
 
         <p class="text-muted">
-            Upload a dermoscopic skin image and classify it using the
-            <strong>MobileNetV2 + RMSprop</strong> deep learning model.
+            JPG, JPEG, PNG
         </p>
+
     </div>
 
-    <div class="row g-4">
+    <input
+        type="file"
+        id="imageInput"
+        name="image"
+        class="form-control mt-3"
+        accept=".jpg,.jpeg,.png"
+        required>
 
-        <!-- Upload Card -->
-        <div class="col-lg-5">
+</div>
 
-            <div class="diagnosis-card">
+                <button class="btn btn-primary btn-lg diagnose-btn">
 
-                <h4 class="mb-4">
-                    <i class="bi bi-cloud-arrow-up-fill text-primary"></i>
-                    Upload Image
-                </h4>
+    
 
-                <form method="POST" enctype="multipart/form-data">
+    Diagnose Image
 
-                    <div class="upload-box">
+</button>
 
-                        <i class="bi bi-image upload-icon"></i>
-
-                        <h5>Select Skin Image</h5>
-
-                        <p>Supported Formats: JPG, JPEG, PNG</p>
-
-                        <input
-                            type="file"
-                            name="image"
-                            class="form-control mt-3"
-                            accept=".jpg,.jpeg,.png"
-                            required>
-
-                    </div>
-
-                    <button class="btn btn-primary btn-lg w-100 mt-4">
-
-                        <i class="bi bi-search"></i>
-
-                        Diagnose Image
-
-                    </button>
-
-                </form>
-
-            </div>
+            </form>
 
         </div>
 
-        <!-- Result Card -->
-        <div class="col-lg-7">
+    </div>
 
-            <div class="diagnosis-card">
+</div>
+</div>
 
-                <h4 class="mb-4">
-                    <i class="bi bi-cpu-fill text-success"></i>
-                    Diagnosis Result
-                </h4>
 
-                {% if prediction %}
 
-                <div class="row">
 
-                    <div class="col-md-5 text-center">
+    {% if prediction %}
+    <div class="row mt-4 g-4">
 
-                        <img src="{{ url_for('static', filename=image_path) }}"
-                             class="img-fluid rounded shadow-lg"
-                             style="height:280px; object-fit:cover;">
+    <!-- Left Side -->
 
-                    </div>
+    <div class="col-lg-6">
 
-                    <div class="col-md-7">
+        <div class="diagnosis-card h-100">
 
-                        <div class="alert alert-success">
+            <h4 class="mb-4 fw-bold text-dark">
+                
+                Diagnosis Result
+            </h4>
 
-                            <h3>
-                                <i class="bi bi-check-circle-fill"></i>
-                                {{ prediction }}
-                            </h3>
 
-                            <h5>
-                                Confidence :
-                                {{ "%.2f"|format(confidence) }}%
-                            </h5>
+            <div class="text-center">
 
-                        </div>
+                <img src="{{ url_for('static', filename=image_path) }}"
+                     class="img-fluid rounded shadow"
+                     style="width:100%; height:280px; object-fit:cover;">
 
-                        <table class="table table-borderless">
+            </div>
 
-                            <tr>
-                                <th>Model</th>
-                                <td>
-                                    <span class="badge bg-primary">
-                                        MobileNetV2 + RMSprop
-                                    </span>
-                                </td>
-                            </tr>
+            <div class="mt-4 text-center">
 
-                            <tr>
-                                <th>Input Size</th>
-                                <td>224 × 224</td>
-                            </tr>
+                <h2 class="fw-bold text-success">
+                    {{ prediction }}
+                </h2>
 
-                            <tr>
-                                <th>Total Classes</th>
-                                <td>7 Skin Diseases</td>
-                            </tr>
+                <h5 class="mt-3 text-white">
 
-                        </table>
+                    Confidence
 
-                    </div>
+                    <span class="badge bg-secondary fs-6">
+
+                        {{ "%.2f"|format(confidence) }}%
+
+                    </span>
+
+                </h5>
+
+            </div>
+
+        
+
+            
+
+        </div>
+
+    </div>
+
+    <!-- Right Side -->
+
+    <div class="col-lg-6">
+
+        <div class="diagnosis-card h-100">
+
+            <h4 class="mb-4 fw-bold text-dark">
+                Prediction Details
+            </h4>
+
+            <!-- Model Details -->
+
+            <div class="card border-0 shadow-sm mb-4">
+
+                <div class="card-body" style="background-color:#b3c5d7;">
+
+                    <table class="table table-borderless mb-0" >
+
+                        <tr>
+                            <th>Model</th>
+                            <td>ResNet50</td>
+                        </tr>
+
+                        <tr>
+                            <th>Input Size</th>
+                            <td>224 × 224</td>
+                        </tr>
+
+                        <tr>
+                            <th>Total Classes</th>
+                            <td>7</td>
+                        </tr>
+
+                    </table>
 
                 </div>
 
-                <hr>
+            </div>
+
+            <!-- Tips -->
+
+            <h5 class="mb-3 fw-bold text-dark">
+
+                Skin Care Tips
+
+            </h5>
+
+            <ul class="ps-3">
+
+                <li>Use sunscreen with SPF 30 or higher.</li>
+
+                <li>Avoid prolonged exposure to direct sunlight.</li>
+
+                <li>Keep the affected skin clean and moisturized.</li>
+
+                <li>Avoid scratching or irritating the lesion.</li>
+
+                <li>Consult a dermatologist for proper medical advice.</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+{% endif %}
+
+    <!-- SECOND ROW  -->
+
+    {% if prediction %}
+
+    <div class="row mt-4">
+
+        <div class="col-lg-12">
+
+            <div class="diagnosis-card">
 
                 <h4 class="mb-4">
 
@@ -143,43 +232,46 @@
 
                     <div class="d-flex justify-content-between">
 
-                        <strong>{{ item.class_name }}</strong>
+                        <span class="fw-semibold">
 
-                        <strong>{{ "%.2f"|format(item.probability) }}%</strong>
+                            {{ item.class_name }}
+
+                        </span>
+
+                        <span class="fw-bold">
+
+                            {{ "%.2f"|format(item.probability) }}%
+
+                        </span>
 
                     </div>
 
-                    <div class="progress mt-1" style="height:22px;">
+                    <div class="progress mt-2 rounded-pill"
+                         style="height:24px;">
 
-                        {% if loop.first %}
+                        <div class="progress-bar
 
-                        <div class="progress-bar bg-success"
-                             role="progressbar"
-                             style="width: {{ item.probability }}%;">
-                        </div>
-
+                        {% if loop.index == 1 %}
+                            bg-success
                         {% elif loop.index == 2 %}
-
-                        <div class="progress-bar bg-primary"
-                             role="progressbar"
-                             style="width: {{ item.probability }}%;">
-                        </div>
-
+                            bg-primary
                         {% elif loop.index == 3 %}
-
-                        <div class="progress-bar bg-warning"
-                             role="progressbar"
-                             style="width: {{ item.probability }}%;">
-                        </div>
-
+                            bg-warning
                         {% else %}
-
-                        <div class="progress-bar bg-secondary"
-                             role="progressbar"
-                             style="width: {{ item.probability }}%;">
-                        </div>
-
+                            bg-secondary
                         {% endif %}
+
+                        rounded-pill"
+
+                        role="progressbar"
+
+                        style="width:{{ item.probability }}%;">
+
+                            {% if item.probability > 12 %}
+                                {{ "%.1f"|format(item.probability) }}%
+                            {% endif %}
+
+                        </div>
 
                     </div>
 
@@ -187,26 +279,55 @@
 
                 {% endfor %}
 
-                {% else %}
-
-                <div class="empty-state">
-
-                    <i class="bi bi-image text-secondary" style="font-size:80px;"></i>
-
-                    <h4 class="mt-3">No Diagnosis Yet</h4>
-
-                    <p class="text-muted">
-
-                        Upload a skin lesion image and click
-                        <strong>Diagnose Image</strong>
-
-                    </p>
-
-                </div>
-
-                {% endif %}
-
             </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+{% if prediction %} 
+
+<div class="row mt-4">
+
+    <div class="col-lg-12">
+
+        <div class="diagnosis-card">
+
+            <h4 class="fw-bold text-dark mb-4">
+                Class Probability Comparison
+            </h4>
+
+            <canvas id="probabilityChart" style="max-height:380px;"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+{% endif %}
+
+<!--= Explain Prediction  -->
+
+{% if prediction %}
+
+<div class="row mt-5">
+
+    <div class="col-12">
+
+        <div class="alert alert-info border-0 shadow-sm p-4 text-center">
+
+            <p class="text-muted mb-4">
+                View the Grad-CAM heatmap and AI explanation to understand
+                which regions of the skin image influenced the model's decision.
+            </p>
+
+            <a href="{{ url_for('explain_prediction') }}"
+               class="btn btn-primary btn-lg px-5">
+                Explain Prediction
+
+            </a>
 
         </div>
 
@@ -214,4 +335,149 @@
 
 </div>
 
+{% endif %}
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% if prediction %}
+
+<script>
+
+const labels = [
+
+{% for item in probability_data %}
+"{{ item.class_name }}",
+{% endfor %}
+
+];
+
+const values = [
+
+{% for item in probability_data %}
+{{ item.probability }},
+{% endfor %}
+
+];
+
+new Chart(document.getElementById("probabilityChart"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:labels,
+
+        datasets:[{
+
+            label:"Probability (%)",
+
+            data:values,
+            color:"white",
+
+            backgroundColor:[
+                "#16a34a",
+                "#2563eb",
+                "#f59e0b",
+                "#6b7280",
+                "#8b5cf6",
+                "#ec4899",
+                "#06b6d4"
+            ],
+
+            borderRadius:10
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        indexAxis:"y",
+
+        plugins:{
+
+            legend:{
+                display:false
+            },
+
+            title:{
+                display:true,
+                color:"white", 
+                text:"Prediction Confidence for All Classes",
+                font:{
+                    size:18
+                }
+            }
+
+        },
+
+        scales:{
+
+    x:{
+        beginAtZero:true,
+        max:100,
+
+        title:{
+            display:true,
+            color:"white",
+            text:"Probability (%)"
+        },
+
+        ticks:{
+            color:"#111827"
+        }
+    },
+
+    y:{
+
+        ticks:{
+            color:"#111827",   
+            font:{
+                size:14,
+                weight:"bold"
+            }
+        }
+
+    }
+
+}
+
+    }
+
+});
+
+</script>
+
+
+
+{% endif %}
+
+
+<script>
+
+const input = document.getElementById("imageInput");
+const preview = document.getElementById("previewImage");
+const placeholder = document.getElementById("placeholder");
+
+input.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (file) {
+
+        preview.src = URL.createObjectURL(file);
+
+        preview.style.display = "block";
+
+        placeholder.style.display = "none";
+
+    }
+
+});
+
+</script>
 {% endblock %}

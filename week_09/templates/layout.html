@@ -56,12 +56,12 @@
                 </a>
             </li>
 
-            <li>
+            <!-- <li>
                 <a href="{{ url_for('explain_prediction') }}">
                     <i class="bi bi-search-heart"></i>
                     Explain Prediction
                 </a>
-            </li>
+            </li> -->
 
             <li>
                 <a href="{{ url_for('model_analytics') }}">
@@ -85,33 +85,12 @@
 
     <div class="main">
 
-        <!-- Navbar -->
+        
 
-        <nav class="topbar">
+        <div class="content p-4">
 
-            <button id="menu-btn">
+            
 
-                <i class="bi bi-list"></i>
-
-            </button>
-
-            <h3>
-
-                🧠 Advanced Deep Learning Skin Disease Classification
-
-            </h3>
-
-            <div class="profile">
-
-                <i class="bi bi-person-circle"></i>
-
-                Admin
-
-            </div>
-
-        </nav>
-
-        <div class="content">
 
             {% block content %}
 
@@ -132,6 +111,8 @@
         }
 
     </script>
+
+
 
 </body>
 
