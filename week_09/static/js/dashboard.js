@@ -1,12 +1,12 @@
 // Class Distribution
 
-new Chart(document.getElementById("classChart"),{
+new Chart(document.getElementById("classChart"), {
 
-    type:"bar",
+    type: "bar",
 
-    data:{
+    data: {
 
-        labels:[
+        labels: [
             "Melanoma",
             "Nevus",
             "BCC",
@@ -16,9 +16,9 @@ new Chart(document.getElementById("classChart"),{
             "VASC"
         ],
 
-        datasets:[{
+        datasets: [{
 
-            data:[
+            data: [
                 1113,
                 6705,
                 514,
@@ -26,9 +26,35 @@ new Chart(document.getElementById("classChart"),{
                 1099,
                 115,
                 142
-            ]
+            ],
+
+            backgroundColor: [
+                "#3B82F6", // Blue
+                "#10B981", // Green
+                "#F59E0B", // Orange
+                "#EF4444", // Red
+                "#8B5CF6", // Purple
+                "#06B6D4", // Cyan
+                "#EC4899"  // Pink
+            ],
+
+            borderRadius: 8
 
         }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+                display: false
+            }
+
+        }
 
     }
 
@@ -79,50 +105,6 @@ new Chart(document.getElementById("splitChart"),{
         datasets:[{
 
             data:[70,15,15]
-
-        }]
-
-    }
-
-});
-
-// Accuracy
-
-new Chart(document.getElementById("accuracyChart"),{
-
-    type:"line",
-
-    data:{
-
-        labels:[1,2,3,4,5,6,7,8,9,10],
-
-        datasets:[{
-
-            data:[60,72,79,85,89,92,94,96,97,97.8],
-
-            fill:true
-
-        }]
-
-    }
-
-});
-
-// Loss
-
-new Chart(document.getElementById("lossChart"),{
-
-    type:"line",
-
-    data:{
-
-        labels:[1,2,3,4,5,6,7,8,9,10],
-
-        datasets:[{
-
-            data:[1.4,1.0,.8,.6,.5,.4,.3,.2,.15,.09],
-
-            fill:true
 
         }]
 

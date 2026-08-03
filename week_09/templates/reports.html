@@ -2,6 +2,379 @@
 
 {% block content %}
 
-<h2>Reports</h2>
+<div class="card border-0 shadow mb-4"
+     style="background: linear-gradient(135deg, #273f64, #172741); border-radius:15px;">
+    <div class="card-body p-4">
+        <h2 class="text-white fw-bold">Reports</h2>
+        <p class="text-white-50 mb-0">
+            Generate and download prediction reports and model comparison summaries for analysis and documentation.
+        </p>
+    </div>
+</div>
+
+
+<div class="row mt-4">
+
+
+    <!-- Diagnosis Report -->
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+
+            <div class="card-header"
+                 style="background:#424850;color:white;">
+
+                <h5>
+                    Diagnosis Report
+                </h5>
+
+            </div>
+
+
+            <div class="card-body text-center">
+
+                <p>
+                    Generate disease prediction report with
+                    diagnosis result, confidence score and Grad-CAM explanation.
+                </p>
+
+
+                <a href="{{ url_for('download_prediction_report') }}"
+   class="btn btn-success btn-lg">
+
+                    Download PDF
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <!-- Model Comparison Report -->
+
+    <div class="col-md-6">
+
+
+        <div class="card shadow">
+
+
+            <div class="card-header"
+                 style="background:#424850;color:white;">
+
+                <h5>
+                    Model Comparison Report
+                </h5>
+
+            </div>
+
+
+            <div class="card-body text-center">
+
+
+                <p>
+                    Generate model evaluation report containing accuracy,
+                    precision, recall, F1-score and ROC-AUC comparison.
+                </p>
+
+
+                <a href="{{ url_for('download_model_report') }}"
+   class="btn btn-primary btn-lg">
+
+                    Download PDF
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+<div class="row mt-4">
+
+
+    <div class="col-md-4">
+
+        <div class="card shadow border-0 text-center"
+             style="border-radius:15px;">
+
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+                    Best Model Used
+                </h6>
+
+                <h3 style="color:#166534;">
+                    ResNet50
+                </h3>
+
+                <p>
+                    Final selected model
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <div class="col-md-4">
+
+        <div class="card shadow border-0 text-center"
+             style="border-radius:15px;">
+
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+                    Evaluation Metrics
+                </h6>
+
+                <h3 style="color:#2563eb;">
+                    5+
+                </h3>
+
+                <p>
+                    Accuracy, Precision, Recall, F1, ROC-AUC
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="col-md-4">
+
+        <div class="card shadow border-0 text-center"
+             style="border-radius:15px;">
+
+
+            <div class="card-body">
+
+                <h6 class="text-muted">
+                    Explainability
+                </h6>
+
+                <h3 style="color:#9333ea;">
+                    Grad-CAM
+                </h3>
+
+                <p>
+                    Visual prediction explanation
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="mt-4">
+
+
+    <div class="card shadow border-0">
+
+
+        <div class="card-header"
+             style="background:#424850;color:white;">
+
+            <h5 class="mb-0">
+                Future Scope & Recommendations
+            </h5>
+
+        </div>
+
+
+
+        <div class="card-body">
+
+
+            <div class="timeline">
+
+
+                <h6>
+                    <b> Advanced Model Development</b>
+                </h6>
+
+                <p>
+                    Implement advanced architectures such as Vision
+                    Transformers and ensemble models to improve skin
+                    disease classification accuracy.
+                </p>
+
+
+
+                <h6>
+                    <b>Larger Medical Dataset Integration</b>
+                </h6>
+
+                <p>
+                    Expand training data with diverse dermatology images
+                    to improve model generalization across different cases.
+                </p>
+
+
+
+                <h6>
+                     <b>Real-Time Healthcare Deployment</b>
+                </h6>
+
+                <p>
+                    Deploy the system as a mobile and web-based screening
+                    assistant for early disease detection.
+                </p>
+
+
+
+                <h6>
+                    <b>Enhanced Explainability</b>
+                </h6>
+
+                <p>
+                    Integrate advanced XAI methods to provide more reliable
+                    visual explanations for medical predictions.
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<div class="mt-4 mb-4">
+
+
+    <div class="card shadow border-0"
+         style="background:#f8fafc;">
+
+
+        <div class="card-body text-center p-4">
+
+
+            <h4>
+                AI Skin Disease Classification System
+            </h4>
+
+
+            <p class="text-muted mt-3">
+
+                An intelligent deep learning solution that assists in
+                skin disease identification through image analysis,
+                performance evaluation, and explainable AI visualization.
+
+            </p>
+
+
+
+            <div class="row mt-4">
+
+
+                <div class="col-md-3">
+
+                    <h5>
+                        8+
+                    </h5>
+
+                    <small>
+                        CNN Architectures Evaluated
+                    </small>
+
+                </div>
+
+
+
+                <div class="col-md-3">
+
+                    <h5>
+                        ResNet50
+                    </h5>
+
+                    <small>
+                        Final Selected Model
+                    </small>
+
+                </div>
+
+
+
+                <div class="col-md-3">
+
+                    <h5>
+                        XAI
+                    </h5>
+
+                    <small>
+                        Grad-CAM Explanation
+                    </small>
+
+                </div>
+
+
+
+                <div class="col-md-3">
+
+                    <h5>
+                        PDF
+                    </h5>
+
+                    <small>
+                        Automated Reporting
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
 
 {% endblock %}
