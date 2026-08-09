@@ -1,0 +1,9 @@
+Model,Train Accuracy,Validation Accuracy,Test Accuracy,Train Loss,Validation Loss,Test Loss
+EfficientNetB0,51.68,56.26,54.49,1.3004,1.247,1.2937
+EfficientNetB0 ES_LR,61.95,59.99,60.55,1.1024,1.0835,1.1392
+EfficientNetB0 SGD,54.49,61.32,60.15,1.243,1.0996,1.1356
+EfficientNetB0 RMSprop,65.39,62.65,61.34,0.8975,0.9037,0.9606
+EfficientNetB0 batchsize(64),62.67,61.12,59.35,0.9607,0.9531,1.0026
+EfficientNetB0 Finetuning,59.63,53.4,50.77,1.2568,1.2456,1.2901
+EfficientNetB0 HyperParameter,71.48,66.44,66.27,0.7116,0.7996,0.8552
+EfficientNetB0 HyperParameter,71.48,66.44,66.27,0.7116,0.7996,0.8552

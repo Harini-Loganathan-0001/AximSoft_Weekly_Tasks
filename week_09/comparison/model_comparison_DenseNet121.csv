@@ -1,0 +1,8 @@
+Model,Train Accuracy,Validation Accuracy,Test Accuracy,Train Loss,Validation Loss,Test Loss
+DenseNet121,48.73,58.72,56.65,1.3829,1.2098,1.2557
+DenseNet121 ES_LR,57.67,59.19,56.62,1.2366,1.1927,1.2348
+DenseNet121 SGD,41.46,44.67,43.85,1.5846,1.6536,1.6072
+DenseNet121 RMSprop,41.44,44.74,43.85,1.6594,1.5842,1.6068
+DenseNet121 batchsize(64),54.24,55.06,52.83,1.3738,1.3179,1.3543
+DenseNet121 Finetuning,59.63,53.4,50.77,1.2568,1.2456,1.2901
+DenseNet121 HyperParameter,62.58,65.65,65.0,1.0652,0.9851,1.009

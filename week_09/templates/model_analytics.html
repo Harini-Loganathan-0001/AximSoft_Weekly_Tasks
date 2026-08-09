@@ -1,0 +1,492 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="card border-0 shadow-sm mb-4"
+     style="background: linear-gradient(135deg, #273f64, #172741); border-radius:15px;">
+
+    <div class="card-body p-4">
+
+        <h2 class="text-white fw-bold mb-2">
+            Model Analytics
+        </h2>
+
+        <p class="text-white-50 mb-0">
+            Gain valuable insights into model performance by comparing training results,
+            evaluation metrics, and optimization techniques to select the most accurate
+            deep learning model.
+        </p>
+
+    </div>
+
+</div>
+<div class="card shadow mt-4" style="background-color:#b4b5ce;">
+
+    <div class="card-header">
+        <h5>
+            Baseline Model Comparison
+        </h5>
+    </div>
+
+
+    <div class="card-body table-responsive">
+
+
+<table border="1px" class="table table-hover align-middle" >
+
+
+<thead class="custom-table-header">
+
+<tr>
+
+<th>Model</th>
+
+<th>Train Accuracy</th>
+
+<th>Validation Accuracy</th>
+
+<th>Test Accuracy</th>
+
+<th>Train Loss</th>
+
+<th>Validation Loss</th>
+
+<th>Test Loss</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for row in baseline_table %}
+
+<tr>
+
+
+<td>
+{{row["Model"]}}
+</td>
+
+
+<td>
+{{row["Train Accuracy"]}}%
+</td>
+
+
+<td>
+{{row["Validation Accuracy"]}}%
+</td>
+
+
+<td>
+{{row["Test Accuracy"]}}%
+</td>
+
+
+<td>
+{{row["Train Loss"]}}
+</td>
+
+
+<td>
+{{row["Validation Loss"]}}
+</td>
+
+
+<td>
+{{row["Test Loss"]}}
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+</div>
+
+<div class="card shadow mt-4">
+
+    <div class="card-body text-center"
+         style="background:#325e69; border-radius:10px;">
+
+        <h5 style="color:#dadee5;">
+            Baseline Evaluation Summary
+        </h5>
+
+        <p class="mb-0">
+            MobileNetV2 achieved the highest baseline test accuracy among all
+            evaluated models and was selected as the reference model for further
+            optimization.
+        </p>
+
+    </div>
+
+
+
+
+
+</div>
+
+<div class="card shadow mt-4" style="background-color:#b4b5ce;">
+
+<div class="card-header" >
+
+<h5>
+Optimization Summary Accuracy
+</h5>
+
+</div>
+
+
+<div class="card-body table-responsive">
+
+
+<table border="1px" class="table table-hover">
+
+
+<thead class="custom-table-header">
+
+<tr>
+
+<th>Model</th>
+
+<th>Best Optimization</th>
+
+<th>Test Accuracy</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+
+{% for row in optimization_table %}
+
+<tr>
+
+<td>
+{{row["Model"]}}
+</td>
+
+
+<td>
+{{row["Best Optimization"]}}
+</td>
+
+
+<td>
+{{row["Test Accuracy"]}} %
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+</div>
+
+<div class="card shadow mt-4"  >
+
+<div class="card-header" style="background-color:#424850; color:white;" >
+
+<h5>
+Best Optimization Accuracy Comparison
+</h5>
+
+</div>
+
+
+<div class="card-body">
+
+<canvas id="optimizationAccuracyChart"></canvas>
+
+</div>
+
+</div>
+
+
+<div class="card shadow mt-4" style="background-color:#b4b5ce;">
+
+<div class="card-header">
+    <h5>Final Model Performance Comparison</h5>
+</div>
+
+
+<div class="card-body table-responsive">
+
+
+<table border="1px" class="table table-hover align-middle">
+
+
+<thead class="custom-table-header">
+
+<tr>
+
+<th>Model</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1 Score</th>
+<th>ROC-AUC</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+
+{% for row in final_table %}
+
+<tr 
+{% if row["Model"] == "ResNet50" %}
+style="background-color :#325e69;; font-weight:700;"
+{% endif %}
+>
+
+
+<td>
+{{row["Model"]}}
+</td>
+
+
+<td>
+{{"%.2f"|format(row["Accuracy"]*100)}} %
+</td>
+
+
+<td>
+{{"%.2f"|format(row["Precision"]*100)}} %
+</td>
+
+
+<td>
+{{"%.2f"|format(row["Recall"]*100)}} %
+</td>
+
+
+<td>
+{{"%.2f"|format(row["F1Score"]*100)}} %
+</td>
+
+
+<td>
+{{"%.2f"|format(row["ROC-AUC"]*100)}} %
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+</div>
+
+<div class="card shadow mt-4">
+
+    <div class="card-body text-center"
+         style="background:#325e69; border-radius:10px;">
+
+
+        <h4 style="color:#e4efe8;">
+            Best Performing Model: ResNet50
+        </h4>
+
+
+        <p class="mb-0">
+
+            ResNet50 achieved the highest test accuracy among all evaluated
+            CNN architectures and was selected as the final model for skin
+            disease classification.
+
+        </p>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<!-- ResNet50 Performance Images -->
+
+<div class="row mt-4">
+
+
+    <!-- Accuracy Curve -->
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-header text-center" style="background-color:#424850; color:white;">
+                <h5>
+                    ResNet50 Accuracy Curve
+                </h5>
+            </div>
+
+
+            <div class="card-body text-center">
+
+                <img src="{{ url_for('static', filename='images/resnet50_accuracy_curve.png') }}"
+                     class="img-fluid">
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Confusion Matrix -->
+
+    <div class="col-md-6">
+
+        <div class="card shadow" >
+
+            <div class="card-header text-center" style="background-color:#424850; color:white;">
+                <h5>
+                    ResNet50 Loss Curve
+                </h5>
+            </div>
+
+
+            <div class="card-body text-center">
+
+                <img src="{{ url_for('static', filename='images/resnet50_loss_curve.png') }}"
+                     class="img-fluid">
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="row mt-4">
+
+
+    <div class="col-md-12">
+
+        <div class="card shadow">
+
+
+            <div class="card-header text-center" style="background-color:#424850; color:white;">
+
+                <h5>
+                    Grad-CAM Explainability
+                </h5>
+
+            </div>
+
+
+            <div class="card-body text-center"
+            >
+
+
+                <img src="{{ url_for('static', filename='images/ALL_TOGETHER.png') }}"
+                     class="img-fluid"
+                     style="max-height:450px;">
+
+
+                <p class="mt-3">
+
+                    Grad-CAM highlights the important regions of the skin image
+                    that influenced the ResNet50 prediction.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<div class="card shadow mt-4">
+
+    <div class="card-body text-center"
+         style="background:#325e69; border-left:5px solid #14155c; border-radius:10px;">
+
+        <h4 style="color:#c2d3c9;">
+            Final Model Selection
+        </h4>
+
+        <p class="mb-0">
+            After baseline evaluation and optimization analysis of multiple CNN
+            architectures, ResNet50 was selected as the final model based on
+            its best test accuracy and overall performance metrics.
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+window.optimizationModels =
+{{ optimization_models | tojson }};
+
+window.optimizationAccuracy =
+{{ optimization_accuracy | tojson }};
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+
+
+{% endblock %}

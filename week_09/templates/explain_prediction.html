@@ -1,0 +1,392 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ================= Page Title ================= -->
+
+    <div class="page-title mb-4">
+
+        <h2>
+
+
+            Explain Prediction
+
+        </h2>
+
+        <p class="text-muted">
+
+            AI Explainability using
+            <strong>ResNet50</strong> and
+            <strong>Grad-CAM</strong>
+
+        </p>
+
+    </div>
+
+    {% if prediction %}
+
+    
+    <!-- Row 1  -->
+
+<div class="row g-4">
+
+    <!-- Original Image -->
+
+    <div class="col-lg-6">
+
+        <div class="diagnosis-card h-100 ">
+
+            <h4 class="mb-3">
+    
+                Original Image
+            </h4>
+
+            {% if image_path %}
+
+            <img
+                src="{{ url_for('static', filename=image_path) }}"
+                class="img-fluid rounded shadow"
+                style="height:420px;width:100%;object-fit:cover;">
+
+            {% endif %}
+
+            <div class="text-center mt-3">
+
+                <span class="badge bg-primary px-3 py-2">
+
+                    Uploaded Image
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Grad-CAM -->
+
+    <div class="col-lg-6">
+
+        <div class="diagnosis-card h-100">
+
+            <h4 class="mb-3">
+
+
+                Grad-CAM Heatmap
+
+            </h4>
+
+            {% if gradcam_path %}
+
+            <img
+                src="{{ url_for('static', filename=gradcam_path) }}"
+                class="img-fluid rounded shadow"
+                style="height:420px;width:100%;object-fit:cover;">
+
+            <div class="text-center mt-3">
+
+                <span class="badge bg-primary px-3 py-2">
+
+                    AI Attention Region
+
+                </span>
+
+            </div>
+
+            {% else %}
+
+            <div class="text-center p-5">
+
+                <i class="bi bi-fire display-2 text-secondary"></i>
+
+                <h4 class="mt-3">
+
+                    Grad-CAM Not Generated
+
+                </h4>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+        <!-- ================= Prediction Summary ================= -->
+
+<div class="row mt-4">
+
+    <div class="col-lg-12">
+
+        <div class="diagnosis-card">
+
+            <h4 class="mb-4 fw-bold">
+
+                Prediction Summary
+            </h4>
+
+            <div class="row g-4">
+
+                <!-- Disease -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            
+                            <h6 class="mt-3 fw-bold text-muted">Predicted Disease</h6>
+                            <span class="badge bg-danger fs-6 px-3 py-2">
+                                {{ prediction }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confidence -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                    
+                            <h6 class="mt-3 fw-bold text-muted">Confidence Score</h6>
+
+                            <div class="progress mt-3" style="height:12px;">
+                                <div class="progress-bar bg-success"
+                                     style="width:{{ confidence }}%">
+                                </div>
+                            </div>
+
+                            <h4 class="text-success fw-bold mt-3">
+                                {{ confidence|round(2) }}%
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+
+                            <h6 class="text-center fw-bold mb-3">
+                    
+                                Model Details
+                            </h6>
+
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Model</span>
+                                <strong>ResNet50</strong>
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Input Size</span>
+                                <strong>224 × 224</strong>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <span>Classes</span>
+                                <strong>7</strong>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!--  Row 2  -->
+
+    <div class="row mt-4 g-4">
+
+        <!-- Confidence -->
+
+        <div class="col-lg-6">
+
+            <div class="diagnosis-card h-100">
+
+                <h4 fw-bold>
+
+        
+
+                    Model Confidence
+
+                </h4>
+
+                <div class="progress mt-4" style="height:30px;">
+
+                    <div
+
+                        class="progress-bar bg-success"
+
+                        style="width:{{ confidence }}%;">
+
+                        {{ confidence|round(2) }}%
+
+                    </div>
+
+                </div>
+
+                <p class="text-muted fw-bold mt-4">
+
+                    Higher confidence indicates that the model is more certain
+                    about its predicted disease category.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Top Predictions -->
+
+        <div class="col-lg-6">
+
+            <div class="diagnosis-card h-100">
+
+                <h4>
+
+        
+
+                    Top Predictions
+
+                </h4>
+
+                {% for item in probability_data[:3] %}
+
+                <div class="mt-4">
+
+                    <div class="d-flex justify-content-between">
+
+                        <strong>
+
+                            {{ item.class_name }}
+
+                        </strong>
+
+                        <strong>
+
+                            {{ item.probability }}%
+
+                        </strong>
+
+                    </div>
+
+                    <div class="progress mt-2">
+
+                        <div
+
+                            class="progress-bar
+
+                            {% if loop.index==1 %}
+                                bg-success
+                            {% elif loop.index==2 %}
+                                bg-primary
+                            {% else %}
+                                bg-warning
+                            {% endif %}"
+
+                            style="width:{{ item.probability }}%;">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--  Row 3  -->
+
+    <div class="row mt-4">
+
+        <div class="col-lg-12">
+
+            <div class="diagnosis-card">
+
+                <h4 class="mt-3 fw-bold">              
+
+                    AI Explanation
+
+                </h4>
+
+                <p class="mt-3 fw-bold">
+
+                    The ResNet50 deep learning model analyzes the dermoscopic
+                    image and extracts hierarchical visual features. Grad-CAM
+                    highlights the image regions that contributed the most to
+                    the final prediction. Warmer colors indicate stronger
+                    influence on the prediction.
+
+                </p>
+
+                <div class="alert alert-warning mt-4">
+
+
+
+                    <strong>Medical Disclaimer</strong>
+
+                    <br><br>
+
+                    This prediction is generated by an Artificial Intelligence
+                    model for research and educational purposes only. It should
+                    not be considered a substitute for professional medical
+                    diagnosis. Always consult a qualified dermatologist for
+                    clinical confirmation.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-warning text-center mt-5 p-5">
+
+        <i class="bi bi-exclamation-circle display-4"></i>
+
+        <h3 class="mt-3">
+
+            No Prediction Available
+
+        </h3>
+
+        <p>
+
+            Please upload a skin image and perform diagnosis first.
+
+        </p>
+
+        <a
+
+            href="{{ url_for('image_diagnosis') }}"
+
+            class="btn btn-primary btn-lg">
+
+            Go to Image Diagnosis
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

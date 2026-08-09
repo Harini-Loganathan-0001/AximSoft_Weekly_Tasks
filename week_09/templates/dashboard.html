@@ -1,0 +1,293 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="card border-0 shadow-lg mb-4"
+     style="background: linear-gradient(135deg, #273f64, #172741); border-radius:15px;">
+
+    <div class="card-body p-4 text-white">
+
+        <h3 class="fw-bold mb-3">
+          Welcome to the AI Skin Disease Classification Dashboard
+        </h3>
+
+        <p class="mb-0" style="font-size:17px; line-height:1.8;">
+
+            Explore intelligent skin disease diagnosis powered by deep learning.
+            Monitor model performance, visualize Grad-CAM explanations,
+            compare CNN architectures, and generate comprehensive reports
+            through a centralized analytics dashboard.
+
+        </p>
+
+    </div>
+
+</div>
+
+    <div class="page-title">
+        <h2>Dashboard</h2>
+        <p>Skin Disease Classification Overview</p>
+    </div>
+
+    <!-- KPI Cards -->
+
+<!-- ================= KPI CARDS ================= -->
+
+<div class="row g-4">
+
+    <!-- Total Images -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+
+        <div class="kpi-card blue-card">
+
+            <i class="bi bi-images card-icon"></i>
+
+            <h5>Total Images</h5>
+
+            <h4>10,015</h4>
+
+        </div>
+
+    </div>
+
+    <!-- Disease Classes -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+
+        <div class="kpi-card green-card">
+
+            <i class="bi bi-virus card-icon"></i>
+
+            <h5>Disease Classes</h5>
+
+            <h4>7</h4>
+
+        </div>
+
+    </div>
+
+    <!-- Best Model -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+
+        <div class="kpi-card orange-card">
+
+            <i class="bi bi-cpu-fill card-icon"></i>
+
+            <h5>Best Model</h5>
+
+            <h4 class="model-name">
+
+                ResNet50
+
+            </h4>
+
+        </div>
+
+    </div>
+
+    <!-- Accuracy -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+
+        <div class="kpi-card pink-card">
+
+            <i class="bi bi-graph-up-arrow card-icon"></i>
+
+            <h5>Accuracy</h5>
+
+            <h4>67.8%</h4>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- Charts -->
+
+    <div class="row mt-4">
+
+        <div class="col-lg-12">
+
+            <div class="chart-card">
+
+                <h4>Class Distribution</h4>
+
+                <canvas id="classChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+    <div class="col-lg-6">
+
+        <div class="diagnosis-card">
+
+            <h4>Grad-CAM Visualization</h4>
+
+            <img src="{{ url_for('static', filename='images/GRADCAM_OVERLAY.png') }}"
+                 class="img-fluid rounded shadow-sm"
+                 alt="Grad-CAM Overlay">
+
+        </div>
+
+    </div>
+
+
+
+        <div class="col-lg-6">
+
+            <div class="diagnosis-card">
+
+                <h4>Dataset Split</h4>
+
+                <canvas id="splitChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="row mt-4">
+
+    <div class="col-lg-6">
+
+        <div class="diagnosis-card">
+
+            <h4>GRAD-CAM Heatmap</h4>
+
+            <img src="{{ url_for('static', filename='images/Grad-CAM (2).png') }}"
+                 class="img-fluid rounded shadow-sm"
+                 alt="Grad-CAM Overlay">
+
+        </div>
+
+    </div>
+
+
+
+        <div class="col-lg-6">
+
+        <div class="diagnosis-card">
+
+            <h4> ResNet50 Confusion Matrix</h4>
+
+            <img src="{{ url_for('static', filename='images/resnet_cofusion_matrix.png') }}"
+                 class="img-fluid rounded shadow-sm"
+                 alt="Grad-CAM Overlay">
+
+        </div>
+
+    </div>
+
+    
+
+    <div class="row mt-4">
+
+    <div class="col-lg-12">
+
+        <div class="diagnosis-card">
+
+            <h4>Sample Images</h4>
+
+            <img src="{{ url_for('static', filename='images/SAMPLE.png') }}"
+                 class="img-fluid rounded shadow-sm"
+                 alt="Grad-CAM Overlay">
+
+        </div>
+
+    
+
+
+
+    <div class="card shadow mt-4">
+
+    <div class="card-header"
+         style="background:#424850;color:white;">
+
+        <h5 class="mb-0">
+            Model Performance Snapshot
+        </h5>
+
+    </div>
+
+    
+
+    <div class="card-body table-responsive">
+
+        <table border="1px" class="table table-hover align-middle">
+
+            <thead style="background:#6787a7;">
+
+                <tr>
+
+                    <th>Rank</th>
+                    <th>Model</th>
+                    <th>Best Optimization</th>
+                    <th>Test Accuracy</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr style="background:#8faabd;">
+
+                    <td>1</td>
+                    <td><strong>ResNet50</strong></td>
+                    <td>SGD Optimizer</td>
+                    <td><strong>67.80%</strong></td>
+
+                </tr>
+
+                <tr>
+
+                    <td> 2</td>
+                    <td>Deep CNN</td>
+                    <td>Hyperparameter Optimization</td>
+                    <td>67.53%</td>
+
+                </tr>
+
+                <tr>
+
+                    <td> 3</td>
+                    <td>Dropout CNN</td>
+                    <td>Hyperparameter Optimization</td>
+                    <td>67.13%</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>4</td>
+                    <td>EfficientNetB0</td>
+                    <td>Hyperparameter Optimization</td>
+                    <td>66.27%</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+{% endblock %}

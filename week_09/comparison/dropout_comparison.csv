@@ -1,0 +1,7 @@
+Model,Train Accuracy,Validation Accuracy,Test Accuracy,Train Loss,Validation Loss,Test Loss
+Dropout CNN,47.97,48.74,46.64,1.3525,1.2767,1.3052
+Dropout CNN LR_ES,54.96,54.53,54.22,1.1839,1.1545,1.1801
+Dropout CNN(RMSprop),53.97,58.59,60.88,1.2339,1.1845,1.1949
+Dropout CNN(SGD),58.37,60.25,60.35,1.4187,1.39,1.4062
+Dropout HyperParameter,67.26,67.64,67.13,0.9371,0.9371,0.9323
+Dropout CNN Batchsize(64),58.93,59.39,60.28,1.3837,1.3507,1.3625
