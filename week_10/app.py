@@ -12,7 +12,7 @@ app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-MODEL_PATH = os.path.join(BASE_DIR, "models", "phase7", "final_rnn_24h_to_24h.keras")
+MODEL_PATH = os.path.join(BASE_DIR, "models", "phase7", "final_rnn_48h_to_24h_rmsprop.keras")
 FEATURE_SCALER_PATH = os.path.join(BASE_DIR, "scalers","feature_scaler.pkl")
 TARGET_SCALER_PATH = os.path.join(BASE_DIR,"scalers", "target_scaler.pkl")
 DATA_PATH = os.path.join( BASE_DIR, "processed_data", "PJME_phase2_preprocessed.csv")
@@ -29,6 +29,9 @@ upper_errors = forecast_intervals["upper_errors"]
 print("model loaded")
 print("Input shape :", model.input_shape)
 print("Output shape:", model.output_shape)
+print("Forecast intervals loaded")
+print("Lower errors shape:", np.asarray(lower_errors).shape)
+print("Upper errors shape:", np.asarray(upper_errors).shape)
 
 # load scalers
 feature_scaler = joblib.load(FEATURE_SCALER_PATH)
@@ -105,7 +108,7 @@ def generate_24_hour_forecast():
     sequence_features = []
     all_demand = demand_history
 
-    start_index = (len(PJME_data) - 24)
+    start_index = (len(PJME_data) - 48)
 
     for i in range(start_index, len(PJME_data)):
 
@@ -127,7 +130,7 @@ def generate_24_hour_forecast():
     sequence_scaled = (feature_scaler.transform(sequence_features))
 
     # rnn input
-    sequence_scaled = sequence_scaled.reshape(1, 24, 14)
+    sequence_scaled = sequence_scaled.reshape(1, 48, 14)
 
     print("Forecast inputtt:", sequence_scaled.shape)
 
@@ -243,26 +246,42 @@ def analytics():
 @app.route("/validation")
 def validation():
 
-    df = pd.read_csv("models/phase7/phase7_final_results.csv")
+    df = pd.read_csv("comparison/phase7_final_results.csv")
     validation_data = {
         "30": {
-            "mae": 1707.6502495659722,
-            "rmse": 2395.6688913148264,
-            "mape": 4.844190792636168,
-            "r2": 0.9069143871482694,
-            "bias": 235.72475043402778
+            "mae": 1760.4446451822917,
+            "rmse": 2485.4733423173907,
+            "mape": 5.014282326881961,
+            "r2": 0.8998047358504945,
+            "bias": 304.7603515625
         },
+
         "60": {
-            "mae": 1849.6819132486978,
-            "rmse": 2600.5815646552323,
-            "mape": 5.076388045821296,
-            "r2": 0.8858652323189403,
-            "bias": 363.8615736219618
+            "mae": 1945.6095269097223,
+            "rmse": 2739.1471559224597,
+            "mape": 5.34199935184507,
+            "r2": 0.873378420077503,
+            "bias": 282.6929633246528
+        }
+    }
+
+    peak_demand_data = {
+        "30": {
+            "mae": 2680.5411241319443,
+            "rmse": 3255.570996511496,
+            "mape": 5.509521015338086
+        },
+
+        "60": {
+            "mae": 3159.5068088107637,
+            "rmse": 3777.598196631339,
+            "mape": 6.465600064149024
         }
     }
 
     return render_template("validation.html",
-        validation_data=validation_data
+        validation_data=validation_data,
+        peak_demand_data=peak_demand_data
     )
 
 if __name__ == "__main__":

@@ -217,17 +217,17 @@ Validation - Electricity Demand Forecasting
                         <strong>30 Days</strong>
                     </td>
 
-                    <td>1,707.65</td>
+                    <td>1760.44</td>
 
-                    <td>2,395.67</td>
+                    <td>1760.44</td>
 
-                    <td>4.84%</td>
+                    <td>5.01%</td>
 
                     <td class="metric-good">
-                        90.69%
+                        89.98%
                     </td>
 
-                    <td>235.72</td>
+                    <td>304.76</td>
                 </tr>
 
 
@@ -238,22 +238,22 @@ Validation - Electricity Demand Forecasting
 
                     </td>
 
-                    <td>1,849.68</td>
+                    <td>1945.61</td>
 
-                    <td>2,600.58</td>
+                    <td>2739.15</td>
 
-                    <td>5.08%</td>
+                    <td>5.34%</td>
 
                     <td class="metric-good">
-                        88.59%
+                        87.34%
                     </td>
 
-                    <td>363.86</td>
+                    <td>282.69</td>
 
                 </tr>
 
 
-                <tr>
+                <!-- <tr>
 
                     <td>
                         <strong>60 Days Peak Demand</strong>
@@ -269,7 +269,7 @@ Validation - Electricity Demand Forecasting
 
                     <td>—</td>
 
-                </tr>
+                </tr> -->
 
             </tbody>
 
@@ -299,7 +299,7 @@ Validation - Electricity Demand Forecasting
             </div>
 
             <span class="section-badge">
-                RNN 24 → 24
+                RNN RMSprop 48 → 24
             </span>
 
         </div>
@@ -394,7 +394,7 @@ Validation - Electricity Demand Forecasting
                 <span>MAE</span>
 
                 <strong id="summaryMae">
-                    1,707.65
+                    1760.44
                 </strong>
 
             </div>
@@ -405,7 +405,7 @@ Validation - Electricity Demand Forecasting
                 <span>RMSE</span>
 
                 <strong id="summaryRmse">
-                    2,395.67
+                    2485.47
                 </strong>
 
             </div>
@@ -416,7 +416,7 @@ Validation - Electricity Demand Forecasting
                 <span>MAPE</span>
 
                 <strong id="summaryMape">
-                    4.84%
+                    5.1%
                 </strong>
 
             </div>
@@ -427,7 +427,7 @@ Validation - Electricity Demand Forecasting
                 <span>R²</span>
 
                 <strong id="summaryR2">
-                    90.69%
+                    89.98%
                 </strong>
 
             </div>
@@ -438,7 +438,7 @@ Validation - Electricity Demand Forecasting
                 <span>Bias</span>
 
                 <strong id="summaryBias">
-                    235.72
+                    304.76
                 </strong>
 
             </div>
@@ -457,31 +457,19 @@ Validation - Electricity Demand Forecasting
 const validationData = {
 
     "30": {
-
-        mae: 1707.6502495659722,
-
-        rmse: 2395.6688913148264,
-
-        mape: 4.844190792636168,
-
-        r2: 0.9069143871482694,
-
-        bias: 235.72475043402778
-
+        mae: 1760.4446451822917,
+        rmse: 2485.4733423173907,
+        mape: 5.014282326881961,
+        r2: 0.8998047358504945,
+        bias: 304.7603515625
     },
 
     "60": {
-
-        mae: 1849.6819132486978,
-
-        rmse: 2600.5815646552323,
-
-        mape: 5.076388045821296,
-
-        r2: 0.8858652323189403,
-
-        bias: 363.8615736219618
-
+        mae: 1945.6095269097223,
+        rmse: 2739.1471559224597,
+        mape: 5.34199935184507,
+        r2: 0.873378420077503,
+        bias: 282.6929633246528
     }
 
 };

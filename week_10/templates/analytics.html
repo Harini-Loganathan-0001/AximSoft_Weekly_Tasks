@@ -35,7 +35,7 @@ Analytics - Electricity Demand Forecasting
 
         <div class="card-content">
             <span class="card-label">MAE</span>
-            <h2>1,376.72 <small>MW</small></h2>
+            <h2>1,368.04 <small>MW</small></h2>
             <p>Mean Absolute Error</p>
         </div>
     </div>
@@ -49,7 +49,7 @@ Analytics - Electricity Demand Forecasting
 
         <div class="card-content">
             <span class="card-label">RMSE</span>
-            <h2>1,926.89 <small>MW</small></h2>
+            <h2>1,924.23 <small>MW</small></h2>
             <p>Root Mean Square Error</p>
         </div>
     </div>
@@ -63,7 +63,7 @@ Analytics - Electricity Demand Forecasting
 
         <div class="card-content">
             <span class="card-label">MAPE</span>
-            <h2>4.35<small>%</small></h2>
+            <h2>4.32<small>%</small></h2>
             <p>Mean Absolute Percentage Error</p>
         </div>
     </div>
@@ -77,7 +77,7 @@ Analytics - Electricity Demand Forecasting
 
         <div class="card-content">
             <span class="card-label">R² SCORE</span>
-            <h2>91.05<small>%</small></h2>
+            <h2>91.08<small>%</small></h2>
             <p>Model Explained Variance</p>
         </div>
     </div>
@@ -95,7 +95,7 @@ Analytics - Electricity Demand Forecasting
         </div>
 
         <span class="section-badge">
-            RNN 24 → 24
+            RNN 48 → 24
         </span>
     </div>
 
@@ -369,17 +369,17 @@ Analytics - Electricity Demand Forecasting
             <div class="section-header">
                 <div>
                     <h2>Training vs Validation Loss</h2>
-                    <p>RNN 24 → 24 learning performance</p>
+                    <p>RNN 48 → 24 learning performance</p>
                 </div>
 
                 <span class="section-badge green-badge">
-                    RNN 24→24
+                    RNN 48→24
                 </span>
             </div>
 
             <div class="chart-container">
                 <img
-                    src="{{ url_for('static', filename='images/phase5_rnn_24h_training.png') }}"
+                    src="{{ url_for('static', filename='images/phase5_rnn_48h_training.png') }}"
                     alt="RNN Training and Validation Loss"
                     class="img-fluid"
                 >
