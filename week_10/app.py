@@ -12,7 +12,7 @@ app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-MODEL_PATH = os.path.join(BASE_DIR, "models", "phase7", "final_rnn_48h_to_24h_rmsprop.keras")
+MODEL_PATH = os.path.join(BASE_DIR, "final_rnn_48h_to_24h_rmsprop.keras")
 FEATURE_SCALER_PATH = os.path.join(BASE_DIR, "scalers","feature_scaler.pkl")
 TARGET_SCALER_PATH = os.path.join(BASE_DIR,"scalers", "target_scaler.pkl")
 DATA_PATH = os.path.join( BASE_DIR, "processed_data", "PJME_phase2_preprocessed.csv")

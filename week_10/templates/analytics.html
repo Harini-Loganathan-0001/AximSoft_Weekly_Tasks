@@ -86,7 +86,7 @@ Analytics - Electricity Demand Forecasting
 
 
 <!-- Actual vs Forecast -->
-<div class="analytics-section actual-forecast-section">
+<div class="validation-section">
 
     <div class="section-header">
         <div>
@@ -99,7 +99,7 @@ Analytics - Electricity Demand Forecasting
         </span>
     </div>
 
-    <div class="chart-container large-chart">
+    <div class="validation-chart">
 
         <img
             src="{{ url_for('static', filename='/images/phase8_final_actual_vs_forecast.png') }}"
@@ -116,7 +116,7 @@ Analytics - Electricity Demand Forecasting
     <!-- Hourly -->
     <div class="col-lg-6 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -129,7 +129,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/eda_hourly_demand.png') }}"
                     alt="Hourly Demand Trend"
@@ -145,7 +145,7 @@ Analytics - Electricity Demand Forecasting
     <!-- Monthly -->
     <div class="col-lg-6 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -158,7 +158,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/eda_monthly_demand.png') }}"
                     alt="Monthly Demand Trend"
@@ -179,7 +179,7 @@ Analytics - Electricity Demand Forecasting
     <!-- Peak Demand -->
     <div class="col-lg-6 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -192,7 +192,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/eda_demand_distribution.png') }}"
                     alt="Peak Demand Analysis"
@@ -208,7 +208,7 @@ Analytics - Electricity Demand Forecasting
     <!-- Forecast Error -->
     <div class="col-lg-6 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -221,7 +221,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/weekly_electricity_consumption.png') }}"
                     alt="Forecast Error Analysis"
@@ -240,7 +240,7 @@ Analytics - Electricity Demand Forecasting
     <!-- Forecast Error -->
     <div class="col-lg-12">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -253,7 +253,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/phase8_forecast_error.png') }}"
                     alt="Forecast Error Analysis"
@@ -274,7 +274,7 @@ Analytics - Electricity Demand Forecasting
     <!-- R² Comparison -->
     <div class="col-lg-6 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -287,7 +287,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/phase8_r2_comparison.png') }}"
                     alt="R² Score Comparison"
@@ -303,7 +303,7 @@ Analytics - Electricity Demand Forecasting
     <!-- RMSE Comparison -->
     <div class="col-lg-6 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -316,7 +316,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/phase8_rmse_comparison.png') }}"
                     alt="RMSE Comparison"
@@ -336,7 +336,7 @@ Analytics - Electricity Demand Forecasting
     <!-- MAE Comparison -->
     <div class="col-lg-4 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -349,7 +349,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/phase8_mae_comparison.png') }}"
                     alt="MAE Comparison"
@@ -364,7 +364,7 @@ Analytics - Electricity Demand Forecasting
     <!-- Training & Validation Loss -->
     <div class="col-lg-4 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -377,7 +377,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/phase5_rnn_48h_training.png') }}"
                     alt="RNN Training and Validation Loss"
@@ -393,7 +393,7 @@ Analytics - Electricity Demand Forecasting
     <!-- MAPE Comparison -->
     <div class="col-lg-4 col-md-6">
 
-        <div class="analytics-section h-100">
+        <div class="validation-section">
 
             <div class="section-header">
                 <div>
@@ -406,7 +406,7 @@ Analytics - Electricity Demand Forecasting
                 </span>
             </div>
 
-            <div class="chart-container">
+            <div class="validation-chart">
                 <img
                     src="{{ url_for('static', filename='images/phase8_mape_comparison.png') }}"
                     alt="MAPE Comparison"
