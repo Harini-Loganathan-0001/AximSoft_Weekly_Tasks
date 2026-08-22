@@ -1,0 +1,557 @@
+{% extends "base.html" %}
+
+{% block title %}
+Validation - Electricity Demand Forecasting
+{% endblock %}
+
+{% block content %}
+
+<div class="validation-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="validation-header">
+
+    <h1>Forecast Validation</h1>
+
+    <p>
+        Evaluate the accuracy and reliability of electricity demand
+        forecasts across different validation periods
+    </p>
+
+</div>
+
+
+    <!-- ================= VALIDATION PERIOD ================= -->
+
+    <div class="validation-selector">
+
+        <div>
+            <span class="selector-label">Validation Period</span>
+
+            <p>
+                Select the forecasting period to evaluate
+            </p>
+        </div>
+
+        <div class="period-buttons">
+
+            <button
+                class="period-btn active"
+                onclick="selectPeriod('30', this)">
+                30 Days
+            </button>
+
+            <button
+                class="period-btn"
+                onclick="selectPeriod('60', this)">
+                60 Days
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= KPI CARDS ================= -->
+
+    <div class="row g-4">
+
+
+        <!-- MAE -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="validation-card">
+
+                <div class="validation-icon blue">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+
+                <div>
+
+                    <span>MAE</span>
+
+                    <h2 id="maeValue">
+                        1,707.65
+                    </h2>
+
+                    <p>
+                        Mean Absolute Error
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RMSE -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="validation-card">
+
+                <div class="validation-icon purple">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+
+                <div>
+
+                    <span>RMSE</span>
+
+                    <h2 id="rmseValue">
+                        2,395.67
+                    </h2>
+
+                    <p>
+                        Root Mean Square Error
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAPE -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="validation-card">
+
+                <div class="validation-icon orange">
+                    <i class="fas fa-percentage"></i>
+                </div>
+
+                <div>
+
+                    <span>MAPE</span>
+
+                    <h2 id="mapeValue">
+                        4.84%
+                    </h2>
+
+                    <p>
+                        Mean Percentage Error
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- R2 -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="validation-card">
+
+                <div class="validation-icon green">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+
+                <div>
+
+                    <span>R² SCORE</span>
+
+                    <h2 id="r2Value">
+                        90.69%
+                    </h2>
+
+                    <p>
+                        Explained Variance
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    
+
+    <!-- ================= VALIDATION PERFORMANCE TABLE ================= -->
+
+<div class="validation-section">
+
+    <div class="section-header">
+
+        <div>
+            <h2>Validation Performance</h2>
+            <p>Comparison of forecasting metrics across validation periods</p>
+        </div>
+
+        <span class="section-badge">
+            Performance
+        </span>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table validation-table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Validation Period</th>
+                    <th>MAE</th>
+                    <th>RMSE</th>
+                    <th>MAPE</th>
+                    <th>R²</th>
+                    <th>Bias</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>
+                        <strong>30 Days</strong>
+                    </td>
+
+                    <td>1760.44</td>
+
+                    <td>1760.44</td>
+
+                    <td>5.01%</td>
+
+                    <td class="metric-good">
+                        89.98%
+                    </td>
+
+                    <td>304.76</td>
+                </tr>
+
+
+                <tr class="current-row">
+
+                    <td>
+                        <strong>60 Days</strong>
+
+                    </td>
+
+                    <td>1945.61</td>
+
+                    <td>2739.15</td>
+
+                    <td>5.34%</td>
+
+                    <td class="metric-good">
+                        87.34%
+                    </td>
+
+                    <td>282.69</td>
+
+                </tr>
+
+
+                <!-- <tr>
+
+                    <td>
+                        <strong>60 Days Peak Demand</strong>
+                    </td>
+
+                    <td>3,081.22</td>
+
+                    <td>3,508.07</td>
+
+                    <td>6.31%</td>
+
+                    <td>—</td>
+
+                    <td>—</td>
+
+                </tr> -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+    <!-- ================= ACTUAL VS PREDICTED ================= -->
+
+    <div class="validation-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Actual vs Predicted Demand
+                </h2>
+
+                <p>
+                    Compare actual electricity demand with forecasted demand
+                </p>
+
+            </div>
+
+            <span class="section-badge">
+                RNN RMSprop 48 → 24
+            </span>
+
+        </div>
+
+
+        <div class="validation-chart">
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/phase7_actual_vs_forecast_60days.png'
+                ) }}"
+                alt="Actual vs Predicted Demand"
+                class="img-fluid"
+            >
+
+        </div>
+
+    </div>
+
+    <!-- ================= FORECAST ERROR ANALYSIS ================= -->
+
+<div class="validation-section">
+
+    <div class="section-header">
+
+        <div>
+            <h2>Forecast Error Distribution</h2>
+
+        </div>
+
+        <span class="section-badge error-badge">
+            Error
+        </span>
+
+    </div>
+
+    <div class="validation-chart">
+
+        <img
+            src="{{ url_for(
+                'static',
+                filename='images/phase7_forecast_error_distribution.png'
+            ) }}"
+            alt="Forecast Error Analysis"
+            class="img-fluid"
+        >
+
+    </div>
+
+</div>
+
+
+
+
+    <!-- ================= VALIDATION SUMMARY ================= -->
+
+    <div class="validation-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Validation Summary
+                </h2>
+
+                <p>
+                    Current validation-period performance
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-item">
+
+                <span>Validation Period</span>
+
+                <strong id="periodValue">
+                    30 Days
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>MAE</span>
+
+                <strong id="summaryMae">
+                    1760.44
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>RMSE</span>
+
+                <strong id="summaryRmse">
+                    2485.47
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>MAPE</span>
+
+                <strong id="summaryMape">
+                    5.1%
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>R²</span>
+
+                <strong id="summaryR2">
+                    89.98%
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>Bias</span>
+
+                <strong id="summaryBias">
+                    304.76
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+const validationData = {
+
+    "30": {
+        mae: 1760.4446451822917,
+        rmse: 2485.4733423173907,
+        mape: 5.014282326881961,
+        r2: 0.8998047358504945,
+        bias: 304.7603515625
+    },
+
+    "60": {
+        mae: 1945.6095269097223,
+        rmse: 2739.1471559224597,
+        mape: 5.34199935184507,
+        r2: 0.873378420077503,
+        bias: 282.6929633246528
+    }
+
+};
+
+
+function formatNumber(value) {
+
+    return value.toLocaleString(
+        undefined,
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+
+function selectPeriod(period, button) {
+
+    const data = validationData[period];
+
+
+    /* ================= KPI VALUES ================= */
+
+    document.getElementById("maeValue").textContent =
+        formatNumber(data.mae);
+
+
+    document.getElementById("rmseValue").textContent =
+        formatNumber(data.rmse);
+
+
+    document.getElementById("mapeValue").textContent =
+        data.mape.toFixed(2) + "%";
+
+
+    document.getElementById("r2Value").textContent =
+        (data.r2 * 100).toFixed(2) + "%";
+
+
+    document.getElementById("biasValue").textContent =
+        formatNumber(data.bias);
+
+
+    /* ================= SUMMARY ================= */
+
+    document.getElementById("periodValue").textContent =
+        period + " Days";
+
+
+    document.getElementById("summaryMae").textContent =
+        formatNumber(data.mae);
+
+
+    document.getElementById("summaryRmse").textContent =
+        formatNumber(data.rmse);
+
+
+    document.getElementById("summaryMape").textContent =
+        data.mape.toFixed(2) + "%";
+
+
+    document.getElementById("summaryR2").textContent =
+        (data.r2 * 100).toFixed(2) + "%";
+
+
+    document.getElementById("summaryBias").textContent =
+        formatNumber(data.bias);
+
+
+    /* ================= ACTIVE BUTTON ================= */
+
+    document.querySelectorAll(".period-btn").forEach(
+        btn => btn.classList.remove("active")
+    );
+
+    button.classList.add("active");
+
+}
+
+</script>
+
+
+{% endblock %}

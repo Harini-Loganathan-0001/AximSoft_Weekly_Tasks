@@ -1,0 +1,472 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard - PowerForecast
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= DASHBOARD HEADER ================= -->
+
+<div class="dashboard-header">
+
+    <div>
+        <h1>Electricity Demand Forecasting</h1>
+
+        <p>
+            Real-Time Energy Intelligence & 24-Hour Forecasting
+        </p>
+    </div>
+
+</div>
+
+
+<!-- ================= KPI CARDS ================= -->
+
+<div class="row g-4 dashboard-row">
+
+    <!-- Current Demand -->
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="dashboard-card current-card">
+
+            <div class="card-label">
+                Current Demand
+            </div>
+
+            <div class="card-value">
+                {{ "%.2f"|format(latest_demand) }} MW
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- 24 Hour Average -->
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="dashboard-card average-card">
+
+            <div class="card-label">
+                24-Hour Average
+            </div>
+
+            <div class="card-value">
+                {{ "%.2f"|format(average_demand) }} MW
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Peak Demand -->
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="dashboard-card peak-card">
+
+            <div class="card-label">
+                Peak Demand
+            </div>
+
+            <div class="card-value">
+                {{ "%.2f"|format(maximum_demand) }} MW
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Minimum Demand -->
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="dashboard-card minimum-card">
+
+            <div class="card-label">
+                Minimum Demand
+            </div>
+
+            <div class="card-value">
+                {{ "%.2f"|format(minimum_demand) }} MW
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= HISTORICAL + FORECAST ================= -->
+
+<div class="row g-4 dashboard-row">
+
+
+    <!-- HISTORICAL CONSUMPTION -->
+
+    <div class="col-lg-8">
+
+        <div class="validation-section chart-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h3>
+                        Historical Consumption
+                    </h3>
+
+                    <p>
+                        Recent electricity demand pattern
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="validation-chart">
+
+                <img
+                    src="{{ url_for('static', filename='images/demand_distribution.png') }}"
+                    alt="Historical Electricity Consumption"
+                    class="historical-chart">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FORECAST SUMMARY -->
+
+    <div class="col-lg-4">
+
+        <div class="dashboard-panel forecast-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h3>
+                        Forecast Summary
+                    </h3>
+
+                    <p>
+                        Next 24-hour prediction
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Forecast Horizon -->
+
+            <div class="forecast-item">
+
+                <div class="forecast-info">
+
+                    <span>
+                        Forecast Horizon
+                    </span>
+
+                    <strong>
+                        24 Hours
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Forecast Model -->
+
+            <div class="forecast-item">
+
+                <div class="forecast-info">
+
+                    <span>
+                        Forecast Model
+                    </span>
+
+                    <strong>
+                        RNN(RMSprop)
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Input Sequence -->
+
+            <div class="forecast-item">
+
+                <div class="forecast-info">
+
+                    <span>
+                        Input Sequence
+                    </span>
+
+                    <strong>
+                        Previous 48 Hours
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Forecast Output -->
+
+            <div class="forecast-item">
+
+                <div class="forecast-info">
+
+                    <span>
+                        Forecast Output
+                    </span>
+
+                    <strong>
+                        Next 24 Hours
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Generate Button -->
+
+            <a
+                href="{{ url_for('forecast') }}"
+                class="generate-button">
+
+                Generate Forecast
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MODEL PERFORMANCE ================= -->
+
+<div class="dashboard-panel performance-panel">
+
+    <div class="panel-header">
+
+        <div>
+
+            <h3>
+                Model Performance
+            </h3>
+
+            <p>
+                Final RNN 24 → 24 hour forecasting performance
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="row g-4 performance-grid">
+
+
+        <!-- MAE -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="metric-box">
+
+                <span>
+                    MAE
+                </span>
+
+                <strong>
+                    1368.64
+                </strong>
+
+                <small>
+                    MW
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- RMSE -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="metric-box">
+
+                <span>
+                    RMSE
+                </span>
+
+                <strong>
+                    1924.23
+                </strong>
+
+                <small>
+                    MW
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAPE -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="metric-box">
+
+                <span>
+                    MAPE
+                </span>
+
+                <strong>
+                    4.32%
+                </strong>
+
+                <small>
+                    Forecast Error
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- R2 -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="metric-box">
+
+                <span>
+                    R²
+                </span>
+
+                <strong>
+                    0.9108
+                </strong>
+
+                <small>
+                    Model Fit
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MODEL DETAILS ================= -->
+
+<div class="row g-4 dashboard-row">
+
+
+    <!-- Deep Learning -->
+
+    <div class="col-md-4">
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                DL
+            </div>
+
+            <div>
+
+                <h4>
+                    Deep Learning
+                </h4>
+
+                <p>
+                    Recurrent Neural Network
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Features -->
+
+    <div class="col-md-4">
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                14
+            </div>
+
+            <div>
+
+                <h4>
+                    14 Features
+                </h4>
+
+                <p>
+                    Time, lag and rolling features
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Forecast -->
+
+    <div class="col-md-4">
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                24
+            </div>
+
+            <div>
+
+                <h4>
+                    Multi-Step Forecast
+                </h4>
+
+                <p>
+                    Next 24 hourly demand values
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

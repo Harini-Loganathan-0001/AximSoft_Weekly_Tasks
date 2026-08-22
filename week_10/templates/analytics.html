@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+
+{% block title %}
+Analytics - Electricity Demand Forecasting
+{% endblock %}
+
+
+{% block head %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="analytics-page">
+<!-- Analytics Header -->
+<div class="analytics-header">
+    <div>
+        <h1>Forecast Analytics</h1>
+        <p>Electricity demand insights, forecasting performance and model analysis</p>
+    </div>
+</div>
+
+
+<!-- Analytics KPI Cards -->
+<div class="analytics-cards">
+
+    <!-- MAE -->
+    <div class="analytics-card">
+        <div class="card-icon blue">
+            <i class="fas fa-bullseye"></i>
+        </div>
+
+        <div class="card-content">
+            <span class="card-label">MAE</span>
+            <h2>1,368.04 <small>MW</small></h2>
+            <p>Mean Absolute Error</p>
+        </div>
+    </div>
+
+
+    <!-- RMSE -->
+    <div class="analytics-card">
+        <div class="card-icon purple">
+            <i class="fas fa-chart-line"></i>
+        </div>
+
+        <div class="card-content">
+            <span class="card-label">RMSE</span>
+            <h2>1,924.23 <small>MW</small></h2>
+            <p>Root Mean Square Error</p>
+        </div>
+    </div>
+
+
+    <!-- MAPE -->
+    <div class="analytics-card">
+        <div class="card-icon orange">
+            <i class="fas fa-percentage"></i>
+        </div>
+
+        <div class="card-content">
+            <span class="card-label">MAPE</span>
+            <h2>4.32<small>%</small></h2>
+            <p>Mean Absolute Percentage Error</p>
+        </div>
+    </div>
+
+
+    <!-- R2 -->
+    <div class="analytics-card">
+        <div class="card-icon green">
+            <i class="fas fa-chart-pie"></i>
+        </div>
+
+        <div class="card-content">
+            <span class="card-label">R² SCORE</span>
+            <h2>91.08<small>%</small></h2>
+            <p>Model Explained Variance</p>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Actual vs Forecast -->
+<div class="validation-section">
+
+    <div class="section-header">
+        <div>
+            <h2>Actual vs Forecast</h2>
+            <p>Comparison of actual electricity demand with predicted demand</p>
+        </div>
+
+        <span class="section-badge">
+            RNN 48 → 24
+        </span>
+    </div>
+
+    <div class="validation-chart">
+
+        <img
+            src="{{ url_for('static', filename='/images/phase8_final_actual_vs_forecast.png') }}"
+            alt="Actual vs Forecast"
+        >
+
+    </div>
+
+</div>
+
+<!-- Hourly + Monthly -->
+<div class="row g-4">
+
+    <!-- Hourly -->
+    <div class="col-lg-6 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Hourly Demand Trend</h2>
+                    <p>Electricity demand pattern across 24 hours</p>
+                </div>
+
+                <span class="section-badge blue-badge">
+                    Hourly
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/eda_hourly_demand.png') }}"
+                    alt="Hourly Demand Trend"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Monthly -->
+    <div class="col-lg-6 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Monthly Demand Trend</h2>
+                    <p>Long-term electricity demand variation by month</p>
+                </div>
+
+                <span class="section-badge purple-badge">
+                    Monthly
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/eda_monthly_demand.png') }}"
+                    alt="Monthly Demand Trend"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Peak Demand + Forecast Error -->
+<div class="row g-4 mt-1">
+
+    <!-- Peak Demand -->
+    <div class="col-lg-6 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Peak Demand Analysis</h2>
+                    <p>Analysis of high electricity demand periods</p>
+                </div>
+
+                <span class="section-badge orange-badge">
+                    Peak
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/eda_demand_distribution.png') }}"
+                    alt="Peak Demand Analysis"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Forecast Error -->
+    <div class="col-lg-6 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Weekly Electricity Consumption</h2>
+                    <p>Weekly electricity demand and consumption pattern</p>
+                </div>
+
+                <span class="section-badge red-badge">
+                    Weekly
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/weekly_electricity_consumption.png') }}"
+                    alt="Forecast Error Analysis"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row g-4 mt-1">
+    <!-- Forecast Error -->
+    <div class="col-lg-12">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Forecast Error Analysis</h2>
+                    <p>Analysis of prediction errors and forecasting accuracy</p>
+                </div>
+
+                <span class="section-badge red-badge">
+                    Error
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/phase8_forecast_error.png') }}"
+                    alt="Forecast Error Analysis"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<!-- R² Comparison + RMSE Comparison -->
+<div class="row g-4 mt-1">
+
+    <!-- R² Comparison -->
+    <div class="col-lg-6 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>R² Score Comparison</h2>
+                    <p>Comparison of model explained variance</p>
+                </div>
+
+                <span class="section-badge green-badge">
+                    R²
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/phase8_r2_comparison.png') }}"
+                    alt="R² Score Comparison"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RMSE Comparison -->
+    <div class="col-lg-6 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>RMSE Comparison</h2>
+                    <p>Comparison of root mean square forecasting errors</p>
+                </div>
+
+                <span class="section-badge orange-badge">
+                    RMSE
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/phase8_rmse_comparison.png') }}"
+                    alt="RMSE Comparison"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MAE + MAPE + Training Loss -->
+<div class="row g-4 mt-1">
+
+    <!-- MAE Comparison -->
+    <div class="col-lg-4 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>MAE Comparison</h2>
+                    <p>Mean absolute error across models</p>
+                </div>
+
+                <span class="section-badge blue-badge">
+                    MAE
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/phase8_mae_comparison.png') }}"
+                    alt="MAE Comparison"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Training & Validation Loss -->
+    <div class="col-lg-4 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>Training vs Validation Loss</h2>
+                    <p>RNN 48 → 24 learning performance</p>
+                </div>
+
+                <span class="section-badge green-badge">
+                    RNN 48→24
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/phase5_rnn_48h_training.png') }}"
+                    alt="RNN Training and Validation Loss"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAPE Comparison -->
+    <div class="col-lg-4 col-md-6">
+
+        <div class="validation-section">
+
+            <div class="section-header">
+                <div>
+                    <h2>MAPE Comparison</h2>
+                    <p>Mean absolute percentage error</p>
+                </div>
+
+                <span class="section-badge purple-badge">
+                    MAPE
+                </span>
+            </div>
+
+            <div class="validation-chart">
+                <img
+                    src="{{ url_for('static', filename='images/phase8_mape_comparison.png') }}"
+                    alt="MAPE Comparison"
+                    class="img-fluid"
+                >
+            </div>
+
+        </div>
+
+    </div>
+
+
+    
+
+</div>
+
+
+
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+
+
+</div>
+
+{% endblock %}

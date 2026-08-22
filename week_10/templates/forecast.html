@@ -1,0 +1,465 @@
+{% extends "base.html" %}
+
+{% block title %}
+Forecast - Electricity Demand Forecasting
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+
+    <div class="forcast-header text-center mb-4">
+
+        <h1>
+            Electricity Demand Forecasting
+        </h1>
+
+        <p class="text-muted">
+            RNN-based electricity demand prediction
+        </p>
+
+    </div>
+
+    <div class="card border-0 shadow-sm mt-4">
+    <div class="card-body p-4">
+
+        <h5 class="fw-semibold mb-3">
+            Forecast Model
+        </h5>
+
+        <div class="row text-center">
+
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    Model
+                </div>
+                <div class="fw-bold">
+                    RNN + RMSprop
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    Historical Input
+                </div>
+                <div class="fw-bold">
+                    48 Hours
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="text-muted small">
+                    Forecast Horizon
+                </div>
+                <div class="fw-bold">
+                    24 Hours
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+    <!-- FORECAST CONTROL -->
+
+<div class="card border-0 shadow-sm mt-4">
+
+    <div class="card-body p-4">
+
+        <form method="POST">
+
+            <div class="row g-4 align-items-end">
+
+                <!-- Forecast Horizon -->
+
+                <div class="col-lg-9 col-md-8">
+
+                    <label
+                        for="horizon"
+                        class="form-label fw-semibold text-secondary">
+
+                        Forecast Horizon
+
+                    </label>
+
+                    <select
+                        id="horizon"
+                        name="horizon"
+                        class="form-select form-select-lg">
+
+                        <option value="24">
+                            Next 24 Hours
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Generate Button -->
+
+                <div class="col-lg-3 col-md-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg w-100">
+
+                        Generate Forecast
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+    {% if error %}
+
+    <div class="alert alert-danger mt-4">
+
+        <strong>Forecast Error:</strong>
+
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    {% if forecast_available %}
+
+
+    <!-- SUMMARY -->
+
+    <div class="row g-4 mt-2">
+
+
+        <div class="col-md-4">
+
+            <div class="card summary-card">
+
+                <div class="summary-label">
+                    Average Forecast
+                </div>
+
+                <div class="summary-value">
+
+                    {{ "%.2f"|format(average_forecast) }} MW
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card summary-card">
+
+                <div class="summary-label">
+                    Peak Forecast
+                </div>
+
+                <div class="summary-value">
+
+                    {{ "%.2f"|format(peak_forecast) }} MW
+
+                </div>
+
+                <div class="peak-time">
+
+                    Peak Time: {{ peak_time }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card summary-card">
+
+                <div class="summary-label">
+                    Minimum Forecast
+                </div>
+
+                <div class="summary-value">
+
+                    {{ "%.2f"|format(minimum_forecast) }} MW
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- TABLE -->
+
+<div class="card forecast-card mt-4 border-0 shadow-sm">
+
+    <div
+    class="card-header forecast-table-header text-center py-3"
+    style="background-color: #8daac7;">
+
+        <h4 class="mb-0 fw-semibold text-dark">
+            Next 24 Hours Forecast
+        </h4>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle text-center mb-0">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th class="py-3">No</th>
+
+                    <th class="py-3">Date & Time</th>
+
+                    <th class="py-3">Forecast Demand (MW)</th>
+                    <th>Lower (MW)</th>
+                    <th>Upper (MW)</th>
+
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for row in forecast.itertuples() %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+                    <td>
+                        {{ row.Datetime.strftime("%Y-%m-%d %H:%M") }}
+                    </td>
+
+                    <td class="forecast-value fw-semibold">
+
+                        {{ "%.2f"|format(row.Forecast_MW) }}
+
+                    </td>
+                    <td>
+            {{ "%.2f"|format(row.Lower_MW) }}
+        </td>
+
+        <td>
+            {{ "%.2f"|format(row.Upper_MW) }}
+        </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<div class="card forecast-chart-card mt-4">
+
+    <div class="card-header forecast-table-header text-center py-3">
+        <h4 class="mb-0 fw-semibold">
+            24-Hour Demand Forecast
+        </h4>
+    </div>
+
+    <div class="card-body">
+
+        <div style="height: 400px;">
+            <canvas id="forecastChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const forecastLabels = [
+        {% for row in forecast.itertuples() %}
+            "{{ row.Datetime.strftime('%Y-%m-%d %H:%M') }}",
+        {% endfor %}
+    ];
+
+    const forecastValues = [
+        {% for row in forecast.itertuples() %}
+            {{ row.Forecast_MW }},
+        {% endfor %}
+    ];
+
+    const lowerValues = [
+        {% for row in forecast.itertuples() %}
+            {{ row.Lower_MW }},
+        {% endfor %}
+    ];
+
+    const upperValues = [
+        {% for row in forecast.itertuples() %}
+            {{ row.Upper_MW }},
+        {% endfor %}
+    ];
+
+
+    const ctx = document.getElementById(
+        "forecastChart"
+    ).getContext("2d");
+
+
+    new Chart(ctx, {
+
+        type: "line",
+
+        data: {
+
+            labels: forecastLabels,
+
+            datasets: [
+
+                {
+                    label: "Forecast Demand",
+
+                    data: forecastValues,
+
+                    borderColor: "#2563eb",
+
+                    backgroundColor: "rgba(37, 99, 235, 0.08)",
+
+                    borderWidth: 3,
+
+                    pointRadius: 4,
+
+                    pointBackgroundColor: "#2563eb",
+
+                    tension: 0.3,
+
+                    fill: false
+                },
+
+                {
+                    label: "Upper Bound",
+
+                    data: upperValues,
+
+                    borderColor: "rgba(37, 99, 235, 0.35)",
+
+                    borderWidth: 1,
+
+                    pointRadius: 0,
+
+                    tension: 0.3,
+
+                    fill: false
+                },
+
+                {
+                    label: "Lower Bound",
+
+                    data: lowerValues,
+
+                    borderColor: "rgba(37, 99, 235, 0.35)",
+
+                    borderWidth: 1,
+
+                    pointRadius: 0,
+
+                    tension: 0.3,
+
+                    fill: "-1",
+
+                    backgroundColor: "rgba(37, 99, 235, 0.12)"
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            interaction: {
+                mode: "index",
+                intersect: false
+            },
+
+            plugins: {
+
+                legend: {
+                    position: "top"
+                }
+
+            },
+
+            scales: {
+
+                x: {
+    title: {
+        display: true,
+        text: "Forecast Horizon"
+    },
+
+    ticks: {
+        display: false
+    },
+
+    grid: {
+        display: false
+    }
+},
+
+                y: {
+                    title: {
+                        display: true,
+                        text: "Electricity Demand (MW)"
+                    }
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+
+
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
