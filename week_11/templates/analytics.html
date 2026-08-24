@@ -1,0 +1,411 @@
+{% extends "base.html" %}
+
+{% block title %}Text Analytics{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Header -->
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Text Analytics
+        </h1>
+
+        <p class="text-white">
+            Explore patterns, distributions and linguistic characteristics
+            of the IMDb movie review dataset.
+        </p>
+
+    </div>
+
+
+    <!-- Analytics Cards -->
+
+    <div class="row g-4">
+
+
+        <!-- 1. Sentiment Distribution -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+                <div class="card-body p-3">
+
+                    <h5 class="fw-bold mb-1">
+                        Sentiment Distribution
+                    </h5>
+
+                    <p class="text-muted small mb-3">
+                        Distribution of positive and negative reviews
+                    </p>
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/sentiment_distribution.png'
+                        ) }}"
+                        class="img-fluid rounded"
+                        alt="Sentiment Distribution"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 2. Review Length Distribution -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+                <div class="card-body p-3">
+
+                    <h5 class="fw-bold mb-1">
+                        Review Length Distribution
+                    </h5>
+
+                    <p class="text-muted small mb-3">
+                        Distribution of review lengths in the dataset
+                    </p>
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/review_length_distribution.png'
+                        ) }}"
+                        class="img-fluid rounded"
+                        alt="Review Length Distribution"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 3. Word Frequency -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+                <div class="card-body p-3">
+
+                    <h5 class="fw-bold mb-1">
+                        Word Frequency
+                    </h5>
+
+                    <p class="text-muted small mb-3">
+                        Most frequently occurring words in reviews
+                    </p>
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/word_frequency.png'
+                        ) }}"
+                        class="img-fluid rounded"
+                        alt="Word Frequency"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 4. Word Cloud -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+                <div class="card-body p-3">
+
+                    <h5 class="fw-bold mb-1">
+                        Word Cloud
+                    </h5>
+
+                    <p class="text-muted small mb-3">
+                        Frequently used words represented visually
+                    </p>
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/wordcloud.png'
+                        ) }}"
+                        class="img-fluid rounded"
+                        alt="Word Cloud"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+            <!-- 9. GRU Confusion Matrix -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+        <div class="card-body p-3">
+
+            <h5 class="fw-bold mb-1">
+                GRU Confusion Matrix
+            </h5>
+
+            <p class="text-muted small mb-3">
+                Classification performance of the final GRU model
+            </p>
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/confusion_matrix.png'
+                ) }}"
+                class="img-fluid rounded"
+                alt="GRU Confusion Matrix"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+ <!-- 10. GRU Training and Validation Loss -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+        <div class="card-body p-3">
+
+            <h5 class="fw-bold mb-1">
+                GRU Training & Validation Accuracy
+            </h5>
+
+            <p class="text-muted small mb-3">
+                Training and validation accuracy across epochs
+            </p>
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/training_validation_accuracy.png'
+                ) }}"
+                class="img-fluid rounded"
+                alt="GRU Training and Validation Loss"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+        
+
+
+        <!-- 11. Baseline Model Comparison -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+        <div class="card-body p-3">
+
+            <h5 class="fw-bold mb-1">
+                Baseline Model Comparison
+            </h5>
+
+            <p class="text-muted small mb-3">
+                Accuracy comparison of baseline models
+            </p>
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/baseline_accuracy.png'
+                ) }}"
+                class="img-fluid rounded"
+                alt="Baseline Model Comparison"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 12. Final Model Comparison -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+        <div class="card-body p-3">
+
+            <h5 class="fw-bold mb-1">
+                Final Model Comparison
+            </h5>
+
+            <p class="text-muted small mb-3">
+                Accuracy comparison of optimized final models
+            </p>
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/final_accuracy.png'
+                ) }}"
+                class="img-fluid rounded"
+                alt="Final Model Comparison"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- LSTM Confusion Matrix -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+        <div class="card-body p-3">
+
+            <h5 class="fw-bold mb-1">
+                LSTM Confusion Matrix
+            </h5>
+
+            <p class="text-muted small mb-3">
+                Classification performance of the LSTM model
+            </p>
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/confusion_matrix copy.png'
+                ) }}"
+                class="img-fluid rounded"
+                alt="LSTM Confusion Matrix"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ANN Confusion Matrix -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+        <div class="card-body p-3">
+
+            <h5 class="fw-bold mb-1">
+                ANN Confusion Matrix
+            </h5>
+
+            <p class="text-muted small mb-3">
+                Classification performance of the ANN model
+            </p>
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/confusion_matrix copy 2.png'
+                ) }}"
+                class="img-fluid rounded"
+                alt="ANN Confusion Matrix"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ANN Confusion Matrix -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+        <div class="card-body p-3">
+
+            <h5 class="fw-bold mb-1">
+                ANN Confusion Matrix
+            </h5>
+
+            <p class="text-muted small mb-3">
+                Classification performance of the ANN baseline model
+            </p>
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/phase4_ann_confusion_matrix.png'
+                ) }}"
+                class="img-fluid rounded"
+                alt="ANN Confusion Matrix"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TF-IDF Confusion Matrix -->
+
+<div class="col-lg-6">
+
+    <div class="card shadow-sm border-0 h-100 dashboard-card">
+
+        <div class="card-body p-3">
+
+            <h5 class="fw-bold mb-1">
+                TF-IDF Confusion Matrix
+            </h5>
+
+            <p class="text-muted small mb-3">
+                Classification performance of the TF-IDF baseline model
+            </p>
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='images/tfidf_confusion_matrix.png'
+                ) }}"
+                class="img-fluid rounded"
+                alt="TF-IDF Confusion Matrix"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+       
+
+</div>
+
+{% endblock %}

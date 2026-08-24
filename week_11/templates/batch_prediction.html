@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block title %}Batch Prediction{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Header -->
+
+    <div class="text-center mb-5">
+
+        <h1>Batch Prediction</h1>
+
+        <p class="text-white">
+            Upload a CSV file containing movie reviews
+            and generate sentiment predictions.
+        </p>
+
+    </div>
+
+
+    <!-- Upload Card -->
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('batch_prediction') }}"
+                        enctype="multipart/form-data"
+                    >
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+                                Upload CSV File
+                            </label>
+
+                            <input
+                                type="file"
+                                name="file"
+                                class="form-control"
+                                accept=".csv"
+                                required
+                            >
+
+                        
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Predict Sentiments
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Error -->
+
+    {% if error %}
+
+    <div class="alert alert-danger mt-4">
+
+        <strong>Error:</strong>
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- Summary -->
+
+    {% if summary %}
+
+    <div class="row mt-5">
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card shadow-sm text-center">
+
+                <div class="card-body">
+
+                    <h6>Total Reviews</h6>
+
+                    <h2>
+                        {{ summary.total }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card shadow-sm text-center">
+
+                <div class="card-body">
+
+                    <h6>Positive</h6>
+
+                    <h2 class="text-success">
+                        {{ summary.positive }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card shadow-sm text-center">
+
+                <div class="card-body">
+
+                    <h6>Negative</h6>
+
+                    <h2 class="text-danger">
+                        {{ summary.negative }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card shadow-sm text-center">
+
+                <div class="card-body">
+
+                    <h6>Unknown</h6>
+
+                    <h2 class="text-secondary">
+                        {{ summary.unknown }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- Results Table -->
+
+    {% if results %}
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h4 class="mb-0">
+                Prediction Results
+            </h4>
+
+            <a
+                href="{{ url_for('download_results') }}"
+                class="btn btn-success"
+            >
+                Download Results CSV
+            </a>
+
+        </div>
+
+
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Review</th>
+
+                            <th>Predicted Sentiment</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for row in results %}
+
+                        <tr>
+
+                            <td>
+                                {{ loop.index }}
+                            </td>
+
+                            <td>
+                                {{ row.review }}
+                            </td>
+
+                            <td>
+
+                                {% if row["Predicted Sentiment"] == "Positive" %}
+
+                                    <span class="badge bg-primary">
+                                        Positive
+                                    </span>
+
+                                {% elif row["Predicted Sentiment"] == "Negative" %}
+
+                                    <span class="badge bg-danger">
+                                        Negative
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+                                        Unknown
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

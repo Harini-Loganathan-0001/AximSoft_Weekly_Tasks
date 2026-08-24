@@ -1,0 +1,149 @@
+
+.navbar {
+    background: linear-gradient(90deg, #29646e,#85576d, #29646e) !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    letter-spacing: 0.3px;
+}
+
+.nav-link {
+    margin-left: 10px;
+}
+
+.nav-link:hover {
+    color: #ffffff !important;
+}
+
+.dashboard-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+.analytics-placeholder {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+/* Dashboard */
+.dashboard-container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+/* Dashboard cards */
+.dashboard-container .card {
+    border-radius: 12px;
+}
+
+/* Reduce card content */
+.dashboard-container .card-body {
+    padding: 18px;
+}
+
+/* Reduce headings */
+.dashboard-container h1 {
+    font-size: 2rem;
+}
+
+.dashboard-container h2 {
+    font-size: 1.5rem;
+}
+
+.dashboard-container h3 {
+    font-size: 1.25rem;
+}
+
+.dashboard-container h4 {
+    font-size: 1.15rem;
+}
+
+/* Statistics numbers */
+.dashboard-container .stats-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Smaller spacing */
+.dashboard-container .row {
+    margin-bottom: 20px;
+}
+
+/* Dashboard Card Hover Effect */
+
+.dashboard-card {
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Comparison Table */
+
+.comparison-table {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.comparison-table thead th {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px;
+}
+
+.comparison-table tbody td {
+    padding: 13px 14px;
+    font-size: 14px;
+}
+
+.comparison-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.comparison-table tbody tr:hover {
+    transform: scale(1.005);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+ /* .card {
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+    }  */
+
+.card{
+     background: linear-gradient(90deg, #7fb0b8,#be8da5, #76a1a8) !important;
+}
+

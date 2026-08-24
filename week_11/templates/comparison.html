@@ -1,0 +1,758 @@
+{% extends "base.html" %}
+
+{% block title %}Model Comparison{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="text-center mb-5">
+
+        <h1>Model Comparison</h1>
+
+        <p class="text-white">
+            Compare the performance of all sentiment analysis models.
+        </p>
+
+    </div>
+
+    <!-- Best Model KPI Cards -->
+
+<div class="row g-3 mb-5">
+
+    <!-- Model -->
+
+    <div class="col-6 col-md-4 col-lg">
+
+        <div class="card border-0 shadow-sm dashboard-card h-100">
+
+            <div class="card-body text-center p-3">
+
+                <small class="text-muted">
+                    Best Model
+                </small>
+
+                <h5 class="fw-bold mt-2 mb-0">
+                    GRU
+                </h5>
+
+                <small class="text-muted">
+                    Adam Optimizer
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Accuracy -->
+
+    <div class="col-6 col-md-4 col-lg">
+
+        <div class="card border-0 shadow-sm dashboard-card h-100">
+
+            <div class="card-body text-center p-3">
+
+                <small class="text-muted">
+                    Accuracy
+                </small>
+
+                <h3 class="fw-bold text-success mt-2 mb-0">
+                    90.02%
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Precision -->
+
+    <div class="col-6 col-md-4 col-lg">
+
+        <div class="card border-0 shadow-sm dashboard-card h-100">
+
+            <div class="card-body text-center p-3">
+
+                <small class="text-muted">
+                    Precision
+                </small>
+
+                <h3 class="fw-bold mt-2 mb-0">
+                    88.41%
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Recall -->
+
+    <div class="col-6 col-md-6 col-lg">
+
+        <div class="card border-0 shadow-sm dashboard-card h-100">
+
+            <div class="card-body text-center p-3">
+
+                <small class="text-muted">
+                    Recall
+                </small>
+
+                <h3 class="fw-bold mt-2 mb-0">
+                    92.21%
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- F1 Score -->
+
+    <div class="col-6 col-md-6 col-lg">
+
+        <div class="card border-0 shadow-sm dashboard-card h-100">
+
+            <div class="card-body text-center p-3">
+
+                <small class="text-muted">
+                    F1 Score
+                </small>
+
+                <h3 class="fw-bold mt-2 mb-0">
+                    90.27%
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Baseline Model Comparison -->
+
+<div class="row mb-5">
+
+    <div class="col-lg-12">
+
+        <div class="card border-0 shadow-sm dashboard-card">
+
+            <div class="card-body p-4">
+
+                <!-- Section Header -->
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+
+                        <h4 class="fw-bold mb-1">
+                            Baseline Model Comparison
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Performance comparison of the baseline models
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Table -->
+
+                <div class="table-responsive">
+
+                    <table  class="table table-hover align-middle mb-0">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                {% for column in baseline_columns %}
+
+                                <th class="text-nowrap">
+                                    {{ column }}
+                                </th>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for row in baseline_data %}
+
+                            <tr>
+
+                                {% for column in baseline_columns %}
+
+                                <td>
+
+                                    {% if column|lower == "accuracy" %}
+
+                                        <span class="fw-semibold">
+                                            {{ "%.4f"|format(row[column]) }}
+                                        </span>
+
+                                    {% elif column|lower == "precision" %}
+
+                                        <span>
+                                            {{ "%.4f"|format(row[column]) }}
+                                        </span>
+
+                                    {% elif column|lower == "recall" %}
+
+                                        <span>
+                                            {{ "%.4f"|format(row[column]) }}
+                                        </span>
+
+                                    {% elif column|lower == "f1 score" or column|lower == "f1_score" %}
+
+                                        <span>
+                                            {{ "%.4f"|format(row[column]) }}
+                                        </span>
+
+                                    {% elif column|lower == "roc-auc" or column|lower == "roc_auc" %}
+
+                                        <span>
+                                            {{ "%.4f"|format(row[column]) }}
+                                        </span>
+
+                                    {% else %}
+
+                                        {{ row[column] }}
+
+                                    {% endif %}
+
+                                </td>
+
+                                {% endfor %}
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Baseline Best Model -->
+
+<div class="row mt-4 mb-4">
+
+    <div class="col-lg-12">
+
+        <div class="card border-0 shadow-sm dashboard-card">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="me-3">
+
+                    </div>
+
+                    <div>
+
+                        <h5 class="fw-bold mb-1">
+                            GRU
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            The GRU Baseline achieved the best overall
+                            baseline performance with 88.47% accuracy
+                            and an F1 score of 88.56%.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Baseline Accuracy Chart -->
+
+<div class="row mb-5">
+
+    <div class="col-lg-12">
+
+        <div class="card border-0 shadow-sm dashboard-card">
+
+            <div class="card-body p-4">
+
+                <h5 class="fw-bold mb-1">
+                    Baseline Model Accuracy
+                </h5>
+
+                <div class="text-center">
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/baseline_accuracy.png'
+                        ) }}"
+                        class="img-fluid rounded"
+                        alt="Baseline Model Accuracy"
+                        style="max-height: 400px;"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Final Model Comparison -->
+
+<div class="row mb-5">
+
+    <div class="col-lg-12">
+
+        <div class="card border-0 shadow-sm dashboard-card">
+
+            <div class="card-body p-4">
+
+                <!-- Header -->
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+
+                        <h4 class="fw-bold mb-1">
+                            Final Model Comparison
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Comparison of optimized models after final training
+                            and hyperparameter tuning
+                        </p>
+
+                    </div>
+
+    
+
+                </div>
+
+
+                <!-- Table -->
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle comparison-table mb-0">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                {% for column in final_columns %}
+
+                                <th class="text-nowrap">
+                                    {{ column }}
+                                </th>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for row in final_data %}
+
+                            <tr
+                                {% if row["Model"] == "GRU Adam LR 0.0005" %}
+                                    class="table-success"
+                                {% endif %}
+                            >
+
+                                {% for column in final_columns %}
+
+                                <td>
+
+                                    {% if column == "Rank" %}
+
+                                        {% if row[column] == 1 %}
+
+                                            <span class="badge bg-success rounded-pill">
+                                                 1
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="badge bg-secondary rounded-pill">
+                                                {{ row[column] }}
+                                            </span>
+
+                                        {% endif %}
+
+
+                                    {% elif column == "Model" %}
+
+                                        <strong>
+                                            {{ row[column] }}
+                                        </strong>
+
+
+                                    {% elif column in [
+                                        "Accuracy",
+                                        "Precision",
+                                        "Recall",
+                                        "F1 Score",
+                                        "ROC-AUC",
+                                        "Average Precision"
+                                    ] %}
+
+                                        {% if row[column] is none or row[column] != row[column] %}
+
+                                            <span class="text-muted">
+                                                —
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="fw-semibold">
+                                                {{ "%.4f"|format(row[column]) }}
+                                            </span>
+
+                                        {% endif %}
+
+
+                                    {% else %}
+
+                                        {{ row[column] }}
+
+                                    {% endif %}
+
+                                </td>
+
+                                {% endfor %}
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Best Model Message -->
+
+                <div class="alert alert-primary mt-4 mb-0">
+
+                    <strong>Best Final Model:</strong>
+                    GRU Adam LR 0.0005 achieved the highest accuracy
+                    of <strong>90.02%</strong> and the highest F1 Score
+                    of <strong>90.27%</strong>.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Final Model Accuracy -->
+
+<div class="row mb-5">
+
+    <div class="col-lg-12">
+
+        <div class="card border-0 shadow-sm dashboard-card">
+
+            <div class="card-body p-4">
+
+                <div class="mb-4">
+
+                    <h5 class="fw-bold mb-1">
+                        Final Model Accuracy Comparison
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Accuracy comparison of the final optimized models
+                    </p>
+
+                </div>
+
+                <div class="text-center">
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/final_accuracy.png'
+                        ) }}"
+                        class="img-fluid rounded"
+                        alt="Final Model Accuracy Comparison"
+                        style="max-height: 420px;"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Model Performance Scorecard -->
+
+<div class="row mb-5">
+
+    <div class="col-lg-12">
+
+        <div class="card border-0 shadow-sm dashboard-card">
+
+            <div class="card-body p-4">
+
+                <div class="mb-4">
+
+                    <h4 class="fw-bold mb-1">
+                        Model Performance Scorecard
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Accuracy ranking of all evaluated sentiment models
+                    </p>
+
+                </div>
+
+
+                <!-- GRU -->
+
+                <div class="p-3 mb-3 rounded border border-success">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+
+                        <div>
+
+                            <span class="badge bg-success me-2">
+                                1
+                            </span>
+
+                            <strong>
+                                GRU Adam LR 0.0005
+                            </strong>
+
+                        </div>
+
+                        <strong class="text-success">
+                            90.02%
+                        </strong>
+
+                    </div>
+
+                    <div class="progress" style="height: 10px;">
+
+                        <div
+                            class="progress-bar bg-success"
+                            style="width: 90.02%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ANN -->
+
+                <div class="p-3 mb-3 rounded border">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+
+                        <div>
+
+                            <span class="badge bg-secondary me-2">
+                                2
+                            </span>
+
+                            <strong>
+                                ANN Batch 128
+                            </strong>
+
+                        </div>
+
+                        <strong>
+                            89.74%
+                        </strong>
+
+                    </div>
+
+                    <div class="progress" style="height: 10px;">
+
+                        <div
+                            class="progress-bar"
+                            style="width: 89.74%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Bi-LSTM -->
+
+                <div class="p-3 mb-3 rounded border">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+
+                        <div>
+
+                            <span class="badge bg-secondary me-2">
+                                3
+                            </span>
+
+                            <strong>
+                                Bi-LSTM RMSprop
+                            </strong>
+
+                        </div>
+
+                        <strong>
+                            89.64%
+                        </strong>
+
+                    </div>
+
+                    <div class="progress" style="height: 10px;">
+
+                        <div
+                            class="progress-bar"
+                            style="width: 89.64%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LSTM -->
+
+                <div class="p-3 mb-3 rounded border">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+
+                        <div>
+
+                            <span class="badge bg-secondary me-2">
+                                4
+                            </span>
+
+                            <strong>
+                                LSTM ReduceLR
+                            </strong>
+
+                        </div>
+
+                        <strong>
+                            88.43%
+                        </strong>
+
+                    </div>
+
+                    <div class="progress" style="height: 10px;">
+
+                        <div
+                            class="progress-bar"
+                            style="width: 88.43%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RNN -->
+
+                <div class="p-3 rounded border">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+
+                        <div>
+
+                            <span class="badge bg-secondary me-2">
+                                5
+                            </span>
+
+                            <strong>
+                                RNN Batch 128
+                            </strong>
+
+                        </div>
+
+                        <strong>
+                            50.72%
+                        </strong>
+
+                    </div>
+
+                    <div class="progress" style="height: 10px;">
+
+                        <div
+                            class="progress-bar"
+                            style="width: 50.72%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    
+
+</div>
+
+{% endblock %}
