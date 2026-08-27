@@ -242,7 +242,7 @@ The sigmoid output produces a probability between 0 and 1.
 
 ---
 
-# 🔹 Phase 6 — Training & Optimization
+# Phase 6 — Training & Optimization
 
 Different training configurations were investigated.
 
@@ -270,7 +270,7 @@ Optimizer: Adam
 Learning Rate: 0.0005
 ```
 
-# 🔹 Phase 7 — Final Evaluation & Model Selection
+# Phase 7 — Final Evaluation & Model Selection
 
 The final models were evaluated using:
 
@@ -365,7 +365,7 @@ ROC-AUC measures the model's ability to distinguish between positive and negativ
 
 ---
 
-# 📌 Confusion Matrix
+# Confusion Matrix
 
 The confusion matrix contains four values:
 
@@ -433,14 +433,20 @@ The same preprocessing configuration used during training is used during predict
 
 ## Project Screenshots
 
+### Dashboard
 ![Dashboard](screenshots/dashboard.png)
 
+
+### Prediction
 ![Prediction](screenshots/prediction.png)
 
+### Model Comparison
 ![Model Comparison](screenshots/comparison.png)
 
+### Analytics
 ![Analytics](screenshots/analytics.png)
 
+### Batch Prediction
 ![Batch Prediction](screenshots/batch_prediction.png)
 
 
