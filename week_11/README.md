@@ -42,7 +42,7 @@ The main objectives of this project are:
 
 ---
 
-# 📂 Project Structure
+# Project structure
 
 ```text
 week_11/
