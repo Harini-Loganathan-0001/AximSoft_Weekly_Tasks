@@ -1,0 +1,31 @@
+Feature
+tenure
+MonthlyCharges
+TotalCharges
+IsFiberOptic
+NoInternet
+ChargeToTenureRatio
+HighRiskCustomer
+InternetService_Fiber optic
+InternetService_No
+OnlineSecurity_No
+OnlineSecurity_No internet service
+OnlineBackup_No
+OnlineBackup_No internet service
+DeviceProtection_No
+DeviceProtection_No internet service
+TechSupport_No
+TechSupport_No internet service
+StreamingTV_No internet service
+StreamingMovies_No internet service
+Contract_Month-to-month
+Contract_Two year
+PaperlessBilling_No
+PaperlessBilling_Yes
+PaymentMethod_Electronic check
+TenureGroup_New Customer
+TenureGroup_Very Long Term
+MonthlyChargesGroup_High
+MonthlyChargesGroup_Low
+InternetTechSupport_Internet_Without_Support
+InternetTechSupport_No_Internet
