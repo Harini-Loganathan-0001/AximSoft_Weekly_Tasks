@@ -4,12 +4,14 @@ import joblib
 import shap
 import ollama
 from sklearn.preprocessing import normalize
+import re
 
-from sentence_transformers import SentenceTransformer
-import faiss
-import pickle
-import ollama
-from sklearn.preprocessing import normalize
+from src.tools import (
+    get_customer_profile,
+    predict_customer_churn,
+    get_customer_shap,
+    search_knowledge_base
+)
 
 app = Flask(__name__)
 
@@ -23,7 +25,7 @@ model = joblib.load("models/final_xgb_feature_model.pkl")
 feature_data = pd.read_csv("data/processed/feature_engineered_customers.csv")
 
 # load fiass index
-index = faiss.read_index("data/processed/knowledge_base2_faiss.index")
+index = None
 
 # load knowledge base chunks
 knowledge_base = pd.read_csv("data/processed/knowledge_base_chunks.csv")
@@ -38,7 +40,9 @@ training_columns = joblib.load("models/xgb_training_columns.pkl")
 
 selected_features = pd.read_csv("models/xgb_selected_features.csv")["Feature"].tolist()
 
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+embedding_model = None
+
+nlp_data = pd.read_csv("data/processed/customer_support_nlp_cleaned.csv")
 
 
 # Fix TotalCharges
@@ -49,7 +53,15 @@ explainer = shap.TreeExplainer(model)
 
 LLM_MODEL = "llama3.2:3b"
 
-# HIGH_RISK_CUSTOMERS = []
+total_tickets = len(nlp_data)
+
+label_counts = nlp_data["label"].value_counts()
+
+total_issue_types = nlp_data["label"].nunique()
+
+highest_issue_category = label_counts.idxmax()
+
+lowest_issue_category = label_counts.idxmin()
 
 # dashboard
 @app.route("/")
@@ -76,25 +88,28 @@ def dashboard():
 
 # rag
 def retrieve_context(query, top_k=5):
+    global embedding_model
+    global index
 
-    query_embedding = embedding_model.encode(
-        [query],
-        convert_to_numpy=True
-    )
+    from sentence_transformers import SentenceTransformer
+    import faiss
+
+    if embedding_model is None:
+        embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+
+    if index is None:
+        index = faiss.read_index("data/processed/knowledge_base2_faiss.index")
+
+    query_embedding = embedding_model.encode([query], convert_to_numpy=True)
 
     query_embedding = normalize(
         query_embedding,
         norm="l2"
     ).astype("float32")
 
-    distances, indices = index.search(
-        query_embedding,
-        top_k
-    )
+    distances, indices = index.search( query_embedding, top_k)
 
-    results = knowledge_base.iloc[
-        indices[0]
-    ].copy()
+    results = knowledge_base.iloc[indices[0]].copy()
 
     results["similarity_score"] = distances[0]
 
@@ -104,15 +119,12 @@ def retrieve_context(query, top_k=5):
 def generate_rag_answer(query, top_k=5):
 
     retrieved_docs = retrieve_context(query,top_k=top_k)
-
     context = "\n\n".join(retrieved_docs["text"].tolist())
 
     prompt = f"""
 ```text
 You are a professional AI customer support assistant for a customer intelligence platform.
-
 Your primary responsibility is to provide accurate, concise, and reliable answers to customer questions using ONLY the supplied support information.
-
 IMPORTANT: The supplied support information is the sole source of truth for the answer.
 
 STRICT GROUNDING RULES:
@@ -192,9 +204,6 @@ Authorized support information:
 
 Answer:
 """
-
-
-
     response = ollama.chat(
         model=LLM_MODEL,
         messages=[
@@ -202,8 +211,7 @@ Answer:
                 "role": "user",
                 "content": prompt
             }
-        ]
-    )
+        ])
 
     return {
         "answer": response["message"]["content"],
@@ -367,7 +375,6 @@ def churn_explanation():
     )
  
 
-
 # knowledge searsch route
 @app.route("/knowledge", methods=["GET", "POST"])
 def knowledge_search():
@@ -387,75 +394,209 @@ def knowledge_search():
         results=results
     )
 
+def extract_customer_id(query):
+
+    pattern = r"\b\d{4}-[A-Z0-9]{5}\b"
+    match = re.search(pattern, query.upper())
+    if match:
+        return match.group(0)
+    return None
+
+
+def detect_intent(query):
+
+    query_lower = query.lower()
+    intents = []
+    if any(word in query_lower for word in [
+        "profile",
+        "details",
+        "customer information",
+        "customer info",
+        "account"
+    ]):
+        intents.append("profile")
+
+    if any(word in query_lower for word in [
+        "churn",
+        "risk",
+        "likely to leave",
+        "likely to stay"
+    ]):
+        intents.append("churn")
+
+    if any(word in query_lower for word in [
+        "why",
+        "reason",
+        "factor",
+        "factors",
+        "explanation",
+        "shap"
+    ]):
+        intents.append("shap")
+
+    if any(word in query_lower for word in [
+        "policy",
+        "refund",
+        "billing",
+        "payment",
+        "cancellation",
+        "support",
+        "technical",
+        "procedure"
+    ]):
+        intents.append("knowledge")
+
+    if not intents:
+        intents.append("knowledge")
+
+    return list(dict.fromkeys(intents))
+
+
+def run_assistant_tools(query):
+
+    customer_id = extract_customer_id(query)
+    intents = detect_intent(query)
+
+    tool_results = {
+        "customer_id": customer_id,
+        "intents": intents,
+        "profile": None,
+        "churn": None,
+        "shap": None,
+        "knowledge": None
+    }
+
+    # customer profile
+    if "profile" in intents and customer_id:
+        tool_results["profile"] = get_customer_profile(customer_id)
+
+    # churn prediction
+    if "churn" in intents and customer_id:
+        tool_results["churn"] = predict_customer_churn( customer_id)
+
+    #shap explanation
+    if "shap" in intents and customer_id:
+        tool_results["shap"] = get_customer_shap( customer_id)
+
+    # knowledge base search
+    if "knowledge" in intents:
+        tool_results["knowledge"] = search_knowledge_base(query, top_k=5)
+
+    return tool_results
+
+def generate_assistant_answer(query):
+    tool_results = run_assistant_tools(query)
+
+    prompt = f"""
+You are an AI Customer Support Assistant.
+
+Answer the user's question using ONLY the verified information
+provided by the tools.
+
+IMPORTANT RULES:
+
+1. Do not describe the tools, intents, Python data, dictionaries,
+   similarity scores, document IDs, or retrieval results.
+2. Do not say things like "The customer has sent a knowledge intent".
+3. Do not list the retrieved documents as the answer.
+4. Use the retrieved knowledge-base text to directly answer
+   the user's question.
+5. If the question is about a technical problem, provide the
+   relevant troubleshooting guidance from the knowledge base.
+6. Do not invent troubleshooting steps that are not supported
+   by the retrieved information.
+7. If the available information is insufficient, say:
+   "The available support information is insufficient to provide
+   a specific solution. Human support may be required."
+8. For customer-specific questions, use the verified customer
+   profile, churn prediction, and SHAP results.
+9. Never calculate or modify the churn probability.
+10. SHAP values describe contribution to the model prediction,
+    not causation.
+11. Keep the response concise, professional, and easy to understand.
+12. Do not mention FAISS, embeddings, RAG, tools, or internal systems.
+
+User question:
+{query}
+
+Verified information:
+{tool_results}
+
+Now provide ONLY the final answer to the user.
+"""
+
+    response = ollama.chat(
+        model=LLM_MODEL,
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ])
+
+    return {"answer": response["message"]["content"],  "tool_results": tool_results}
+
 @app.route("/assistant", methods=["GET", "POST"])
 def ai_assistant():
 
     query = ""
     answer = None
     sources = []
+    tool_results = None
 
     if request.method == "POST":
-
         query = request.form.get("query", "").strip()
 
         if query:
             try:
-                result = generate_rag_answer(query, top_k=5)
+
+                result = generate_assistant_answer(query)
                 answer = result["answer"]
-                sources = result["sources"]
+                tool_results = result["tool_results"]
+
+                # Knowledge Base sources
+                if tool_results.get("knowledge"):
+                    sources = tool_results["knowledge"]
 
             except Exception as e:
-                answer = (
-                    "Unable to generate a response "
-                    "at this time. Please try again."
-                )
+
+                answer = ("Unable to generate a response at this time. Please try again.")
                 print("AI Assistant Error:", e)
 
     return render_template(
         "assistant.html",
         query=query,
         answer=answer,
-        sources=sources
+        sources=sources,
+        tool_results=tool_results
     )
 
 
 @app.route("/analytics")
 def analytics():
-    return render_template("analytics.html",)
+    baseline_results = pd.read_csv("data/processed/baseline_model_results.csv")
+    baseline_results = baseline_results.round(4)
 
-# @app.route("/high-risk")
-# def high_risk_customers():
+    final_results = pd.read_csv("data/processed/final_model_comparison.csv")
+    final_results = final_results.round(4)
+    final_results = final_results.sort_values(by="F1 Score", ascending=False).reset_index(drop=True)
 
-#     total_high_risk = len(HIGH_RISK_CUSTOMERS)
+    best_model = final_results.iloc[0]
 
-#     average_probability = round(
-#         sum(
-#             x["churn_probability"]
-#             for x in HIGH_RISK_CUSTOMERS
-#         ) / total_high_risk,
-#         2
-#     ) if total_high_risk else 0
-
-#     return render_template(
-#         "high_risk.html",
-#         high_risk=HIGH_RISK_CUSTOMERS,
-#         total_high_risk=total_high_risk,
-#         average_probability=average_probability
-#     )
-
-# HIGH_RISK_CUSTOMERS = build_high_risk_customers()
-
-# print(
-#     f"High-risk customers loaded: "
-#     f"{len(HIGH_RISK_CUSTOMERS)}"
-# )
-
-
-@app.route("/high-risk")
-def high_risk_customers():
 
     return render_template(
-         "high_risk.html")
+        "analytics.html",
+        total_tickets=total_tickets,
+        total_issue_types=total_issue_types,
+        highest_issue_category=highest_issue_category,
+        lowest_issue_category=lowest_issue_category,
+        baseline_results=baseline_results.to_dict(orient="records"),
+        columns=baseline_results.columns,
+        final_results=final_results.to_dict(orient="records"),
+        final_columns=final_results.columns,
+        best_model=best_model.to_dict()
+    )
+
 
 if __name__ == "__main__":
     app.run(debug=True)

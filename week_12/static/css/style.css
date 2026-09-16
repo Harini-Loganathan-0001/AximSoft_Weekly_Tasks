@@ -59,3 +59,21 @@ body {
 .custom-width {
     width: 65%;
 }
+
+
+.table {
+    font-size: 14px;
+}
+
+.table th {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
