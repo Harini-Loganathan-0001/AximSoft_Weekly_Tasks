@@ -1,0 +1,569 @@
+{% extends "base.html" %}
+
+{% block title %}AI Assistant{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">
+            <i class="bi bi-stars me-2"></i>AI Customer Assistant
+        </h2>
+        <p class="text-muted mb-0">
+            Ask questions about customers, churn risk, support issues, billing, refunds, and policies.
+        </p>
+    </div>
+
+    <!-- Ask AI -->
+ <div class="row g-4 mb-4">
+
+    <!-- LEFT: Ask Assistant -->
+    <div class="col-lg-8">
+
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+
+
+
+                <form method="POST">
+
+                    <div class="mb-3">
+
+                        <label for="query" class="form-label fw-semibold">
+                            Ask your question
+                        </label>
+
+                        <textarea
+                            class="form-control"
+                            id="query"
+                            name="query"
+                            rows="6"
+                            placeholder="Example: what is the refund policy?"
+                            required>{{ query }}</textarea>
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <small class="text-muted">
+                    
+                            Responses are grounded in verified data.
+                        </small>
+
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-send me-2"></i>
+                            Ask Assistant
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT: Assistant Capabilities -->
+    <div class="col-lg-4">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body p-4">
+
+                <div class="text-center mb-4">
+
+        
+
+                    <div>
+                        <h5 class="fw-semibold mb-1">
+                            AI Capabilities
+                        </h5>
+
+                        <small class="text-muted">
+                            Available intelligence tools
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <!-- Tool 1 -->
+                <div class="d-flex align-items-start mb-4">
+
+    
+
+                    <div>
+                        <h6 class="fw-semibold mb-1">
+                            Customer Profile
+                        </h6>
+
+                        <p class="text-muted small mb-0">
+                            Retrieve verified customer information and account details.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- Tool 2 -->
+                <div class="d-flex align-items-start mb-4">
+
+
+                    <div>
+                        <h6 class="fw-semibold mb-1">
+                            Churn Prediction
+                        </h6>
+
+                        <p class="text-muted small mb-0">
+                            Analyze customer churn probability and risk level.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- Tool 3 -->
+                <div class="d-flex align-items-start mb-4">
+
+
+                    <div>
+                        <h6 class="fw-semibold mb-1">
+                            Churn Explanation
+                        </h6>
+
+                        <p class="text-muted small mb-0">
+                            Identify important factors contributing to the prediction.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- Tool 4 -->
+                <div class="d-flex align-items-start">
+
+    
+
+                    <div>
+                        <h6 class="fw-semibold mb-1">
+                            Knowledge Search
+                        </h6>
+
+                        <p class="text-muted small mb-0">
+                            Search support policies, FAQs, and troubleshooting information.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- Example Questions -->
+    <div class="mb-4">
+
+        <h6 class="fw-semibold mb-3">Try asking</h6>
+
+        <div class="row g-3">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="bi bi-person-vcard text-primary fs-3"></i>
+
+                        <h6 class="fw-semibold mt-3">
+                            Customer Profile
+                        </h6>
+
+                        <p class="text-muted small mb-0">
+                            Show me the profile of customer 7590-VHVEG.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="bi bi-graph-up-arrow text-danger fs-3"></i>
+
+                        <h6 class="fw-semibold mt-3">
+                            Churn Risk
+                        </h6>
+
+                        <p class="text-muted small mb-0">
+                            Why is customer 7590-VHVEG at high risk?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="bi bi-tools text-warning fs-3"></i>
+
+                        <h6 class="fw-semibold mt-3">
+                            Technical Support
+                        </h6>
+
+                        <p class="text-muted small mb-0">
+                            My product is not working properly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <i class="bi bi-arrow-counterclockwise text-success fs-3"></i>
+
+                        <h6 class="fw-semibold mt-3">
+                            Refund Policy
+                        </h6>
+
+                        <p class="text-muted small mb-0">
+                            What is the refund policy?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% if answer %}
+
+    <!-- AI Response -->
+    <div class="card border-0 shadow-sm mb-4">
+
+        
+
+            <div class="d-flex align-items-center">
+
+                <div>
+                    <h5 class="fw-semibold mb-1">
+                        AI Response
+                    </h5>
+
+                    <small class="text-muted">
+                        Generated by local Llama 3.2 3B
+                    </small>
+                </div>
+
+            </div>
+
+
+        <div class="card-body px-4 pb-4">
+
+            
+
+                <p class="mb-0" style="line-height: 1.8;">
+                    {{ answer }}
+                </p>
+
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Customer Information -->
+    {% if tool_results and tool_results.customer_id %}
+
+    {% if tool_results.profile %}
+
+    <div class="card border-0 shadow-sm mb-4">
+
+       
+            <h5 class="fw-semibold mb-1">
+                Verified Customer Information
+            </h5>
+
+            <small class="text-muted">
+                Customer information retrieved from the database
+            </small>
+
+
+        <div class="card-body px-4">
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+                    <div class="bg-light rounded-3 p-3">
+                        <small class="text-muted d-block">Customer ID</small>
+                        <strong>{{ tool_results.profile.customerID }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="bg-light rounded-3 p-3">
+                        <small class="text-muted d-block">Gender</small>
+                        <strong>{{ tool_results.profile.gender }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="bg-light rounded-3 p-3">
+                        <small class="text-muted d-block">Tenure</small>
+                        <strong>{{ tool_results.profile.tenure }} months</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="bg-light rounded-3 p-3">
+                        <small class="text-muted d-block">Contract</small>
+                        <strong>{{ tool_results.profile.Contract }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="bg-light rounded-3 p-3">
+                        <small class="text-muted d-block">Internet Service</small>
+                        <strong>{{ tool_results.profile.InternetService }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="bg-light rounded-3 p-3">
+                        <small class="text-muted d-block">Monthly Charges</small>
+                        <strong>
+                            ${{ "%.2f"|format(tool_results.profile.MonthlyCharges) }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="bg-light rounded-3 p-3">
+                        <small class="text-muted d-block">Payment Method</small>
+                        <strong>{{ tool_results.profile.PaymentMethod }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="bg-light rounded-3 p-3">
+                        <small class="text-muted d-block">Current Churn</small>
+                        <strong>{{ tool_results.profile.Churn }}</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+    {% endif %}
+
+
+    <!-- Churn Analysis -->
+    {% if tool_results and tool_results.churn %}
+
+    <div class="card border-0 shadow-sm mb-4">
+
+
+            <h5 class="fw-semibold mb-1">
+                <i class="bi bi-graph-up-arrow text-danger me-2"></i>
+                Churn Risk Analysis
+            </h5>
+
+
+
+
+        <div class="card-body px-4 pb-4">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <div class="bg-light rounded-3 p-4 text-center">
+
+                        <small class="text-muted d-block mb-2">
+                            Churn Probability
+                        </small>
+
+                        <strong class="fw-bold mb-0">
+                            {{ tool_results.churn.churn_probability }}%
+                        </strong>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="bg-light rounded-3 p-4 text-center">
+
+                        <small class="text-muted d-block mb-2">
+                            Risk Level
+                        </small>
+
+                        <span class="fs-6 px-3 py-2">
+                            {{ tool_results.churn.risk_level }}
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="bg-light rounded-3 p-4 text-center">
+
+                        <small class="text-muted d-block mb-2">
+                            Prediction
+                        </small>
+
+                        <strong>
+                            {{ tool_results.churn.prediction }}
+                        </strong>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- SHAP Factors -->
+    {% if tool_results and tool_results.shap %}
+
+    <div class="card border-0 shadow-sm mb-4">
+
+
+            <strong class="text-muted">
+                Features contributing toward the model prediction
+            </strong>
+
+
+        <div class="card-body p-4">
+
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>SHAP Value</th>
+                            <th>Contribution</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in tool_results.shap %}
+
+                        <tr>
+
+                            <td class="fw-semibold">
+                                {{ item.feature }}
+                            </td>
+
+                            <td>
+                                {{ item.shap_value }}
+                            </td>
+
+                            <td>
+
+                                {% if item.shap_value > 0 %}
+
+                                Increases Churn
+
+                                {% else %}
+
+                                Decreases Churn
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- Knowledge Sources -->
+    {% if sources %}
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 p-4">
+
+            <h5 class="fw-semibold mb-1">
+                <i class="bi bi-journal-check text-success me-2"></i>
+                Verified Support Information
+            </h5>
+
+            <small class="text-muted">
+                Relevant knowledge-base information used by the assistant
+            </small>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            {% for source in sources %}
+
+            <div class="border rounded-3 p-3 mb-3">
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+
+                    <span class="badge bg-primary-subtle text-primary">
+                        {{ source.document_id }}
+                    </span>
+
+                    <small class="text-muted">
+                        Relevance:
+                        {{ "%.4f"|format(source.similarity_score) }}
+                    </small>
+
+                </div>
+
+                <p class="mb-0 text-muted" style="line-height: 1.7;">
+                    {{ source.text }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

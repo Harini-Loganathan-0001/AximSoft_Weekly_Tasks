@@ -1,0 +1,481 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Profile{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="mb-3">
+
+        <h4 class="fw-bold mb-1">
+            Customer Profile
+        </h4>
+
+        <small class="text-muted">
+            Search and view customer information
+        </small>
+
+    </div>
+
+
+    <!-- Search -->
+    <div class="card shadow-sm mb-3">
+
+        <div class="card-body py-3">
+
+            <form method="POST">
+
+                <div class="row align-items-end g-2">
+
+                    <div class="col-md-8">
+
+                        <label class="form-label small fw-semibold">
+                            Customer ID
+                        </label>
+
+                        <input
+                            type="text"
+                            name="customer_id"
+                            class="form-control form-control-sm"
+                            placeholder="Enter Customer ID"
+                            value="{{ searched_id }}"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-sm w-100"
+                        >
+                            Search
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    {% if customer %}
+
+    <!-- Customer Information -->
+    <div class="row g-3">
+
+        <!-- Personal Information -->
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm h-100">
+
+                <!-- <div class="card-header bg-white py-2"> -->
+                <h6 class="fw-bold mb-0">
+                    Personal Information
+                </h6>
+                <!-- </div> -->
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Customer ID
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["customerID"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Gender
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["gender"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Senior Citizen
+                            </small>
+
+                            <div class="fw-semibold">
+
+                                {% if customer["SeniorCitizen"] == 1 %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Partner
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["Partner"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Dependents
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["Dependents"] }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Account Information -->
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm h-100">
+
+                <!-- <div class="card-header bg-white py-2"> -->
+                <h6 class="fw-bold mb-0">
+                    Account Information
+                </h6>
+                <!-- </div> -->
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Tenure
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["tenure"] }} months
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Contract
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["Contract"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Payment Method
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["PaymentMethod"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Paperless Billing
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["PaperlessBilling"] }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Services -->
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm h-100">
+
+                <!-- <div class="card-header bg-white py-2"> -->
+                <h6 class="fw-bold mb-0">
+                    Services
+                </h6>
+                <!-- </div> -->
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Phone Service
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["PhoneService"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Internet Service
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["InternetService"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Online Security
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["OnlineSecurity"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Online Backup
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["OnlineBackup"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Device Protection
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["DeviceProtection"] }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Tech Support
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ customer["TechSupport"] }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Billing -->
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm h-100">
+
+                <!-- <div class="card-header bg-white py-2"> -->
+                <h6 class="fw-bold mb-0">
+                    Billing Information
+                </h6>
+                <!-- </div> -->
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Monthly Charges
+                            </small>
+
+                            <div class="fw-semibold">
+                                ${{ "%.2f"|format(customer["MonthlyCharges"]) }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small class="text-muted">
+                                Total Charges
+                            </small>
+
+                            <div class="fw-semibold">
+                                ${{ "%.2f"|format(
+                                    customer["TotalCharges"]|float
+                                ) }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Churn Status -->
+        <div class="col-12">
+
+            <div class="card shadow-sm">
+
+                <!-- <div class="card-header bg-white py-2"> -->
+                <h6 class="fw-bold mb-0">
+                    Current Churn Status
+                </h6>
+                <!-- </div> -->
+
+                <div class="card-body">
+
+                    {% if customer["Churn"] == "Yes" %}
+
+                        <span class="badge bg-danger">
+                            Churned Customer
+                        </span>
+
+                        <small class="text-muted ms-2">
+                            This customer has already churned.
+                        </small>
+
+                    {% else %}
+
+                        <span class="badge bg-success">
+                            Active Customer
+                        </span>
+
+                        <small class="text-muted ms-2">
+                            This customer is currently active.
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% elif searched_id %}
+
+    <!-- Customer Not Found -->
+    <div class="card-body text-center py-2">
+
+        <strong>
+            Customer not found.
+        </strong>
+
+        <br>
+
+        <small>
+            Please check the Customer ID and try again.
+        </small>
+
+    </div>
+
+
+    {% else %}
+
+    <!-- Initial State -->
+    <div class="card shadow-sm custom-width mx-auto">
+
+        <div class="card-body text-center py-2">
+
+            <h6 class="fw-bold">
+                Search for a Customer
+            </h6>
+
+            <small class="text-muted">
+                Enter a Customer ID above to view the complete
+                customer profile.
+            </small>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

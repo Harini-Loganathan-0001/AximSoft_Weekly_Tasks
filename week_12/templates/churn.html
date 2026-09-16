@@ -1,0 +1,824 @@
+{% extends "base.html" %}
+
+{% block title %}
+Churn & Explanation - AI Customer Intelligence Platform
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+
+    <div class="mb-4">
+
+        <h4 class="fw-bold">
+            Churn & Explanation
+        </h4>
+
+        <small class="text-muted">
+            Analyze customer churn probability and risk using the
+            final XGBoost model.
+        </small>
+
+    </div>
+
+
+    <!-- =====================================================
+         CUSTOMER SEARCH
+    ====================================================== -->
+
+    <div class="card shadow-sm mb-3">
+
+        <div class="card-body py-3">
+
+            <form method="POST">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-md-9">
+
+                        <label
+                            for="customer_id"
+                            class="form-label small fw-semibold"
+                        >
+                            Customer ID
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="customer_id"
+                            name="customer_id"
+                            placeholder="Enter Customer ID"
+                            value="{{ searched_id }}"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Search Customer
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ERROR MESSAGE
+    ====================================================== -->
+
+    {% if error %}
+
+    <div class="alert alert-danger shadow-sm">
+
+        <strong>Error:</strong>
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         CUSTOMER RESULT
+    ====================================================== -->
+
+    {% if customer %}
+
+
+    <!-- =====================================================
+         CUSTOMER PROFILE
+    ====================================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        Customer Profile
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Customer information retrieved from the dataset.
+                    </p>
+
+                </div>
+
+                <span class="badge bg-secondary px-3 py-2">
+                    {{ customer.customerID }}
+                </span>
+
+            </div>
+
+
+            <div class="row">
+
+                <!-- Customer ID -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Customer ID
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.customerID }}
+                    </div>
+
+                </div>
+
+
+                <!-- Gender -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Gender
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.gender }}
+                    </div>
+
+                </div>
+
+
+                <!-- Senior Citizen -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Senior Citizen
+                    </small>
+
+                    <div class="fw-semibold">
+
+                        {% if customer.SeniorCitizen == 1 %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Partner -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Partner
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.Partner }}
+                    </div>
+
+                </div>
+
+
+                <!-- Dependents -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Dependents
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.Dependents }}
+                    </div>
+
+                </div>
+
+
+                <!-- Tenure -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Tenure
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.tenure }} months
+                    </div>
+
+                </div>
+
+
+                <!-- Contract -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Contract
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.Contract }}
+                    </div>
+
+                </div>
+
+
+                <!-- Payment -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Payment Method
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.PaymentMethod }}
+                    </div>
+
+                </div>
+
+
+                <!-- Internet -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Internet Service
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.InternetService }}
+                    </div>
+
+                </div>
+
+
+                <!-- Phone -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Phone Service
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.PhoneService }}
+                    </div>
+
+                </div>
+
+
+                <!-- Tech Support -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Tech Support
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.TechSupport }}
+                    </div>
+
+                </div>
+
+
+                <!-- Online Security -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Online Security
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.OnlineSecurity }}
+                    </div>
+
+                </div>
+
+
+                <!-- Monthly Charges -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Monthly Charges
+                    </small>
+
+                    <div class="fw-semibold">
+                        ${{ "%.2f"|format(customer.MonthlyCharges) }}
+                    </div>
+
+                </div>
+
+
+                <!-- Total Charges -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Total Charges
+                    </small>
+
+                    <div class="fw-semibold">
+                        ${{ "%.2f"|format(customer.TotalCharges) }}
+                    </div>
+
+                </div>
+
+
+                <!-- Paperless Billing -->
+
+                <div class="col-md-3 mb-3">
+
+                    <small class="text-muted">
+                        Paperless Billing
+                    </small>
+
+                    <div class="fw-semibold">
+                        {{ customer.PaperlessBilling }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CHURN PREDICTION
+    ====================================================== -->
+
+    {% if churn_probability is not none %}
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-4">
+                Churn Prediction
+            </h5>
+
+            <div class="row g-4">
+
+                <!-- Probability -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-4 text-center h-100">
+
+                        <small class="text-muted">
+                            Churn Probability
+                        </small>
+
+                        <h5 class="fw-bold mt-2 mb-0">
+                            {{ "%.2f"|format(churn_probability) }}%
+                        </h5>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Risk -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-4 text-center h-100">
+
+                        <small class="text-muted">
+                            Risk Level
+                        </small>
+
+                        <div class="mt-3">
+
+                            {% if risk_level == "High" %}
+
+                            <h5 class="fw-bold mt-2 mb-0">
+                                High Risk
+                            </h5>
+
+                            {% elif risk_level == "Medium" %}
+
+                            <span class="text-dark fs-6 px-4 py-2">
+                                Medium Risk
+                            </span>
+
+                            {% else %}
+
+                            <span class="fs-6 px-4 py-2">
+                                Low Risk
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Prediction -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-4 text-center h-100">
+
+                        <small class="text-muted">
+                            Model Prediction
+                        </small>
+
+                        <div class="mt-3">
+
+                            {% if prediction == "Likely to Churn" %}
+
+                            <h5 class="text-darkfw-bold mb-0">
+                                {{ prediction }}
+                            </h5>
+
+                            {% else %}
+
+                            <h5 class="text-dark fw-bold mb-0">
+                                {{ prediction }}
+                            </h5>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Threshold Information -->
+
+            <div class="alert alert-light border mt-4 mb-0">
+
+                <strong>Prediction Threshold:</strong>
+
+                60%
+
+                <span class="text-muted ms-2">
+                    Customers with a churn probability of 60% or higher
+                    are classified as high risk.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SHAP EXPLAINABILITY
+    ====================================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        SHAP Explainability
+                    </h5>
+
+                </div>
+
+                <span class="badge bg-primary px-3 py-2">
+                    XGBoost + SHAP
+                </span>
+
+            </div>
+
+
+            {% if shap_data %}
+
+            <!-- SHAP GRAPH -->
+
+            <div class="mb-4">
+
+                <h6 class="fw-bold mb-3">
+                    Top 10 SHAP Factors
+                </h6>
+
+                <div style="height: 420px;">
+                    <canvas id="shapChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>
+                                Rank
+                            </th>
+
+                            <th>
+                                Feature
+                            </th>
+
+                            <th>
+                                Feature Value
+                            </th>
+
+                            <th>
+                                SHAP Value
+                            </th>
+
+                            <th>
+                                Impact
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in shap_data %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ loop.index }}
+                                </strong>
+                            </td>
+
+
+                            <td>
+
+                                <span class="fw-semibold">
+                                    {{ item.feature }}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                {{ item.value }}
+                            </td>
+
+
+                            <td>
+
+                                {% if item.shap_value > 0 %}
+
+                                <span class="text-danger fw-bold">
+                                    +{{ "%.4f"|format(item.shap_value) }}
+                                </span>
+
+                                {% else %}
+
+                                <span class="text-success fw-bold">
+                                    {{ "%.4f"|format(item.shap_value) }}
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if item.shap_value > 0 %}
+
+                                <span class="badge bg-danger">
+                                    Increases Churn
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-success">
+                                    Decreases Churn
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- SHAP Interpretation -->
+
+            <!--
+            <div class="alert alert-light border mt-4">
+
+                <h6 class="fw-bold">
+                    How to interpret SHAP values
+                </h6>
+
+                <ul class="mb-0">
+
+                    <li>
+                        <span class="text-danger fw-bold">
+                            Positive SHAP values
+                        </span>
+                        increase the likelihood of churn.
+                    </li>
+
+                    <li>
+                        <span class="text-success fw-bold">
+                            Negative SHAP values
+                        </span>
+                        decrease the likelihood of churn.
+                    </li>
+
+                    <li>
+                        The larger the absolute SHAP value,
+                        the stronger the feature's influence.
+                    </li>
+
+                </ul>
+
+            </div>
+            -->
+
+
+            {% else %}
+
+            <div class="alert alert-warning">
+                SHAP explanation is not available for this customer.
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    {% endif %}
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const shapFeatures = [
+    {% for item in shap_data %}
+        "{{ item.feature|replace('"', '\\"') }}"{% if not loop.last %},{% endif %}
+    {% endfor %}
+];
+
+const shapValues = [
+    {% for item in shap_data %}
+        {{ item.shap_value }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+];
+
+const shapColors = shapValues.map(value =>
+    value >= 0
+        ? "rgba(220, 53, 69, 0.80)"
+        : "rgba(25, 135, 84, 0.80)"
+);
+
+const shapBorders = shapValues.map(value =>
+    value >= 0
+        ? "rgba(220, 53, 69, 1)"
+        : "rgba(25, 135, 84, 1)"
+);
+
+const ctx = document.getElementById("shapChart");
+
+new Chart(ctx, {
+
+    type: "bar",
+
+    data: {
+        labels: shapFeatures,
+
+        datasets: [{
+            label: "SHAP Value",
+            data: shapValues,
+
+            backgroundColor: shapColors,
+            borderColor: shapBorders,
+
+            borderWidth: 1,
+            borderRadius: 6,
+
+            barThickness: 24
+        }]
+    },
+
+    options: {
+
+        indexAxis: "y",
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+                display: false
+            },
+
+            tooltip: {
+                callbacks: {
+
+                    label: function(context) {
+
+                        const value = context.raw;
+
+                        if (value >= 0) {
+                            return " +" + value.toFixed(4) +
+                                   "  Increases Churn";
+                        }
+
+                        return " " + value.toFixed(4) +
+                               "  Decreases Churn";
+                    }
+
+                }
+            }
+        },
+
+        scales: {
+
+            x: {
+
+                title: {
+                    display: true,
+                    text: "SHAP Value"
+                },
+
+                grid: {
+                    color: "rgba(0, 0, 0, 0.08)"
+                },
+
+                ticks: {
+                    precision: 2
+                }
+            },
+
+            y: {
+
+                title: {
+                    display: true,
+                    text: "Features"
+                },
+
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+
+</script>
+
+{% endblock %}

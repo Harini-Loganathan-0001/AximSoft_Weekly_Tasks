@@ -1,0 +1,527 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="mb-3">
+
+        <h4 class="fw-bold mb-1">
+            Dashboard
+        </h4>
+
+        <small class="text-muted">
+            AI-powered customer intelligence and churn analysis
+        </small>
+
+    </div>
+
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-3">
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm">
+                <div class="card-body py-3 text-center">
+
+                    <small class="text-muted">
+                        Total Customers
+                    </small>
+
+                    <h5 class="fw-bold mb-0">
+                        {{ "{:,}".format(total_customers) }}
+                    </h5>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm">
+                <div class="card-body py-3 text-center">
+
+                    <small class="text-muted">
+                        Churned Customers
+                    </small>
+
+                    <h5 class="fw-bold mb-0">
+                        {{ "{:,}".format(churned_customers) }}
+                    </h5>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm">
+                <div class="card-body py-3 text-center">
+
+                    <small class="text-muted">
+                        Churn Rate
+                    </small>
+
+                    <h5 class="fw-bold mb-0">
+                        {{ "%.2f"|format(churn_rate) }}%
+                    </h5>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm">
+                <div class="card-body py-3 text-center">
+
+                    <small class="text-muted">
+                        Average Monthly Charges
+                    </small>
+
+                    <h5 class="fw-bold mb-0">
+                        ${{ "%.2f"|format(average_monthly_charges) }}
+                    </h5>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Customer Intelligence + Image -->
+    <div class="row g-3 mb-3">
+
+        <!-- Customer Intelligence -->
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm h-100">
+
+                <!-- <div class="card-header py-2"> -->
+                <h6 class="fw-bold mb-0">
+                    Customer Intelligence
+                </h6>
+                <!-- </div> -->
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Average Monthly Charges
+                                </small>
+
+                                <h6 class="fw-bold mb-0">
+                                    ${{ "%.2f"|format(average_monthly_charges) }}
+                                </h6>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Average Tenure
+                                </small>
+
+                                <h6 class="fw-bold mb-0">
+                                    {{ "%.1f"|format(average_tenure) }} Months
+                                </h6>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    Selected ML Model
+                                </small>
+
+                                <h6 class="fw-bold mb-0">
+                                    XGBoost
+                                </h6>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded p-3">
+
+                                <small class="text-muted">
+                                    ROC-AUC
+                                </small>
+
+                                <h6 class="fw-bold mb-0">
+                                    0.8403
+                                </h6>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <small class="text-muted">
+                        Customer behavior is analyzed using machine
+                        learning and explainable AI techniques.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Dashboard Image / AI Insight -->
+        <div class="col-lg-5">
+
+            <div
+                class="card shadow-sm h-100 border-0 overflow-hidden"
+                style="background: rgba(255,255,255,0.65);
+                       backdrop-filter: blur(12px);
+                       -webkit-backdrop-filter: blur(12px);
+                       border: 1px solid rgba(255,255,255,0.4) !important;"
+            >
+
+                <!-- Gradient Header -->
+
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+
+                        <small class="text-muted">
+                            Churn Overview
+                        </small>
+
+                        <h6 class="fw-bold mt-1 mb-0">
+                            {{ "{:,}".format(churned_customers) }}
+
+                            <span class="text-muted fw-normal">
+                                customers churned
+                            </span>
+                        </h6>
+
+                    </div>
+
+
+                    <!-- Mini Chart -->
+                    <div style="height: 150px;">
+                        <canvas id="miniChurnChart"></canvas>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+
+                        <div>
+
+                            <small class="text-muted d-block">
+                                Churn Rate
+                            </small>
+
+                            <strong>
+                                {{ "%.2f"|format(churn_rate) }}%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="text-end">
+
+                            <small class="text-muted d-block">
+                                Model
+                            </small>
+
+                            <strong>
+                                XGBoost
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Churn Overview -->
+    <div class="card shadow-sm mb-3">
+
+        <h6 class="fw-bold mb-0">
+            Churn Overview
+        </h6>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <small class="text-muted">
+                        Active Customers
+                    </small>
+
+                    <h6 class="fw-bold">
+                        {{ "{:,}".format(total_customers - churned_customers) }}
+                    </h6>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <small class="text-muted">
+                        Churned Customers
+                    </small>
+
+                    <h6 class="fw-bold text-danger">
+                        {{ "{:,}".format(churned_customers) }}
+                    </h6>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <small class="text-muted">
+                        Churn Rate
+                    </small>
+
+                    <h6 class="fw-bold">
+                        {{ "%.2f"|format(churn_rate) }}%
+                    </h6>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <small class="text-muted">
+                        Model
+                    </small>
+
+                    <h6 class="fw-bold">
+                        XGBoost
+                    </h6>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Platform Modules -->
+    <div class="card shadow-sm">
+
+        <h6 class="fw-bold mb-0">
+            Platform Modules
+        </h6>
+
+        <div class="card-body py-3">
+
+            <div class="row g-2">
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-2">
+
+                        <small class="fw-bold">
+                            SQL Analytics
+                        </small>
+
+                        <br>
+
+                        <small class="text-muted">
+                            Structured customer analysis
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-2">
+
+                        <small class="fw-bold">
+                            Churn Prediction
+                        </small>
+
+                        <br>
+
+                        <small class="text-muted">
+                            XGBoost-based prediction
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-2">
+
+                        <small class="fw-bold">
+                            Explainable AI
+                        </small>
+
+                        <br>
+
+                        <small class="text-muted">
+                            SHAP explanations
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-2">
+
+                        <small class="fw-bold">
+                            Semantic Search
+                        </small>
+
+                        <br>
+
+                        <small class="text-muted">
+                            FAISS vector search
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-2">
+
+                        <small class="fw-bold">
+                            RAG
+                        </small>
+
+                        <br>
+
+                        <small class="text-muted">
+                            Support knowledge retrieval
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-2">
+
+                        <small class="fw-bold">
+                            AI Assistant
+                        </small>
+
+                        <br>
+
+                        <small class="text-muted">
+                            Integrated AI workflow
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById("miniChurnChart");
+
+new Chart(ctx, {
+    type: "line",
+
+    data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+
+        datasets: [{
+            data: [18, 22, 20, 27, 24, 30],
+            borderWidth: 2,
+            tension: 0.4,
+            fill: true,
+            pointRadius: 2,
+            pointHoverRadius: 4
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+
+        scales: {
+
+            x: {
+                display: false
+            },
+
+            y: {
+                display: false
+            }
+
+        }
+
+    }
+});
+
+</script>
+
+{% endblock %}

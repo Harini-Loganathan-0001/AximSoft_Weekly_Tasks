@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold">
+            NLP Analytics
+        </h2>
+
+        <p class="text-muted">
+            Customer support ticket classification and text analysis
+        </p>
+
+    </div>
+
+
+    <!-- NLP SUMMARY CARDS -->
+    <div class="row g-3 mb-3">
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm">
+                <div class="card-body py-3 text-center">
+                    <small class="text-muted">Total Tickets</small>
+                    <h5 class="fw-bold mb-0">
+                        {{ "{:,}".format(total_tickets) }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm">
+                <div class="card-body py-3 text-center">
+                    <small class="text-muted">Total Issue Types</small>
+                    <h5 class="fw-bold mb-0">
+                        {{ total_issue_types }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm">
+                <div class="card-body py-3 text-center">
+                    <small class="text-muted">Highest Issue Category</small>
+                    <h5 class="small fw-bold mb-0">
+                        {{ highest_issue_category }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card shadow-sm">
+                <div class="card-body py-3 text-center">
+                    <small class="text-muted">Lowest Issue Category</small>
+                    <h5 class="small fw-bold mb-0">
+                        {{ lowest_issue_category }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- Left side -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <small><b>Customer Churn Distribution</b></small>
+
+                <div class="card-body">
+                    <img
+                        src="{{ url_for('static', filename='images/customer_churn_distribution.png') }}"
+                        class="img-fluid"
+                        alt="churn_distribution"
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Right side - Ticket Type Distribution -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <small><b>Ticket Type Distribution</b></small>
+
+                <div class="card-body">
+                    <img
+                        src="{{ url_for('static', filename='images/tickek_type_distribution.png') }}"
+                        class="img-fluid"
+                        alt="Ticket Type Distribution"
+                    >
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <h6 class="fw-bold mb-0">
+            Baseline ML Model Results
+        </h6>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle text-center">
+
+                    <thead class="table-light">
+                        <tr>
+                            {% for column in columns %}
+                            <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for row in baseline_results %}
+                        <tr>
+                            {% for column in columns %}
+                            <td>{{ row[column] }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <h6 class="fw-bold mb-0">
+            Final Model Comparison
+        </h6>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle text-center">
+
+                    <thead class="table-light">
+                        <tr>
+                            {% for column in final_columns %}
+                            <th>{{ column }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for row in final_results %}
+                        <tr>
+                            {% for column in final_columns %}
+                            <td>{{ row[column] }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- Left side -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-0">
+                <h6>
+                    <b>ML Best Model</b>
+                </h6>
+
+                <small>
+                    XGBoost with Feature Selection (k=30) was selected as the
+                    final model. It achieved 78.14% accuracy, 57.14% precision,
+                    70.59% recall, 63.16% F1-score, 84.03% ROC-AUC, and 66.35%
+                    PR-AUC at a 0.60 threshold.
+                </small>
+            </div>
+
+
+            <div class="card shadow-sm border-0">
+
+                <small>
+                    <b>Shap Summary</b>
+                </small>
+
+                <div class="card-body">
+                    <img
+                        src="{{ url_for('static', filename='images/shap_summary.png') }}"
+                        class="img-fluid"
+                        alt="shap summary"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right side -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-0">
+
+                <small>
+                    <b>Correlation Analysis</b>
+                </small>
+
+                <div class="card-body">
+                    <img
+                        src="{{ url_for('static', filename='images/correlation_analysis.png') }}"
+                        class="img-fluid"
+                        alt="correlation_analysis"
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="card shadow-sm border-0">
+
+                <small>
+                    <b>Churn by Contract</b>
+                </small>
+
+                <div class="card-body">
+                    <img
+                        src="{{ url_for('static', filename='images/churn_by_contract.png') }}"
+                        class="img-fluid"
+                        alt="churn_contract"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

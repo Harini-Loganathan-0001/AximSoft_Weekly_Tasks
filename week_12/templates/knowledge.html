@@ -1,0 +1,386 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =====================================================
+     PAGE HEADER
+====================================================== -->
+<div class="container-fluid">
+
+    <div class="mb-4">
+
+        <h3 class="fw-bold">
+            Knowledge Search
+        </h3>
+
+        <p class="text-muted">
+            Search customer support knowledge using semantic search.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         SEARCH
+    ====================================================== -->
+
+    <div class="card shadow-sm mb-3">
+
+        <div class="card-body py-3">
+
+            <form method="POST">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-md-9">
+
+                        <label for="query" class="form-label small fw-semibold">
+
+                            <h5 class="fw-bold mb-3">
+                                Semantic Search
+                            </h5>
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="query"
+                            name="query"
+                            placeholder="Enter your search query..."
+                            value="{{ query or '' }}"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Search
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+            <div class="mt-3">
+
+                <small class="text-muted">
+                    Example:
+                </small>
+
+                <span class="text-primary ms-2 small fw-semibold">
+                    Why do customers churn?
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SEARCH RESULTS
+    ====================================================== -->
+
+    {% if results %}
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        Search Results
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Most relevant knowledge from the customer knowledge base.
+                    </p>
+
+                </div>
+
+                <span class="badge bg-primary px-3 py-2">
+                    Semantic Search
+                </span>
+
+            </div>
+
+
+            {% for result in results %}
+
+            <div class="border rounded p-3 mb-3">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <h6 class="fw-bold mb-1">
+                            {{ result.title }}
+                        </h6>
+
+                        <span class="badge bg-light text-dark mb-2">
+                            {{ result.source }}
+                        </span>
+
+                    </div>
+
+                    <div class="text-end">
+
+                        <small class="text-muted">
+                            Similarity
+                        </small>
+
+                        <div class="fw-bold text-primary">
+                            {{ "%.4f"|format(result.similarity_score) }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <p class="text-muted mb-2">
+                    {{ result.text }}
+                </p>
+
+
+                {% if result.ticket_id %}
+
+                <small class="text-muted">
+                    Ticket ID: {{ result.ticket_id }}
+                </small>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% elif query %}
+
+    <div class="alert alert-warning shadow-sm">
+
+        <strong>No results found.</strong>
+
+        <br>
+
+        Try using a different question or keyword.
+
+    </div>
+
+    {% else %}
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         KNOWLEDGE CATEGORIES
+    ====================================================== -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-4">
+                Knowledge Categories
+            </h5>
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6 class="fw-bold">
+                            Churn
+                        </h6>
+
+                        <small class="text-muted">
+                            Customer churn and retention information
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6 class="fw-bold">
+                            Customer Support
+                        </h6>
+
+                        <small class="text-muted">
+                            Support tickets and customer issues
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6 class="fw-bold">
+                            Billing
+                        </h6>
+
+                        <small class="text-muted">
+                            Billing and payment-related information
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6 class="fw-bold">
+                            Technical Support
+                        </h6>
+
+                        <small class="text-muted">
+                            Technical problems and solutions
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6 class="fw-bold">
+                            Account Services
+                        </h6>
+
+                        <small class="text-muted">
+                            Account and subscription information
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3">
+
+                        <h6 class="fw-bold">
+                            Retention
+                        </h6>
+
+                        <small class="text-muted">
+                            Customer retention strategies
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TECHNOLOGY
+    ====================================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                Knowledge Search Technology
+            </h5>
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3 text-center">
+
+                        <h6 class="fw-bold">
+                            Sentence Transformers
+                        </h6>
+
+                        <small class="text-muted">
+                            Text Embeddings
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3 text-center">
+
+                        <h6 class="fw-bold">
+                            FAISS
+                        </h6>
+
+                        <small class="text-muted">
+                            Vector Similarity Search
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-3 text-center">
+
+                        <h6 class="fw-bold">
+                            RAG + Ollama
+                        </h6>
+
+                        <small class="text-muted">
+                            Local AI Answer Generation
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
