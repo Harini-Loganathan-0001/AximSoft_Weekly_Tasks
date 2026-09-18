@@ -1,0 +1,3 @@
+Version,Approach,Response_Control,Hallucination_Control,Escalation_Handling
+Original Prompt,General RAG instructions,Moderate,Basic,General
+Improved Prompt,Strict context-only instructions,Strong,High,Explicit

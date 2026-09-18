@@ -1,0 +1,29 @@
+Payment Policy
+
+Customers should verify their payment status when a transaction does not appear to have completed correctly.
+
+If a payment fails, the customer should verify the payment status before attempting another transaction.
+
+If a payment appears to have been deducted but the order was not confirmed, the transaction and order status should be checked before another payment is attempted.
+
+Customers should not make repeated payments for the same transaction until the status of the original payment has been verified.
+
+If a customer is charged twice for the same purchase, the duplicate transaction should be reviewed by the billing support team.
+
+If a payment is shown as successful but the related order is missing, the payment and order records should be checked.
+
+The assistant must not claim that a payment was successful, failed, reversed, or refunded unless the status is available in verified records.
+
+The assistant must not invent transaction IDs, payment amounts, payment dates, or processing times.
+
+Payment-related issues may require review by the payment or billing support team.
+
+If a payment problem cannot be verified from available information, the issue should be escalated to human customer support.
+
+Customers should not provide unnecessary card numbers, passwords, PINs, or authentication credentials when requesting support.
+
+Payment verification and refund processing are separate processes.
+
+A successful payment does not automatically mean that an order has been successfully completed.
+
+If the payment status is unclear, customers should wait for verification rather than repeatedly submitting the same payment.

@@ -1,0 +1,138 @@
+document_id,source,chunk_id,text
+billing_policy,billing_policy.txt,0,Billing Policy
+billing_policy,billing_policy.txt,1,Customers are responsible for reviewing their billing details and monthly charges.
+billing_policy,billing_policy.txt,2,"If a customer notices an incorrect charge, unexpected charge, duplicate charge, or charge for a service they did not expect, the billing issue should be reviewed by customer support."
+billing_policy,billing_policy.txt,3,"Customers should provide the relevant customer, order, invoice, or transaction information when reporting a billing problem."
+billing_policy,billing_policy.txt,4,"If a payment was successful but the order was not confirmed, the payment status and order status should be checked before another payment is attempted."
+billing_policy,billing_policy.txt,5,Customers should not make a second payment until the status of the original transaction has been verified.
+billing_policy,billing_policy.txt,6,"If a customer is charged twice for the same purchase, the duplicate transaction should be reviewed by the billing support team."
+billing_policy,billing_policy.txt,7,"If the billed amount differs from the expected amount, the applicable invoice and transaction details should be verified."
+billing_policy,billing_policy.txt,8,Billing records should be checked before confirming that a charge is incorrect.
+billing_policy,billing_policy.txt,9,"The assistant must not invent transaction amounts, invoice details, payment status, or billing adjustments."
+billing_policy,billing_policy.txt,10,A billing investigation does not automatically result in a refund or account adjustment.
+billing_policy,billing_policy.txt,11,"If the available information is insufficient to verify a billing issue, human customer support may be required."
+billing_policy,billing_policy.txt,12,Customers should not provide unnecessary sensitive payment information when requesting billing assistance.
+billing_policy,billing_policy.txt,13,Billing-related cases that cannot be verified from available records should be escalated to the billing support team.
+cancellation_policy,cancellation_policy.txt,0,Cancellation Policy
+cancellation_policy,cancellation_policy.txt,1,Customers may request cancellation of an order before the order reaches a stage where cancellation is no longer possible.
+cancellation_policy,cancellation_policy.txt,2,Cancellation requests should be checked against the current order status.
+cancellation_policy,cancellation_policy.txt,3,"If an order is still eligible for cancellation, the support process can proceed with the cancellation request."
+cancellation_policy,cancellation_policy.txt,4,"If the order has already entered a non-cancellable stage, cancellation may not be available."
+cancellation_policy,cancellation_policy.txt,5,Customers should provide the relevant order information when requesting cancellation.
+cancellation_policy,cancellation_policy.txt,6,A cancellation request does not guarantee that an order can be cancelled.
+cancellation_policy,cancellation_policy.txt,7,The assistant must not claim that an order has been cancelled unless the cancellation has been confirmed in the customer records.
+cancellation_policy,cancellation_policy.txt,8,"If an order cannot be cancelled, other applicable options should be reviewed by customer support."
+cancellation_policy,cancellation_policy.txt,9,"If payment has already been processed, the payment and cancellation status should be verified before discussing a possible refund."
+cancellation_policy,cancellation_policy.txt,10,The assistant must not invent cancellation deadlines or order statuses.
+cancellation_policy,cancellation_policy.txt,11,"If the available information does not show whether an order can be cancelled, human customer support should review the order."
+cancellation_policy,cancellation_policy.txt,12,Cancellation eligibility and refund eligibility are separate decisions and should not be treated as automatically equivalent.
+cancellation_policy,cancellation_policy.txt,13,Customers should provide accurate order information so that the current order status can be verified.
+customer_service_guidelines,customer_service_guidelines.txt,0,Customer Service Guidelines
+customer_service_guidelines,customer_service_guidelines.txt,1,"Customer support responses should be professional, concise, clear, and relevant to the customer's question."
+customer_service_guidelines,customer_service_guidelines.txt,2,Support responses must use only verified information available in customer records and the approved knowledge base.
+customer_service_guidelines,customer_service_guidelines.txt,3,"The assistant must not invent product specifications, policies, order information, payment information, delivery information, or troubleshooting procedures."
+customer_service_guidelines,customer_service_guidelines.txt,4,"When the available information is insufficient, the assistant should clearly state that additional information or human customer support is required."
+customer_service_guidelines,customer_service_guidelines.txt,5,The assistant should not request unnecessary personal information.
+customer_service_guidelines,customer_service_guidelines.txt,6,"For account-specific questions, customer information should be retrieved through the appropriate customer profile tool."
+customer_service_guidelines,customer_service_guidelines.txt,7,"For churn-related questions, the churn prediction tool should be used."
+customer_service_guidelines,customer_service_guidelines.txt,8,"For questions asking why a customer is at risk, the SHAP explanation tool should be used to identify the main factors affecting the prediction."
+customer_service_guidelines,customer_service_guidelines.txt,9,"For general support, billing, refund, cancellation, delivery, warranty, and technical questions, the business knowledge base should be searched before generating an answer."
+customer_service_guidelines,customer_service_guidelines.txt,10,The assistant should provide grounded answers and avoid unsupported claims.
+customer_service_guidelines,customer_service_guidelines.txt,11,"The assistant should not reveal internal implementation details such as embeddings, vector databases, retrieval mechanisms, or model names to customers."
+customer_service_guidelines,customer_service_guidelines.txt,12,The assistant should not claim that an action has been completed unless the system has actually performed or verified that action.
+customer_service_guidelines,customer_service_guidelines.txt,13,"If a question cannot be answered from available information, the assistant should recommend human support rather than inventing an answer."
+customer_service_guidelines,customer_service_guidelines.txt,14,Responses should focus on the customer's question and avoid unnecessary explanations.
+customer_service_guidelines,customer_service_guidelines.txt,15,Sensitive customer information should not be requested unless it is necessary for the requested support operation.
+delivery_policy,delivery_policy.txt,0,Delivery Policy
+delivery_policy,delivery_policy.txt,1,"Customers can contact support when an order has not been received, has been delayed, or has an unexpected delivery status."
+delivery_policy,delivery_policy.txt,2,Delivery-related issues should be checked using the available order and delivery information.
+delivery_policy,delivery_policy.txt,3,"If an order is delayed, the current order status should be verified before providing an estimated resolution."
+delivery_policy,delivery_policy.txt,4,"If an order is marked as delivered but the customer has not received it, the delivery details should be reviewed and the issue should be escalated when necessary."
+delivery_policy,delivery_policy.txt,5,Customers should provide the relevant order information when requesting delivery assistance.
+delivery_policy,delivery_policy.txt,6,"The system must not invent delivery dates, tracking information, delivery locations, or shipment status."
+delivery_policy,delivery_policy.txt,7,"If an order is still in transit, the available delivery information should be checked before making claims about its arrival."
+delivery_policy,delivery_policy.txt,8,"If delivery information cannot be verified, human customer support may be required."
+delivery_policy,delivery_policy.txt,9,A delayed delivery does not automatically indicate that an order has been lost.
+delivery_policy,delivery_policy.txt,10,A delivered status does not automatically confirm that the customer personally received the order.
+delivery_policy,delivery_policy.txt,11,"If an order appears to have been delivered incorrectly, the delivery information should be reviewed by customer support."
+delivery_policy,delivery_policy.txt,12,The assistant must not guarantee a delivery date unless that information is available in verified customer records.
+delivery_policy,delivery_policy.txt,13,Customers should provide accurate order information so that delivery status can be checked.
+delivery_policy,delivery_policy.txt,14,"Delivery issues involving missing, damaged, or incorrectly delivered products may require additional investigation."
+escalation_policy,escalation_policy.txt,0,Customer Support Escalation Policy
+escalation_policy,escalation_policy.txt,1,Customer issues should be escalated to human support when the available information is insufficient to provide a reliable answer.
+escalation_policy,escalation_policy.txt,2,"Billing disputes involving incorrect charges, duplicate charges, or transactions that cannot be verified should be reviewed by the billing support team."
+escalation_policy,escalation_policy.txt,3,Refund requests should be escalated when refund eligibility cannot be determined from the available purchase information and applicable refund conditions.
+escalation_policy,escalation_policy.txt,4,Cancellation requests should be escalated when the current order status does not show whether cancellation is still possible.
+escalation_policy,escalation_policy.txt,5,"Technical issues should be escalated when documented troubleshooting steps are unavailable, unsuccessful, or inappropriate for the reported problem."
+escalation_policy,escalation_policy.txt,6,Technical issues involving possible safety concerns should not be handled through unsupported troubleshooting instructions and should be referred to appropriate human support.
+escalation_policy,escalation_policy.txt,7,"Warranty requests should be escalated when product information, purchase information, warranty conditions, or eligibility cannot be verified."
+escalation_policy,escalation_policy.txt,8,Delivery issues should be escalated when an order is marked as delivered but the customer has not received it and the available delivery information cannot resolve the issue.
+escalation_policy,escalation_policy.txt,9,Account-related problems should be escalated when the available customer information is insufficient to verify or resolve the issue.
+escalation_policy,escalation_policy.txt,10,Payment problems should be escalated when the transaction status cannot be verified or when repeated payment attempts may create additional charges.
+escalation_policy,escalation_policy.txt,11,"The assistant must not invent missing customer records, order information, payment information, delivery information, warranty conditions, or product specifications."
+escalation_policy,escalation_policy.txt,12,The assistant should clearly explain when additional information or human support is required.
+escalation_policy,escalation_policy.txt,13,"Escalation does not guarantee approval of a refund, replacement, cancellation, warranty claim, or other requested resolution."
+escalation_policy,escalation_policy.txt,14,"When an issue is escalated, the support team should receive the relevant customer information, issue description, available transaction information, and actions already attempted."
+escalation_policy,escalation_policy.txt,15,The assistant should remain concise and professional when recommending escalation.
+escalation_policy,escalation_policy.txt,16,The assistant must never claim that a case has been escalated unless an actual escalation action has been performed by the system.
+escalation_policy,escalation_policy.txt,17,"If a customer asks for an action that the system cannot perform, the assistant should clearly explain the limitation and recommend the appropriate support channel."
+payment_policy,payment_policy.txt,0,Payment Policy
+payment_policy,payment_policy.txt,1,Customers should verify their payment status when a transaction does not appear to have completed correctly.
+payment_policy,payment_policy.txt,2,"If a payment fails, the customer should verify the payment status before attempting another transaction."
+payment_policy,payment_policy.txt,3,"If a payment appears to have been deducted but the order was not confirmed, the transaction and order status should be checked before another payment is attempted."
+payment_policy,payment_policy.txt,4,Customers should not make repeated payments for the same transaction until the status of the original payment has been verified.
+payment_policy,payment_policy.txt,5,"If a customer is charged twice for the same purchase, the duplicate transaction should be reviewed by the billing support team."
+payment_policy,payment_policy.txt,6,"If a payment is shown as successful but the related order is missing, the payment and order records should be checked."
+payment_policy,payment_policy.txt,7,"The assistant must not claim that a payment was successful, failed, reversed, or refunded unless the status is available in verified records."
+payment_policy,payment_policy.txt,8,"The assistant must not invent transaction IDs, payment amounts, payment dates, or processing times."
+payment_policy,payment_policy.txt,9,Payment-related issues may require review by the payment or billing support team.
+payment_policy,payment_policy.txt,10,"If a payment problem cannot be verified from available information, the issue should be escalated to human customer support."
+payment_policy,payment_policy.txt,11,"Customers should not provide unnecessary card numbers, passwords, PINs, or authentication credentials when requesting support."
+payment_policy,payment_policy.txt,12,Payment verification and refund processing are separate processes.
+payment_policy,payment_policy.txt,13,A successful payment does not automatically mean that an order has been successfully completed.
+payment_policy,payment_policy.txt,14,"If the payment status is unclear, customers should wait for verification rather than repeatedly submitting the same payment."
+refund_policy,refund_policy.txt,0,Refund Policy
+refund_policy,refund_policy.txt,1,Customers may request a refund when an eligible purchase requires cancellation or when a product or service qualifies for a refund.
+refund_policy,refund_policy.txt,2,Refund requests must be reviewed against the applicable purchase and refund conditions.
+refund_policy,refund_policy.txt,3,Customers should provide the order or transaction information required to identify the purchase.
+refund_policy,refund_policy.txt,4,A refund request does not guarantee automatic approval.
+refund_policy,refund_policy.txt,5,The support team must verify the transaction and applicable refund conditions before confirming eligibility.
+refund_policy,refund_policy.txt,6,"If a customer received a damaged, defective, or incorrect product, the case should be reviewed to determine whether a refund or replacement is applicable."
+refund_policy,refund_policy.txt,7,"If a payment was completed but the purchase was not successfully processed, the transaction should be verified before a refund is promised."
+refund_policy,refund_policy.txt,8,"If a refund has been approved, processing may require additional time depending on the payment method and applicable processing procedures."
+refund_policy,refund_policy.txt,9,The assistant must not guarantee a refund before eligibility has been verified.
+refund_policy,refund_policy.txt,10,"The assistant must not invent refund amounts, processing times, or eligibility conditions that are not documented."
+refund_policy,refund_policy.txt,11,"If the available information is insufficient to determine refund eligibility, the request should be escalated to human customer support."
+refund_policy,refund_policy.txt,12,Customers should retain relevant order or transaction information when requesting a refund.
+refund_policy,refund_policy.txt,13,A refund request and refund approval are separate processes. Submitting a request does not mean that the refund has already been approved.
+technical_support,technical_support.txt,0,Technical Support Procedure
+technical_support,technical_support.txt,1,"Customers experiencing technical problems should first describe the product, the problem observed, and when the problem started."
+technical_support,technical_support.txt,2,"Customers should provide relevant error messages, warning indicators, unusual behavior, or other observable symptoms when available."
+technical_support,technical_support.txt,3,"If a product does not work after installation, the customer should confirm that the installation was completed correctly and describe what happens when the product is started."
+technical_support,technical_support.txt,4,"If the customer has already performed a factory reset and the problem continues, the issue should be escalated for further technical investigation rather than repeatedly recommending the same reset procedure."
+technical_support,technical_support.txt,5,"If a product stopped working after a software update, the issue should be reviewed to determine whether the update may be related to the problem."
+technical_support,technical_support.txt,6,Support staff should recommend only troubleshooting procedures that are documented for the particular product.
+technical_support,technical_support.txt,7,The assistant must not invent product-specific troubleshooting instructions.
+technical_support,technical_support.txt,8,"Customers should not be instructed to perform repairs, hardware modifications, electrical work, or other potentially unsafe procedures."
+technical_support,technical_support.txt,9,"If the available information does not contain a safe troubleshooting procedure, the customer should be referred to technical support."
+technical_support,technical_support.txt,10,"If the same problem continues after documented troubleshooting steps have been completed, the issue should be escalated for further investigation."
+technical_support,technical_support.txt,11,"When escalating a technical issue, the available product information, symptoms, error messages, troubleshooting steps already attempted, and relevant order information should be provided to the support team."
+technical_support,technical_support.txt,12,"If a product appears to have physical damage, the case should be reviewed before additional troubleshooting is recommended."
+technical_support,technical_support.txt,13,"If a customer reports a safety-related problem, the customer should stop using the product and contact appropriate human support."
+technical_support,technical_support.txt,14,"Technical support should not guarantee a repair, replacement, refund, or resolution until the case has been reviewed."
+technical_support,technical_support.txt,15,The assistant should clearly state when the available information is insufficient to identify the cause of a technical problem.
+warranty_policy,warranty_policy.txt,0,Warranty Policy
+warranty_policy,warranty_policy.txt,1,Warranty-related requests must be reviewed against the applicable product warranty conditions.
+warranty_policy,warranty_policy.txt,2,Customers should provide the product information and purchase details required to verify warranty eligibility.
+warranty_policy,warranty_policy.txt,3,A product that stops working or arrives with a defect may require inspection before a replacement or warranty service is approved.
+warranty_policy,warranty_policy.txt,4,"Physical damage, unauthorized modification, misuse, or other conditions may affect warranty eligibility depending on the applicable warranty terms."
+warranty_policy,warranty_policy.txt,5,"If a product is defective during the applicable warranty period, the case should be reviewed by customer support."
+warranty_policy,warranty_policy.txt,6,Warranty eligibility does not automatically guarantee a replacement or repair.
+warranty_policy,warranty_policy.txt,7,The assistant must not claim that a product is covered by warranty without verifying the applicable conditions.
+warranty_policy,warranty_policy.txt,8,"The assistant must not invent warranty periods, coverage conditions, exclusions, or replacement procedures."
+warranty_policy,warranty_policy.txt,9,"If a product has been modified or repaired by an unauthorized party, warranty eligibility should be reviewed before any conclusion is provided."
+warranty_policy,warranty_policy.txt,10,"If warranty eligibility cannot be determined from the available information, the request should be escalated to customer support."
+warranty_policy,warranty_policy.txt,11,Customers should provide relevant purchase information and product details when requesting warranty assistance.
+warranty_policy,warranty_policy.txt,12,Customers should not be asked to perform potentially unsafe repairs or modifications.
+warranty_policy,warranty_policy.txt,13,A warranty review and warranty approval are separate processes.
+warranty_policy,warranty_policy.txt,14,"Warranty approval does not automatically specify whether the final resolution will be repair, replacement, or another applicable service."

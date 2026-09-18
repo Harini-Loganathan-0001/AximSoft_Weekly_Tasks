@@ -1,0 +1,27 @@
+Cancellation Policy
+
+Customers may request cancellation of an order before the order reaches a stage where cancellation is no longer possible.
+
+Cancellation requests should be checked against the current order status.
+
+If an order is still eligible for cancellation, the support process can proceed with the cancellation request.
+
+If the order has already entered a non-cancellable stage, cancellation may not be available.
+
+Customers should provide the relevant order information when requesting cancellation.
+
+A cancellation request does not guarantee that an order can be cancelled.
+
+The assistant must not claim that an order has been cancelled unless the cancellation has been confirmed in the customer records.
+
+If an order cannot be cancelled, other applicable options should be reviewed by customer support.
+
+If payment has already been processed, the payment and cancellation status should be verified before discussing a possible refund.
+
+The assistant must not invent cancellation deadlines or order statuses.
+
+If the available information does not show whether an order can be cancelled, human customer support should review the order.
+
+Cancellation eligibility and refund eligibility are separate decisions and should not be treated as automatically equivalent.
+
+Customers should provide accurate order information so that the current order status can be verified.
