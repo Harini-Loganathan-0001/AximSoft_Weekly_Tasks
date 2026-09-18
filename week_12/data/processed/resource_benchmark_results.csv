@@ -1,4 +1,0 @@
-Component,Execution Time (sec),Memory Change (MB),Status
-Churn Prediction,0.0898,0.08,Success
-RAG Answer,9.4114,-0.08,Success
-Simple Agent,0.0938,0.08,Success
